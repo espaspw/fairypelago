@@ -1,29 +1,30 @@
 import * as DC from 'discord.js'
 import { JSONFilePreset } from 'lowdb/node'
 
-import { ArchipelagoRoomData } from '../lib/scrape'
-import { ArchipelagoMessageTypes, defaultWhitelistedTypes } from '../archipelago-client'
+import { ArchipelagoRoomData } from '../types/archipelago-types'
+import { defaultWhitelistedTypes } from '../lib/archipelago-client'
+import { ArchipelagoMessageType } from '../types/archipelago-types'
 
 export interface DBGuildSettings {
-  whitelistedMessageTypes: ArchipelagoMessageTypes[]
+  whitelistedMessageTypes: ArchipelagoMessageType[]
   logChannelId?: DC.Snowflake
 }
 
-type GuildSettingsMapping = { [key: DC.Snowflake]: DBGuildSettings }
-type ChannelToRoomDataMapping = { [key: DC.Snowflake]: ArchipelagoRoomData }
-type ChannelToTimestampMapping = { [key: DC.Snowflake]: Date }
+export interface DBActiveMultiworld {
+  guildId: DC.Snowflake
+  channelId: DC.Snowflake
+  roomData: ArchipelagoRoomData
+  createdAt: Date
+}
 
 export interface DBData {
-  channelToRoomData: ChannelToRoomDataMapping
-  channelToTimestamp: ChannelToTimestampMapping
-  guildSettings: GuildSettingsMapping
+  guildSettings: { [key: DC.Snowflake]: DBGuildSettings }
+  activeMultiworlds: DBActiveMultiworld[]
 }
 
 const baseData: DBData = {
-  guildToChannel: {},
-  channelToRoomData: {},
-  channelToTimestamp: {},
   guildSettings: {},
+  activeMultiworlds: [],
 }
 
 const createDefaultGuildSettingObject = () => ({
@@ -31,10 +32,6 @@ const createDefaultGuildSettingObject = () => ({
 })
 
 const db = await JSONFilePreset('db.json', baseData)
-
-// Register guild
-// Create empty settings option for each guild
-// Iterate through bot guild list on startup and register
 
 export async function setLogChannelId(guildId: DC.Snowflake, logChannelId: DC.Snowflake) {
   if (db.data.guildSettings[guildId] === undefined) {
@@ -48,22 +45,40 @@ export function getLogChannelId(guildId: DC.Snowflake): DC.Snowflake | null {
   return db.data.guildSettings[guildId]?.logChannelId ?? null
 }
 
-export async function addActiveRoom(channelId: DC.Snowflake, roomData: ArchipelagoRoomData) {
-  db.data.channelToRoomData[channelId] = roomData
-  db.data.channelToTimestamp[channelId] = new Date()
+export function getWhitelistedMessageTypes(guildId: DC.Snowflake): ArchipelagoMessageType[] | null {
+  return db.data.guildSettings[guildId]?.whitelistedMessageTypes ?? null
+}
+
+// TODO: Add methods for maniping whitelist
+
+export function findActiveMultiworld(guildId: DC.Snowflake, channelId: DC.Snowflake) {
+  for (const multiworld of db.data.activeMultiworlds) {
+    if (multiworld.guildId === guildId && multiworld.channelId === channelId) {
+      return multiworld
+    }
+  }
+  return null
+}
+
+export async function addActiveMultiworld(guildId: DC.Snowflake, channelId: DC.Snowflake, roomData: ArchipelagoRoomData) {
+  const newMultiworld: DBActiveMultiworld = {
+    guildId,
+    channelId,
+    roomData,
+    createdAt: new Date(),
+  }
+  db.data.activeMultiworlds.push(newMultiworld)
+  await db.write()
+  return newMultiworld
+}
+
+export async function removeActiveMultiworld(guildId: DC.Snowflake, channelId: DC.Snowflake) {
+  const idx = db.data.activeMultiworlds.findIndex(w => w.guildId === guildId && w.channelId === channelId)
+  if (idx === -1) return;
+  db.data.activeMultiworlds.splice(idx)
   await db.write()
 }
 
-export async function removeActiveRoom(channelId: DC.Snowflake) {
-  delete db.data.channelToRoomData[channelId]
-  delete db.data.channelToTimestamp[channelId]
-  await db.write()
-}
-
-export function isChannelOfActiveRoom(channelId: DC.Snowflake) {
-  return channelId in db.data.channelToRoomData
-}
-
-export function getAllRoomData() {
-  return Object.entries(db.data.channelToRoomData)
+export function getActiveMultiworlds() {
+  return db.data.activeMultiworlds
 }

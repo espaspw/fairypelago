@@ -1,26 +1,9 @@
 import axios from 'axios'
 import { parse } from 'node-html-parser'
+import { ArchipelagoRoomData, ArchipelagoRoomUrl } from '../types/archipelago-types'
 
-export interface ArchipelagoRoomUrl {
-  url: string
-}
-
-export interface ArchipelagoRoomPlayerData {
-  id: string
-  name: string
-  game: string
-  downloadLink: string | null
-  trackerPage: string
-}
-
-export interface ArchipelagoRoomData {
-  players: ArchipelagoRoomPlayerData[]
-  port: string
-  roomUrl: string
-}
-
-const ARCHIPELAGO_ROOM_REGEX = /^(http(s)?:\/\/)?archipelago.gg\/room\/[A-Za-z0-9\-\_]{22}$/
-const PORT_CAPTURE_REGEX = /archipelago\.gg\:([0-9]{4,5})/
+const ARCHIPELAGO_ROOM_REGEX = /^(http(s)?:\/\/)?archipelago.gg\/room\/[A-Za-z0-9\-_]{22}$/
+const PORT_CAPTURE_REGEX = /archipelago\.gg:([0-9]{4,5})/
 
 export function parseArchipelagoRoomUrl(url: string) : ArchipelagoRoomUrl | null {
   const regexResult = ARCHIPELAGO_ROOM_REGEX.exec(url)
