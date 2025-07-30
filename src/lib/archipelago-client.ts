@@ -1,6 +1,5 @@
-import { Client as ArchClient, SocketError } from 'archipelago.js'
+import { Client as ArchClient, Item, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
-import emojiFromText from 'emoji-from-text'
 
 import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types'
 
@@ -31,15 +30,16 @@ export enum ClientState {
   Failure,
 }
 
-// TODO: Maybe have this store RoomData as well? Right now weak association with Rooms
 export class ArchipelagoClientWrapper {
   private #client: ArchClient
+  private #roomData: ArchipelagoRoomData
   state: ClientState = ClientState.Stopped
   lastError: Error | null = null
   private #whitelistedTypes: Set<ArchipelagoMessageType>
 
-  constructor(client: ArchClient, options: ClientOptions) {
+  constructor(client: ArchClient, roomData: ArchipelagoRoomData, options: ClientOptions) {
     this.#client = client
+    this.#roomData = roomData
     this.#whitelistedTypes = new Set(options.whitelistedMessageTypes)
   }
 
@@ -55,11 +55,11 @@ export class ArchipelagoClientWrapper {
     msgType.forEach(this.#whitelistedTypes.delete)
   }
 
-  async start(roomData: ArchipelagoRoomData) {
+  async start() {
     try {
       await this.#client.login(
-        `archipelago.gg:${roomData.port}`,
-        roomData.players[0].name,
+        `archipelago.gg:${this.#roomData.port}`,
+        this.#roomData.players[0].name,
         null,
         { tags: ['Discord'] },
       )
@@ -82,17 +82,26 @@ export class ArchipelagoClientWrapper {
   }
 }
 
-export async function makeClient(channel: DC.TextChannel | DC.PublicThreadChannel, options?: ClientOptions = defaultClientOptions) {
+function formatItemTagList(item: Item) {
+  const tokens = [' |']
+  if (item.progression) tokens.push(':purple_circle: Progression');
+  if (item.useful) tokens.push(':blue_circle: Useful');
+  if (item.filler) tokens.push(':white_circle: Junk');
+  if (item.trap) tokens.push(':red_circle: Trap');
+  if (tokens.length === 1) return '';
+  return tokens.join(' ')
+}
+
+export async function makeClient(
+  channel: DC.TextChannel | DC.PublicThreadChannel,
+  roomData: ArchipelagoRoomData,
+  options?: ClientOptions = defaultClientOptions,
+) {
   const client = new ArchClient()
-  const wrapper = new ArchipelagoClientWrapper(client, options)
+  const wrapper = new ArchipelagoClientWrapper(client, roomData, options)
 
   function makeTimestamp() {
     return `<t:${Math.floor(Date.now() / 1000)}:T>`
-  }
-
-  function getEmojifiedName(text: string) {
-    const emoji = emojiFromText(text, true).match.toString()
-    return `${emoji} ${text}`
   }
 
   client.messages.on('connected', async (content, player, tags) => {
@@ -120,25 +129,12 @@ export async function makeClient(channel: DC.TextChannel | DC.PublicThreadChanne
     if (item.useful && !item.progression && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return;
     if (item.filler && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return;
     if (item.trap && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentTrap)) return;
-    const color = (() => {
-      if (item.progression) {
-        return 0xF7A278
-      } else if (item.useful) {
-        return 0x6DD3CE
-      } else if (item.filler) {
-        return 0xEFFAFA
-      } else if (item.trap) {
-        return 0xA13D63
-      } else {
-        return 0x0
-      }
-    })()
-    const header = `> -# ${makeTimestamp()} | ${item.locationGame} - **${item.locationName}** | ${item.progression ? 'Progression' : ''}`
+    const header = `> -# ${makeTimestamp()} | ${item.locationGame} - **${item.locationName}**${formatItemTagList(item)}`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> __${item.sender.alias}__ found their **${getEmojifiedName(item.name)}**`
+        return `> __${item.sender.alias}__ found their **${item.name}**`
       } else {
-        return `> __${item.sender.alias}__ sent **${getEmojifiedName(item.name)}** to __${item.receiver.alias}__` 
+        return `> __${item.sender.alias}__ sent **${item.name}** to __${item.receiver.alias}__` 
       }
     })()
     await channel.send([header, body].join('\n'))
@@ -224,7 +220,7 @@ export async function makeClient(channel: DC.TextChannel | DC.PublicThreadChanne
     const embed = new DC.EmbedBuilder()
       .setColor(0xEFAAC4)
       .setDescription(`${makeTimestamp()} | **${player.alias}** has reached their objective!`)
-      .setImage(`https://tenor.com/view/touhou-touhou-project-rin-kaenbyou-dance-dancing-gif-20645477.gif`)
+      .setImage(`https://static.wikia.nocookie.net/touhou/images/b/b2/Orin_hm.gif/revision/latest?cb=20130602172935`)
     await channel.send({ embeds: [embed] })
   })
 

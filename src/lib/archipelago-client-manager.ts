@@ -1,0 +1,90 @@
+import * as DC from 'discord.js'
+import normalizeUrl from 'normalize-url'
+import * as DB from '../db/db'
+import { ArchipelagoClientWrapper, ClientState, ClientOptions, makeClient } from './archipelago-client'
+import { ArchipelagoRoomUrl, type ArchipelagoRoomData } from '../types/archipelago-types'
+
+export class ArchipelagoClientManager {
+  private #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
+  private #multiworlds: DB.DBActiveMultiworld[] = []
+
+  async initFromDb(discordClient: DC.Client) {
+    const multiworlds = await DB.getActiveMultiworlds()
+    for (const { guildId, channelId, roomData } of multiworlds) {
+      const guild = await discordClient.guilds.fetch(guildId)
+      if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
+      const channel = await guild.channels.fetch(channelId)
+      if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
+      const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
+      await this.createClient(channel, roomData, { whitelistedMessageTypes })
+    }
+    this.#multiworlds = multiworlds
+  }
+
+  // Starts clients that aren't started, skipping already running clients.
+  // Will not start clients with previous error.
+  async startAllClients() {
+    for (const [_, client] of this.#clients) {
+      if (client.state === ClientState.Stopped) {
+        await client.start()
+      }
+    }
+  }
+
+  isChannelOfExistingMultiworld(channelId: DC.Snowflake) {
+    return this.#clients.has(channelId)
+  }
+
+  isRoomUrlOfExistingMultiworld(roomUrl: ArchipelagoRoomUrl) {
+    const normalizedInputUrl = normalizeUrl(roomUrl.url, { forceHttps: true })
+    for (const multiworld of this.#multiworlds) {
+      const normalizedMultiworldUrl = normalizeUrl(multiworld.roomData.roomUrl, { forceHttps: true })
+      if (normalizedInputUrl === normalizedMultiworldUrl) return true
+    }
+    return false
+  }
+
+  getChannelIdFromRoomUrl(roomUrl: ArchipelagoRoomUrl) {
+    const normalizedInputUrl = normalizeUrl(roomUrl.url, { forceHttps: true })
+    for (const multiworld of this.#multiworlds) {
+      const normalizedMultiworldUrl = normalizeUrl(multiworld.roomData.roomUrl, { forceHttps: true })
+      if (normalizedInputUrl === normalizedMultiworldUrl) return multiworld.channelId;
+    }
+    return null
+  }
+
+  async createClient(channel: DC.GuildBasedChannel, roomData: ArchipelagoRoomData, options?: ClientOptions) {
+    // const archClient = await makeClient(channel, {
+    //   whitelistedMessageTypes: [
+    //     ...defaultWhitelistedTypes,
+    //     ArchipelagoMessageType.ItemSentUseful,
+    //     ArchipelagoMessageType.ItemSentFiller,
+    //     ArchipelagoMessageType.ItemSentTrap,
+    //   ],
+    // })
+    const archClient = await makeClient(channel, roomData, options)
+
+    this.#clients.set(channel.id, archClient)
+    const existingMultiworld = DB.findActiveMultiworld(channel.guildId, channel.id)
+    if (existingMultiworld) {
+      this.#multiworlds.push(existingMultiworld)
+    } else {
+      const newMultiworld = await DB.addActiveMultiworld(channel.guildId, channel.id, roomData)
+      this.#multiworlds.push(newMultiworld)
+    }
+  }
+
+  async startClient(channelId: DC.Snowflake) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    await archClient.start()
+  }
+
+  // Will not send a message if client is not running.
+  async sendMessage(channelId: DC.Snowflake, message: string) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    if (archClient.state !== ClientState.Running) return;
+    await archClient.client.messages.say(message)
+  }
+}

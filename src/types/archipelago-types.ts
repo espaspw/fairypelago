@@ -35,4 +35,3 @@ export enum ArchipelagoMessageType {
   ServerCommand,
   Goal
 }
-

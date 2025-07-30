@@ -13,11 +13,6 @@ export function createRoomDataDisplay(roomData: ArchipelagoRoomData): string | D
   const tokens = ['### Player Worlds']
   tokens.push(...roomData.players.map(createUserDataDisplay))
   const description = tokens.join('\n')
-  const embed = new DC.EmbedBuilder()
-    .setTitle('Player Worlds')
-    .setURL(roomData.roomUrl)
-    .setDescription(description)
-    .setTimestamp()
   return {
     embeds: [{ description }],
   }
