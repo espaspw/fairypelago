@@ -1,10 +1,4 @@
-interface IconMatcher {
-  pattern: (string | RegExp)[]
-  emoji: string
-}
-
-interface GameIcons = { [key: string]: string }
-interface ItemIcons = { [key: string]: IconMatcher[] }
+import { IconMatcher, GameIcons, ItemIcons } from '../types/icon-types'
 
 const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Yarn'], emoji: '<:ahit_yarn:1400022862542143550>' },
@@ -37,55 +31,10 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: [/Zipline Unlock.*/], emoji: '<:ahit_zipline:1400022874609160224>' },
 ]
 
-const gameIcons: GameIcons = {
+export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
 }
 
-const itemIcons: ItemIcons = {
+export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
-}
-
-interface LookupTable {
-  [key: string]: {
-    exactMatchers: { [key: string]: string },
-    regexMatchers: { r: RegExp, e: string }[],
-  }
-}
-
-function createLookupTable(itemIcons: ItemIcons) {
-  const lookupTable: LookupTable = {}
-  for (const [game, matchers] of Object.entries(itemIcons)) {
-    const gameTable = {
-      exactMatchers: {},
-      regexMatchers: [],
-    }
-    for (const matcher of matchers) {
-      const { pattern, emoji } = matcher
-      for (const strOrRegex of pattern) {
-        if (strOrRegex instanceof String) {
-          gameTable.exactMatchers[strOrRegex] = emoji
-        } else {
-          gameTable.regexMatchers.push({ r: strOrRegex, e: emoji })
-        }
-      }
-    }
-    lookupTable[game] = gameTable
-  }
-  return lookupTable
-}
-
-const _lookupTable = createLookupTable(itemIcons)
-
-// UNTESTED!!
-export function lookup(gameName: string, itemName: string) {
-  const gameTable = _lookupTable[gameName]
-  if (gameTable === undefined) return null;
-  const maybeEmoji = gameTable.exactMatchers[itemName]
-  if (maybeEmoji !== undefined) return maybeEmoji;
-  for (const regexp of gameTable.regexMatchers) {
-    if (regexp.r.test(itemName)) {
-      return regexp.e
-    }
-  }
-  return null
 }

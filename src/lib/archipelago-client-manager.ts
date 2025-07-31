@@ -1,12 +1,19 @@
 import * as DC from 'discord.js'
 import normalizeUrl from 'normalize-url'
 import * as DB from '../db/db'
-import { ArchipelagoClientWrapper, ClientState, ClientOptions, makeClient } from './archipelago-client'
+import { ArchipelagoClientWrapper, ClientState, ClientOptions } from './archipelago-client'
 import { ArchipelagoRoomUrl, type ArchipelagoRoomData } from '../types/archipelago-types'
+import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 
 export class ArchipelagoClientManager {
   private #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
   private #multiworlds: DB.DBActiveMultiworld[] = []
+
+  private #defaultEventFormatter: ArchipelagoEventFormatter
+
+  constructor(defaultEventfFormatter: ArchipelagoEventFormatter) {
+    this.#defaultEventFormatter = defaultEventfFormatter
+  }
 
   async initFromDb(discordClient: DC.Client) {
     const multiworlds = await DB.getActiveMultiworlds()
@@ -54,15 +61,12 @@ export class ArchipelagoClientManager {
   }
 
   async createClient(channel: DC.GuildBasedChannel, roomData: ArchipelagoRoomData, options?: ClientOptions) {
-    // const archClient = await makeClient(channel, {
-    //   whitelistedMessageTypes: [
-    //     ...defaultWhitelistedTypes,
-    //     ArchipelagoMessageType.ItemSentUseful,
-    //     ArchipelagoMessageType.ItemSentFiller,
-    //     ArchipelagoMessageType.ItemSentTrap,
-    //   ],
-    // })
-    const archClient = await makeClient(channel, roomData, options)
+    const archClient = await ArchipelagoClientWrapper.makeClient(
+      channel,
+      roomData,
+      { eventFormatter: this.#defaultEventFormatter },
+      options,
+    )
 
     this.#clients.set(channel.id, archClient)
     const existingMultiworld = DB.findActiveMultiworld(channel.guildId, channel.id)

@@ -16,7 +16,6 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
 
   discordClient.once(DC.Events.ClientReady, async (client) => {
     console.log(`Client ready as "${client.user.tag}"`)
-    // TODO: Temp hardcoding for testing
     await archClients.initFromDb(discordClient)
     await archClients.startAllClients()
   })
@@ -63,6 +62,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       return message;
     })();
     const newThread = await threadBaseMessage.startThread({
+      // TODO: Give this a proper name
       name: 'Test thread',
       autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
     });

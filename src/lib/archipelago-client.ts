@@ -1,17 +1,22 @@
-import { Client as ArchClient, Item, SocketError } from 'archipelago.js'
+import { Client as ArchClient, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
 import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types'
-
+import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 
 export interface ClientOptions {
   whitelistedMessageTypes: ArchipelagoMessageType[]
+  enableGameIcons: boolean;
+  enableItemIcons: boolean;
+  hideFoundHints: boolean;
 }
 
 export const defaultWhitelistedTypes = [
   ArchipelagoMessageType.Connected,
   ArchipelagoMessageType.Disconnected,
   ArchipelagoMessageType.ItemSentProgression,
+  ArchipelagoMessageType.ItemSentUseful,
+  ArchipelagoMessageType.ItemSentFiller,
   ArchipelagoMessageType.ItemSentTrap,
   ArchipelagoMessageType.ItemHinted,
   ArchipelagoMessageType.ItemCheated,
@@ -22,6 +27,13 @@ export const defaultWhitelistedTypes = [
 
 const defaultClientOptions: ClientOptions = {
   whitelistedMessageTypes: defaultWhitelistedTypes,
+  enableGameIcons: true,
+  enableItemIcons: true,
+  hideFoundHints: true,
+}
+
+export interface ClientDeps {
+  eventFormatter: ArchipelagoEventFormatter
 }
 
 export enum ClientState {
@@ -33,14 +45,38 @@ export enum ClientState {
 export class ArchipelagoClientWrapper {
   private #client: ArchClient
   private #roomData: ArchipelagoRoomData
+  private #discordChannel: DC.TextChannel | DC.PublicThreadChannel
+  private #eventFormatter: ArchipelagoEventFormatter
   state: ClientState = ClientState.Stopped
   lastError: Error | null = null
   private #whitelistedTypes: Set<ArchipelagoMessageType>
+  private #options: ClientOptions
 
-  constructor(client: ArchClient, roomData: ArchipelagoRoomData, options: ClientOptions) {
+  constructor(
+    client: ArchClient,
+    roomData: ArchipelagoRoomData,
+    discordChannel: DC.TextChannel | DC.PublicThreadChannel,
+    deps: ClientDeps,
+    options: ClientOptions
+  ) {
     this.#client = client
     this.#roomData = roomData
+    this.#discordChannel = discordChannel
+    this.#eventFormatter = deps.eventFormatter
     this.#whitelistedTypes = new Set(options.whitelistedMessageTypes)
+    this.#options = options
+  }
+
+  static async makeClient(
+    channel: DC.TextChannel | DC.PublicThreadChannel,
+    roomData: ArchipelagoRoomData,
+    deps: ClientDeps,
+    options?: ClientOptions = defaultClientOptions,
+  ) {
+    const client = new ArchClient()
+    const wrapper = new this(client, roomData, channel, deps, options)
+    wrapper.attachListeners()
+    return wrapper
   }
 
   isWhitelisted(msgType: ArchipelagoMessageType) {
@@ -80,149 +116,64 @@ export class ArchipelagoClientWrapper {
   set client(cilent: ArchClient) {
     this.#client = cilent
   }
-}
 
-function formatItemTagList(item: Item) {
-  const tokens = [' |']
-  if (item.progression) tokens.push(':purple_circle: Progression');
-  if (item.useful) tokens.push(':blue_circle: Useful');
-  if (item.filler) tokens.push(':white_circle: Junk');
-  if (item.trap) tokens.push(':red_circle: Trap');
-  if (tokens.length === 1) return '';
-  return tokens.join(' ')
-}
+  attachListeners() {
+    this.#client.messages.on('connected', async (content, player, tags) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.Connected)) return;
+      const responseMsg = this.#eventFormatter.connected(content, player, tags)
+      if (responseMsg === null) return;
+      await this.#discordChannel.send(responseMsg)
+    })
 
-export async function makeClient(
-  channel: DC.TextChannel | DC.PublicThreadChannel,
-  roomData: ArchipelagoRoomData,
-  options?: ClientOptions = defaultClientOptions,
-) {
-  const client = new ArchClient()
-  const wrapper = new ArchipelagoClientWrapper(client, roomData, options)
+    this.#client.messages.on('disconnected', async (content, player) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.Disconnected)) return;
+      await this.#discordChannel.send(this.#eventFormatter.disconnected(content, player))
+    })
 
-  function makeTimestamp() {
-    return `<t:${Math.floor(Date.now() / 1000)}:T>`
+    this.#client.messages.on('itemSent', async (content, item) => {
+      if (item.progression && !this.isWhitelisted(ArchipelagoMessageType.ItemSentProgression)) return;
+      if (item.useful && !item.progression && !this.isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return;
+      if (item.filler && !this.isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return;
+      if (item.trap && !this.isWhitelisted(ArchipelagoMessageType.ItemSentTrap)) return;
+      await this.#discordChannel.send(this.#eventFormatter.itemSent(content, item))
+    })
+
+    this.#client.messages.on('itemHinted', async (content, item) => {
+      if (!this.isWhitelisted(ArchipelagoMessageType.ItemHinted)) return;
+      if (this.#options.hideFoundHints && content.includes('(found)')) return;
+      await this.#discordChannel.send(this.#eventFormatter.itemHinted(content, item))
+    })
+
+    this.#client.messages.on('itemCheated', async (content, item) => {
+      if (!this.isWhitelisted(ArchipelagoMessageType.ItemCheated)) return;
+      await this.#discordChannel.send(this.#eventFormatter.itemCheated(content, item))
+    })
+
+    this.#client.messages.on('chat', async (content, player) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.UserChat)) return;
+      const responseMsg = this.#eventFormatter.chat(content, player)
+      if (responseMsg === null) return;
+      await this.#discordChannel.send(responseMsg)
+    })
+    
+    this.#client.messages.on('serverChat', async (content) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.ServerChat)) return;
+      await this.#discordChannel.send(this.#eventFormatter.serverChat(content))
+    })
+
+    this.#client.messages.on('userCommand', async (content) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.UserCommand)) return;
+      await this.#discordChannel.send(this.#eventFormatter.userCommand(content))
+    })
+
+    this.#client.messages.on('adminCommand', async (content) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.ServerCommand)) return;
+      await this.#discordChannel.send(this.#eventFormatter.adminCommand(content))
+    })
+
+    this.#client.messages.on('goaled', async (content, player) => {
+      if(!this.isWhitelisted(ArchipelagoMessageType.Goal)) return;
+      await this.#discordChannel.send(this.#eventFormatter.goaled(content, player))
+    })
   }
-
-  client.messages.on('connected', async (content, player, tags) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.Connected)) return;
-    if(tags.includes('Discord')) return; // Prevent triggering on its own join
-    const descriptionTokens = [`${makeTimestamp()} | **${player.alias}** playing __${player.game}__ has joined.`]
-    if (tags.length !== 0) { descriptionTokens.push(`(${tags.join(', ')})`) }
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xC8E9A0)
-      .setDescription(descriptionTokens.join(' '))
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('disconnected', async (content, player) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.Disconnected)) return;
-    const description = `${makeTimestamp()} | **${player.alias}** playing ${player.game} has left.`
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xA13D63)
-      .setDescription(description)
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('itemSent', async (content, item) => {
-    if (item.progression && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentProgression)) return;
-    if (item.useful && !item.progression && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return;
-    if (item.filler && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return;
-    if (item.trap && !wrapper.isWhitelisted(ArchipelagoMessageType.ItemSentTrap)) return;
-    const header = `> -# ${makeTimestamp()} | ${item.locationGame} - **${item.locationName}**${formatItemTagList(item)}`
-    const body = (() => {
-      if (item.sender.slot === item.receiver.slot) {
-        return `> __${item.sender.alias}__ found their **${item.name}**`
-      } else {
-        return `> __${item.sender.alias}__ sent **${item.name}** to __${item.receiver.alias}__` 
-      }
-    })()
-    await channel.send([header, body].join('\n'))
-  })
-
-  client.messages.on('itemHinted', async (content, item) => {
-    if (!wrapper.isWhitelisted(ArchipelagoMessageType.ItemHinted)) return;
-    if (content.includes('(found)')) return;
-    const embed = new DC.EmbedBuilder()
-      .setColor(0x947EB0)
-      .setFields({
-        name: 'Item',
-        value: item.name,
-        inline: true,
-      }, {
-        name: 'Location',
-        value: item.locationName,
-        inline: true,
-      }, {
-        name: 'World',
-        value: item.sender.alias,
-        inline: true,
-      })
-      .setFooter({ text: `Hint for ${item.receiver.alias}` })
-      .setTimestamp()
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('itemCheated', async (content, item) => {
-    const header = `> -# ${makeTimestamp()} | Cheat`
-    const body = (() => {
-      if (item.sender.slot === item.receiver.slot) {
-        return `> **${item.name}** was given to __${item.receiver.alias}__, which was located at **${item.locationName}`
-      } else {
-        return `> **${item.name}** was forcefully transfered from __${item.sender.alias}__ to __${item.receiver.alias}__, which was located at **${item.locationName}`
-      }
-    })()
-    await channel.send([header, body].join('\n'))
-  })
-
-  client.messages.on('chat', async (content, player) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.UserChat)) return;
-
-    // Prevent triggering on forwarded messages from discord
-    if (content.includes('[DISCORD]')) return;
-
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xDBABBE)
-      .setDescription(`${makeTimestamp()} | **${player.alias}** : ${content}`)
-    await channel.send({ embeds: [embed] })
-  })
-  
-  client.messages.on('serverChat', async (content) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.ServerChat)) return;
-
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xDBABBE)
-      .setDescription(`${makeTimestamp()} | __**SERVER**__ : ${content}`)
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('userCommand', async (content) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.UserCommand)) return;
-
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xDBABBE)
-      .setDescription(`${makeTimestamp()} | **${player.alias}** :: ${content}`)
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('adminCommand', async (content) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.ServerCommand)) return;
-
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xDBABBE)
-      .setDescription(`${makeTimestamp()} | __**ADMIN**__ :: ${content}`)
-    await channel.send({ embeds: [embed] })
-  })
-
-  client.messages.on('goaled', async (content, player) => {
-    if(!wrapper.isWhitelisted(ArchipelagoMessageType.Goal)) return;
-
-    const embed = new DC.EmbedBuilder()
-      .setColor(0xEFAAC4)
-      .setDescription(`${makeTimestamp()} | **${player.alias}** has reached their objective!`)
-      .setImage(`https://static.wikia.nocookie.net/touhou/images/b/b2/Orin_hm.gif/revision/latest?cb=20130602172935`)
-    await channel.send({ embeds: [embed] })
-  })
-
-  return wrapper
 }
