@@ -52,6 +52,10 @@ export class ArchipelagoClientWrapper {
   private #whitelistedTypes: Set<ArchipelagoMessageType>
   private #options: ClientOptions
 
+  // Quick lookups when a user goals. Mainly used to prevent
+  // message spam after a goal, so persistence not needed.
+  private #goalCache = new Set<string>()
+
   constructor(
     client: ArchClient,
     roomData: ArchipelagoRoomData,
@@ -135,6 +139,8 @@ export class ArchipelagoClientWrapper {
       if (item.useful && !item.progression && !this.isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return;
       if (item.filler && !this.isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return;
       if (item.trap && !this.isWhitelisted(ArchipelagoMessageType.ItemSentTrap)) return;
+      // TODO: Make this configurable in formatter settings
+      if (this.#goalCache.has(item.sender.alias) && !item.progression) return;
       await this.#discordChannel.send(this.#eventFormatter.itemSent(content, item))
     })
 
@@ -173,6 +179,7 @@ export class ArchipelagoClientWrapper {
 
     this.#client.messages.on('goaled', async (content, player) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.Goal)) return;
+      this.#goalCache.add(player.name)
       await this.#discordChannel.send(this.#eventFormatter.goaled(content, player))
     })
   }
