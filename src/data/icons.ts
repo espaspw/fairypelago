@@ -31,10 +31,21 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: [/Zipline Unlock.*/], emoji: '<:ahit_zipline:1400022874609160224>' },
 ]
 
+const yachtDiceIcons: IconMatcher[] = [
+  { pattern: ['Dice'], emoji: '<:yd_dice:1400759791567110154>' },
+  { pattern: ['Dice Fragment'], emoji: '<:yd_dicefragment:1400759802837078150>' },
+  { pattern: ['Roll'], emoji: '<:yd_roll:1400759728551891086>' },
+  { pattern: ['Roll Fragment'], emoji: '<:yd_rollfragment:1400759776564084868>' },
+  { pattern: [/Category.*/], emoji: '<:yd_category:1400759827919274046>' },
+  { pattern: [/.*Multiplier/], emoji: '<:yd_multiplier:1400761120339267605>' },
+]
+
 export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
+  'Yacht Dice': '<:yd:1400759208655192074>',
 }
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
+  'Yacht Dice': yachtDiceIcons,
 }
