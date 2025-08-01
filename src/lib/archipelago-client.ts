@@ -104,12 +104,14 @@ export class ArchipelagoClientWrapper {
         { tags: ['Discord'] },
       )
       this.state = ClientState.Running
+      return true
     } catch (err) {
       if (err instanceof SocketError && err.message.includes('Failed to connect to Archipelago server.')) {
         this.state = ClientState.Failure
         this.lastError = err
       }
       this.state = ClientState.Stopped
+      return false
     }
   }
 

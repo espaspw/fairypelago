@@ -1,6 +1,6 @@
 import * as DC from 'discord.js'
 import * as DB from '../db/db'
-import { ArchipelagoClientManager } from './archipelago-client-manager'
+import { ArchipelagoClientManager, StartClientStatus } from './archipelago-client-manager'
 import { parseArchipelagoRoomUrl, getRoomData } from './archipelago-room-scrape'
 import { createRoomDataDisplay } from './discord-formatting'
 
@@ -26,7 +26,18 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
     if (message.author.bot) return;
     if (!archClients.isChannelOfExistingMultiworld(message.channelId)) return;
     // TODO: If multiworld client has STOPPED state, attempt reinit on message and react
-    await archClients.sendMessage(message.channelId, `[DISCORD] ${message.author.username} :: ${message.content}`)
+    if (message.content === 'restart') {
+      const startStatus = await archClients.startClient(message.channelId)
+      if (startStatus === StartClientStatus.Success) {
+        message.react('<:greentick:567088336166977536>')
+      } else if (startStatus === StartClientStatus.Failed) {
+        message.react('<:redtick:567088349484023818>')
+      } else {
+        message.react('☑️')
+      }
+    } else {
+      await archClients.sendMessage(message.channelId, `[DISCORD] ${message.author.username} :: ${message.content}`)
+    }
   })
 
   // Handle the initialization of one active multiworld

@@ -5,6 +5,12 @@ import { ArchipelagoClientWrapper, ClientState, ClientOptions } from './archipel
 import { ArchipelagoRoomUrl, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 
+export enum StartClientStatus {
+  Success,
+  Failed,
+  AlreadyRunning,
+}
+
 export class ArchipelagoClientManager {
   private #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
   private #multiworlds: DB.DBActiveMultiworld[] = []
@@ -81,7 +87,10 @@ export class ArchipelagoClientManager {
   async startClient(channelId: DC.Snowflake) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
-    await archClient.start()
+    if (archClient.state === ClientState.Running) return StartClientStatus.AlreadyRunning;
+    const isSuccessful = await archClient.start()
+    if (isSuccessful) return StartClientStatus.Success;
+    return StartClientStatus.Failed
   }
 
   // Will not send a message if client is not running.
