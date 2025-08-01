@@ -37,7 +37,7 @@ export class ArchipelagoClientManager {
   // Starts clients that aren't started, skipping already running clients.
   // Will not start clients with previous error.
   async startAllClients() {
-    for (const [_, client] of this.#clients) {
+    for (const client of this.#clients.values()) {
       if (client.state === ClientState.Stopped) {
         await client.start()
       }
