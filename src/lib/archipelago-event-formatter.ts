@@ -133,7 +133,7 @@ export class ArchipelagoEventFormatter {
     const embed = new EmbedBuilder()
       .setColor(0xEFAAC4)
       .setDescription(`${makeTimestamp()} | **${player.alias}** has reached their objective!`)
-    const funnyGif = 'https://images.steamusercontent.com/ugc/5084032633840956950/C34230FEF38D6CDBE532591011C80E0657CCB2FA/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
-    return { embeds: [embed], content: funnyGif }
+      .setImage('https://64.media.tumblr.com/e93889ced23679be7a390829ff4f08c2/tumblr_on14f9HeMl1v857c1o1_400.gif')
+    return { embeds: [embed] }
   }
 }
