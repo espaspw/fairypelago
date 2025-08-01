@@ -23,7 +23,7 @@ export class ArchipelagoClientManager {
       const channel = await guild.channels.fetch(channelId)
       if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
       const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
-      await this.createClient(channel, roomData, { whitelistedMessageTypes })
+      await this.createClient(channel, roomData, { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true })
     }
     this.#multiworlds = multiworlds
   }

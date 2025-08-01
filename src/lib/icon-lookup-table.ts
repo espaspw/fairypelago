@@ -1,3 +1,5 @@
+import { type GameIcons } from '../types/icon-types'
+
 interface LookupTable {
   [key: string]: {
     exactMatchers: { [key: string]: string },

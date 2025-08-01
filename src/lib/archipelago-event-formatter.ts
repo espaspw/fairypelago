@@ -23,6 +23,18 @@ export class ArchipelagoEventFormatter {
     this.#iconLookupTable = iconLookupTable
   }
 
+  private #formatGame(item: Item) {
+    const r = this.#iconLookupTable.lookupGame(item.game)
+    if (r === null) return item.game;
+    return `${r} ${item.game}`
+  }
+
+  private #formatItem(item: Item) {
+    const r = this.#iconLookupTable.lookupItem(item.game, item.name)
+    if (r === null) return item.name;
+    return `${r} ${item.name}`
+  }
+
   connected(content: string, player: Player, tags: string[]): MessageCreateOptions | null {
     if(tags.includes('Discord')) return null; // Prevent triggering on its own join
     const descriptionTokens = [`${makeTimestamp()} | **${player.alias}** playing __${player.game}__ has joined.`]
@@ -42,12 +54,12 @@ export class ArchipelagoEventFormatter {
   }
 
   itemSent(content: string, item: Item): MessageCreateOptions {
-    const header = `> -# ${makeTimestamp()} | ${item.locationGame} - **${item.locationName}**${formatItemTagList(item)}`
+    const header = `> -# ${makeTimestamp()} | ${this.#formatGame(item)} - **${item.locationName}**${formatItemTagList(item)}`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> __${item.sender.alias}__ found their **${item.name}**`
+        return `> __${item.sender.alias}__ found their **${this.#formatItem(item)}**`
       } else {
-        return `> __${item.sender.alias}__ sent **${item.name}** to __${item.receiver.alias}__` 
+        return `> __${item.sender.alias}__ sent **${this.#formatItem(item)}** to __${item.receiver.alias}__` 
       }
     })()
     return { content: [header, body].join('\n') }
@@ -78,9 +90,9 @@ export class ArchipelagoEventFormatter {
     const header = `> -# ${makeTimestamp()} | Cheat`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> **${item.name}** was given to __${item.receiver.alias}__, which was located at **${item.locationName}`
+        return `> **${this.#formatItem(item)}** was given to __${item.receiver.alias}__, which was located at **${item.locationName}`
       } else {
-        return `> **${item.name}** was forcefully transfered from __${item.sender.alias}__ to __${item.receiver.alias}__, which was located at **${item.locationName}`
+        return `> **${this.#formatItem(item)}** was forcefully transfered from __${item.sender.alias}__ to __${item.receiver.alias}__, which was located at **${item.locationName}`
       }
     })()
     return { content: [header, body].join('\n') }
@@ -121,6 +133,7 @@ export class ArchipelagoEventFormatter {
     const embed = new EmbedBuilder()
       .setColor(0xEFAAC4)
       .setDescription(`${makeTimestamp()} | **${player.alias}** has reached their objective!`)
-    return { embeds: [embed] }
+    const funnyGif = 'https://images.steamusercontent.com/ugc/5084032633840956950/C34230FEF38D6CDBE532591011C80E0657CCB2FA/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
+    return { embeds: [embed], content: funnyGif }
   }
 }
