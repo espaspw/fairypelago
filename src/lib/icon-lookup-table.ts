@@ -7,13 +7,10 @@ interface LookupTable {
   }
 }
 
-export class IconLookupTable {
-  private #gameIcons: GameIcons
-  private #lookupTable: LookupTable = {}
+let gameIcons: GameIcons = {}
+let lookupTable: LookupTable = {}
 
-  // Creates a index for looking up icons
-  // Checks exact matches, falling back to slower regex matches if needed
-  private #createLookupTable(itemIcons: ItemIcons) {
+function createLookupTable(itemIcons: ItemIcons) {
     const lookupTable: LookupTable = {}
     for (const [game, matchers] of Object.entries(itemIcons)) {
       const gameTable = {
@@ -35,32 +32,49 @@ export class IconLookupTable {
     return lookupTable
   }
 
-  populateGameIcons(gameIcons: GameIcons) {
-    this.#gameIcons = gameIcons
-    return this
-  }
+export function populateGameIcons(_gameIcons: GameIcons) {
+  gameIcons = _gameIcons
+  return this
+}
 
-  populateItemIcons(itemIcons: ItemIcons) {
-    this.#lookupTable = this.#createLookupTable(itemIcons)
-    return this
-  }
+export function populateItemIcons(itemIcons: ItemIcons) {
+  lookupTable = createLookupTable(itemIcons)
+  return this
+}
 
-  lookupItem(gameName: string, itemName: string) {
-    const gameTable = this.#lookupTable[gameName]
-    if (gameTable === undefined) return null;
-    const maybeEmoji = gameTable.exactMatchers[itemName]
-    if (maybeEmoji !== undefined) return maybeEmoji;
-    for (const regexp of gameTable.regexMatchers) {
-      if (regexp.r.test(itemName)) {
-        return regexp.e
-      }
+export function lookupItem(gameName: string, itemName: string) {
+  const gameTable = lookupTable[gameName]
+  if (gameTable === undefined) return null;
+  const maybeEmoji = gameTable.exactMatchers[itemName]
+  if (maybeEmoji !== undefined) return maybeEmoji;
+  for (const regexp of gameTable.regexMatchers) {
+    if (regexp.r.test(itemName)) {
+      return regexp.e
     }
-    return null
   }
+  return null
+}
 
-  lookupGame(gameName: string) {
-    const maybeEmoji = this.#gameIcons[gameName]
-    if (maybeEmoji === undefined) return null;
-    return maybeEmoji
+export function lookupGame(gameName: string) {
+  const maybeEmoji = gameIcons[gameName]
+  if (maybeEmoji === undefined) return null;
+  return maybeEmoji
+}
+
+export function getSupportedGames() {
+  return Object.keys(lookupTable)
+}
+
+export function getEmojiList(gameName: string) {
+  const matchers = lookupTable[gameName]
+  if (matchers === undefined) return [];
+  const output = new Set<string>()
+  const { exactMatchers, regexMatchers } = matchers
+  for (const emoji of Object.values(exactMatchers)) {
+    output.add(emoji)
   }
+  for (const { e } of regexMatchers) {
+    output.add(e)
+  }
+  return [...output]
 }

@@ -1,5 +1,5 @@
 import { Item, Player } from "archipelago.js";
-import { IconLookupTable } from "./icon-lookup-table";
+import * as IconLookupTable from "./icon-lookup-table";
 import { EmbedBuilder, type MessageCreateOptions } from "discord.js";
 
 function makeTimestamp() {
@@ -17,20 +17,15 @@ function formatItemTagList(item: Item) {
 }
 
 export class ArchipelagoEventFormatter {
-  private #iconLookupTable: IconLookupTable
-
-  constructor(iconLookupTable: IconLookupTable) {
-    this.#iconLookupTable = iconLookupTable
-  }
 
   private #formatGame(item: Item) {
-    const r = this.#iconLookupTable.lookupGame(item.game)
+    const r = IconLookupTable.lookupGame(item.game)
     if (r === null) return item.game;
     return `${r} ${item.game}`
   }
 
   private #formatItem(item: Item) {
-    const r = this.#iconLookupTable.lookupItem(item.game, item.name)
+    const r = IconLookupTable.lookupItem(item.game, item.name)
     if (r === null) return item.name;
     return `${r} ${item.name}`
   }
