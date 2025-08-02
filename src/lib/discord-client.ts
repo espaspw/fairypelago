@@ -74,7 +74,10 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
     if (message.author.bot) return;
     if (message.channel.isThread()) return;
     const targetChannelId = DB.getLogChannelId(message.guildId)
-    if (targetChannelId === null) return;
+    if (targetChannelId === null) {
+      message.channel.send('Log channel has not been setup yet.')
+      return;
+    }
     const channel = await message.guild.channels.fetch(targetChannelId)
     if (channel === null) return;
 

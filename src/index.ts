@@ -9,9 +9,6 @@ import { ArchipelagoEventFormatter } from './lib/archipelago-event-formatter'
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 
-// TODO: Temp hardcoding for testing
-await DB.setLogChannelId('1399097553567482007', '1399099341691420692')
-
 const iconLookupTable = new IconLookupTable()
   .populateGameIcons(gameIcons)
   .populateItemIcons(itemIcons)
