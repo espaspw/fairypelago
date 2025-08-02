@@ -25,7 +25,6 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
     if (message.author.id === discordClient.user.id) return;
     if (message.author.bot) return;
     if (!archClients.isChannelOfExistingMultiworld(message.channelId)) return;
-    // TODO: If multiworld client has STOPPED state, attempt reinit on message and react
     if (message.content === 'restart') {
       const startStatus = await archClients.startClient(message.channelId)
       if (startStatus === StartClientStatus.Success) {
