@@ -31,6 +31,29 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: [/Zipline Unlock.*/], emoji: '<:ahit_zipline:1400022874609160224>' },
 ]
 
+const sm64Icons: IconMatcher[] = [
+  { pattern: ['Power Star'], emoji: '<:sm64_star:1401050056752365709>' },
+  { pattern: [/.*Key/], emoji: '<:sm64_key:1401050009985745007>' },
+  { pattern: ['Wing Cap'], emoji: '<:sm64_wingcap:1401050037085278262>' },
+  { pattern: ['Metal Cap'], emoji: '<:sm64_metalcap:1401050018701377538>' },
+  { pattern: ['Vanish Cap'], emoji: '<:sm64_vanishcap:1401050027320803399>' },
+  { pattern: ['1Up Mushroom'], emoji: '<:sm64_1up:1401049992138985582>' },
+  { pattern: [
+    'Double Jump',
+    'Triple Jump',
+    'Long Jump',
+    'Backflip',
+    'Side Flip',
+    'Wall Kick',
+    'Dive',
+    'Ground Pound',
+    'Kick',
+    'Climb',
+    'Ledge Grab',
+  ], emoji: '<:sm64_move:1401050047654662174>' },
+  { pattern: [/Cannon Unlock.*/], emoji: '<:sm64_cannon:1401049999768555612>' },
+]
+
 const yachtDiceIcons: IconMatcher[] = [
   { pattern: ['Dice'], emoji: '<:yd_dice:1400759791567110154>' },
   { pattern: ['Dice Fragment'], emoji: '<:yd_dicefragment:1400759802837078150>' },
@@ -42,10 +65,12 @@ const yachtDiceIcons: IconMatcher[] = [
 
 export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
+  'Super Mario 64': '<:sm64:1401049975227678751>',
   'Yacht Dice': '<:yd:1400759208655192074>',
 }
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
+  'Super Mario 64': sm64Icons,
   'Yacht Dice': yachtDiceIcons,
 }
