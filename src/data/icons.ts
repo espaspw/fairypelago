@@ -88,6 +88,26 @@ const sm64Icons: IconMatcher[] = [
   { pattern: [/Cannon Unlock.*/], emoji: '<:sm64_cannon:1401049999768555612>' },
 ]
 
+const smwIcons: IconMatcher[] = [
+  { pattern: [/[0-9]+ coins?/], emoji: '<:smw_coin:1401072615073906729>' },
+  { pattern: ['Yoshi Egg'], emoji: '<:smw_yoshiegg:1401072571411202149>' },
+  { pattern: ['Run'], emoji: '<:smw_mariorun:1401077284542218362>' },
+  { pattern: ['Carry'], emoji: '<:smw_mariocarry:1401077258311176212>' },
+  { pattern: ['Swim'], emoji: '<:smw_marioswim:1401077295405334578>' },
+  { pattern: ['Spin Jump'], emoji: '<:smw_spinjump:1401077309854711979>' },
+  { pattern: ['Climb'], emoji: '<:smw_marioclimb:1401077270419865640>' },
+  { pattern: ['Yoshi'], emoji: '<:smw_yoshi:1401077143265345576>' },
+  { pattern: ['P-Switch'], emoji: '<:smw_pswitch:1401077187028848782>' },
+  { pattern: ['P-Balloon'], emoji: '<:smw_pballoon:1401077214799462410>' },
+  { pattern: ['Progressive Powerup'], emoji: '<:smw_powerup:1401077200521920542>' },
+  { pattern: ['Super Star Activate'], emoji: '<:smw_superstar:1401077159082332170>' },
+  { pattern: ['Yellow Switch Palace'], emoji: '<:smw_yellowswitch:1401072581859217418>' },
+  { pattern: ['Green Switch Palace'], emoji: '<:smw_greenswitch:1401072598464462909>' },
+  { pattern: ['Red Switch Palace'], emoji: '<:smw_redswitch:1401072589706887280>' },
+  { pattern: ['Blue Switch Palace'], emoji: '<:smw_blueswitch:1401072606815195217>' },
+  { pattern: ['Special Zone Clear'], emoji: '<:smw_specialworldclear:1401077175641182209>' },
+]
+
 const yachtDiceIcons: IconMatcher[] = [
   { pattern: ['Dice'], emoji: '<:yd_dice:1400759791567110154>' },
   { pattern: ['Dice Fragment'], emoji: '<:yd_dicefragment:1400759802837078150>' },
@@ -101,6 +121,7 @@ export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
   "Luigi's Mansion": '<:lm:1401056594501832734>',
   'Super Mario 64': '<:sm64:1401049975227678751>',
+  'Super Mario World': '<:smw:1401071744550178929>',
   'Yacht Dice': '<:yd:1400759208655192074>',
 }
 
@@ -108,5 +129,6 @@ export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
   "Luigi's Mansion": lmIcons,
   'Super Mario 64': sm64Icons,
+  'Super Mario World': smwIcons,
   'Yacht Dice': yachtDiceIcons,
 }
