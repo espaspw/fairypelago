@@ -102,18 +102,14 @@ const lmIcons: IconMatcher[] = [
   { pattern: ['Progressive Flower'], emoji: '<:lm_flower:1401060459674861699>' },
   { pattern: [/.*Boo.*/], emoji: '<:lm_boo:1401056671899451412>' },
   { pattern: [/Boolossus MiniBoo [0-9]+/], emoji: '<:lm_boo:1401056671899451412>' },
-  { pattern: [
-    '20 Coins & Bills',
-    /[0-9]+ Coins/,
-    /[0-9]+ Bills/,
-    /[0-9]+ Gold Bars/,
-  ], emoji: '<:lm_bills:1401056618090594405>' },
-  { pattern: [
-    'Sapphire',
-    'Emerald',
-    'Ruby',
-    'Diamond',
-  ], emoji: '<:lm_jewel:1401056654505545759>' },
+  { pattern: ['20 Coins & Bills'], emoji: '<:lm_billsandcoins:1401056618090594405>' },
+  { pattern: [/[0-9]+ Coins/ ], emoji: '<:lm_coins:1401332443616645250>' },
+  { pattern: [/[0-9]+ Bills/], emoji: '<:lm_bills:1401332418102820944>' },
+  { pattern: [/[0-9]+ Gold Bars/], emoji: '<:lm_goldbar:1401332493826789518>' },
+  { pattern: ['Sapphire',], emoji: '<:lm_sapphire:1401332899743010826>' },
+  { pattern: ['Emerald'], emoji: '<:lm_emerald:1401332476311244881>' },
+  { pattern: ['Ruby'], emoji: '<:lm_ruby:1401332581034754149>' },
+  { pattern: ['Diamond'], emoji: '<:lm_diamond:1401332464508731482>' },
 ]
 
 const sm64Icons: IconMatcher[] = [
