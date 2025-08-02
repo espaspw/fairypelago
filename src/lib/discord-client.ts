@@ -3,6 +3,7 @@ import * as DB from '../db/db'
 import { ArchipelagoClientManager, StartClientStatus } from './archipelago-client-manager'
 import { parseArchipelagoRoomUrl, getRoomData } from './archipelago-room-scrape'
 import { createRoomDataDisplay } from './discord-formatting'
+import { reloadAvaliableCommands, getAvaliableCommands } from './commands'
 
 const intents = [
   DC.GatewayIntentBits.MessageContent,
@@ -18,6 +19,34 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
     console.log(`Client ready as "${client.user.tag}"`)
     await archClients.initFromDb(discordClient)
     await archClients.startAllClients()
+    await reloadAvaliableCommands()
+  })
+
+  // Handle general bot commands
+  discordClient.on(DC.Events.MessageCreate, async (message) => {
+    if (message.author.id === discordClient.user.id) return;
+    if (message.author.bot) return;
+    const commandPrefix = DB.getCommandPrefix(message.guildId)
+    if (message.content.startsWith(commandPrefix)) {
+      const truncatedMsg = message.content.substring(commandPrefix.length)
+      const tokens = truncatedMsg.split(' ')
+      const commandName = tokens.shift()?.toLocaleLowerCase()
+      const avaliableCommands = getAvaliableCommands()
+      if (commandName === 'reload' && message.author.id === process.env.OWNER_ID) {
+        await reloadAvaliableCommands()
+        message.react('✅')
+      } else if (!(commandName in avaliableCommands)) {
+        message.react('❓')
+      } else {
+        const command = avaliableCommands[commandName]
+        try {
+          await command.execute(message, tokens, avaliableCommands)
+        } catch(err) {
+          console.error(err)
+          message.react('❗')
+        }
+      }
+    }
   })
 
   // Handle forward of messages from a discord channel of an active multiworld

@@ -8,6 +8,7 @@ import { ArchipelagoMessageType } from '../types/archipelago-types'
 export interface DBGuildSettings {
   whitelistedMessageTypes: ArchipelagoMessageType[]
   logChannelId?: DC.Snowflake
+  commandPrefix?: string
 }
 
 export interface DBActiveMultiworld {
@@ -27,11 +28,17 @@ const baseData: DBData = {
   activeMultiworlds: [],
 }
 
-const createDefaultGuildSettingObject = () => ({
-  whitelistedMessageTypes: defaultWhitelistedTypes
+const defaultCommandPrefix = '..'
+
+const createDefaultGuildSettingObject = (): DBGuildSettings => ({
+  whitelistedMessageTypes: defaultWhitelistedTypes,
 })
 
 const db = await JSONFilePreset('db.json', baseData)
+
+export function getLogChannelId(guildId: DC.Snowflake): DC.Snowflake | null {
+  return db.data.guildSettings[guildId]?.logChannelId ?? null
+}
 
 export async function setLogChannelId(guildId: DC.Snowflake, logChannelId: DC.Snowflake) {
   if (db.data.guildSettings[guildId] === undefined) {
@@ -41,12 +48,37 @@ export async function setLogChannelId(guildId: DC.Snowflake, logChannelId: DC.Sn
   await db.write()
 }
 
-export function getLogChannelId(guildId: DC.Snowflake): DC.Snowflake | null {
-  return db.data.guildSettings[guildId]?.logChannelId ?? null
-}
-
 export function getWhitelistedMessageTypes(guildId: DC.Snowflake): ArchipelagoMessageType[] | null {
   return db.data.guildSettings[guildId]?.whitelistedMessageTypes ?? null
+}
+
+export async function addWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType) {
+  if (db.data.guildSettings[guildId] === undefined) {
+    db.data.guildSettings[guildId] = createDefaultGuildSettingObject()
+  }
+  db.data.guildSettings[guildId].whitelistedMessageTypes.push(...messageTypes)
+  await db.write()
+}
+
+export async function removeWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType) {
+  if (db.data.guildSettings[guildId] === undefined) return;
+
+  const currentTypes = new Set(db.data.guildSettings[guildId].whitelistedMessageTypes)
+  messageTypes.forEach(type => currentTypes.delete(type))
+  db.data.guildSettings[guildId].whitelistedMessageTypes = [...messageTypes]
+  await db.write()
+}
+
+export function getCommandPrefix(guildId: DC.Snowflake): string {
+  return db.data.guildSettings[guildId]?.commandPrefix ?? defaultCommandPrefix
+}
+
+export async function setCommandPrefix(guildId: DC.Snowflake, prefix: string) {
+  if (db.data.guildSettings[guildId] === undefined) {
+    db.data.guildSettings[guildId] = createDefaultGuildSettingObject()
+  }
+  db.data.guildSettings[guildId].commandPrefix = prefix
+  await db.write()
 }
 
 // TODO: Add methods for maniping whitelist
