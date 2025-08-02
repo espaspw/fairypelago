@@ -31,6 +31,40 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: [/Zipline Unlock.*/], emoji: '<:ahit_zipline:1400022874609160224>' },
 ]
 
+const lmIcons: IconMatcher[] = [
+  { pattern: ['Heart Key'], emoji: '<:lm_heartkey:1401056731785596999>' },
+  { pattern: ['Club Key'], emoji: '<:lm_clubkey:1401056693529608312>' },
+  { pattern: ['Diamond Key'], emoji: '<:lm_diamondkey:1401056704543723640>' },
+  { pattern: ['Spade Key'], emoji: '<:lm_spadekey:1401056715675537418>' },
+  { pattern: [/.*Key/], emoji: '<:lm_key:1401056743462535178>' },
+  { pattern: ['Fire Element Medal'], emoji: '<:lm_fireelementmedal:1401056772591980544>' },
+  { pattern: ['Water Element Medal'], emoji: '<:lm_waterelementmedal:1401056802900283464>' },
+  { pattern: ['Ice Element Medal'], emoji: '<:lm_iceelementmedal:1401056781186105385>' },
+  { pattern: ["Mario's Glove"], emoji: '<:lm_marioglove:1401056838375440464>' },
+  { pattern: ["Mario's Hat"], emoji: '<:lm_mariohat:1401056848664203406>' },
+  { pattern: ["Mario's Letter"], emoji: '<:lm_marioletter:1401056862513659994>' },
+  { pattern: ["Mario's Star"], emoji: '<:lm_mariostar:1401056881677439078>' },
+  { pattern: ["Mario's Shoe"], emoji: '<:lm_marioshoe:1401056873670643742>' },
+  { pattern: ['Boo Radar'], emoji: '<:lm_booradar:1401056681701544008>' },
+  { pattern: ['Poltergust 4000'], emoji: '<:lm_poltergust4000:1401056812672876655>' },
+  { pattern: ['Gold Diamond'], emoji: '<:lm_golddiamond:1401060433267261520>' },
+  { pattern: ['Progressive Flower'], emoji: '<:lm_flower:1401060459674861699>' },
+  { pattern: [/.*Boo.*/], emoji: '<:lm_boo:1401056671899451412>' },
+  { pattern: [/Boolossus MiniBoo [0-9]+/], emoji: '<:lm_boo:1401056671899451412>' },
+  { pattern: [
+    '20 Coins & Bills',
+    /[0-9]+ Coins/,
+    /[0-9]+ Bills/,
+    /[0-9]+ Gold Bars/,
+  ], emoji: '<:lm_bills:1401056618090594405>' },
+  { pattern: [
+    'Sapphire',
+    'Emerald',
+    'Ruby',
+    'Diamond',
+  ], emoji: '<:lm_jewel:1401056654505545759>' },
+]
+
 const sm64Icons: IconMatcher[] = [
   { pattern: ['Power Star'], emoji: '<:sm64_star:1401050056752365709>' },
   { pattern: [/.*Key/], emoji: '<:sm64_key:1401050009985745007>' },
@@ -65,12 +99,14 @@ const yachtDiceIcons: IconMatcher[] = [
 
 export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
+  "Luigi's Mansion": '<:lm:1401056594501832734>',
   'Super Mario 64': '<:sm64:1401049975227678751>',
   'Yacht Dice': '<:yd:1400759208655192074>',
 }
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
+  "Luigi's Mansion": lmIcons,
   'Super Mario 64': sm64Icons,
   'Yacht Dice': yachtDiceIcons,
 }
