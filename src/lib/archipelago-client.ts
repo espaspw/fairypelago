@@ -101,7 +101,7 @@ export class ArchipelagoClientWrapper {
         `archipelago.gg:${this.#roomData.port}`,
         this.#roomData.players[0].name,
         null,
-        { tags: ['Discord'] },
+        { tags: ['Discord', 'Tracker', 'TextOnly'] },
       )
       this.state = ClientState.Running
       return true
