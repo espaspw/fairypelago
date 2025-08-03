@@ -52,6 +52,7 @@ export class ArchipelagoClientWrapper {
   lastError: Error | null = null
   private #whitelistedTypes: Set<ArchipelagoMessageType>
   private #options: ClientOptions
+  private #createdAt: Date = new Date()
 
   // Quick lookups when a user goals. Mainly used to prevent
   // message spam after a goal, so persistence not needed.
@@ -114,6 +115,14 @@ export class ArchipelagoClientWrapper {
       this.state = ClientState.Stopped
       return false
     }
+  }
+
+  get createdAt() {
+    return this.#createdAt
+  }
+
+  set createdAt(_createdAt: Date) {
+    this.#createdAt = _createdAt
   }
 
   get client() {

@@ -23,13 +23,18 @@ export class ArchipelagoClientManager {
 
   async initFromDb(discordClient: DC.Client) {
     const multiworlds = await DB.getActiveMultiworlds()
-    for (const { guildId, channelId, roomData } of multiworlds) {
+    for (const { guildId, channelId, roomData, createdAt } of multiworlds) {
       const guild = await discordClient.guilds.fetch(guildId)
       if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
       const channel = await guild.channels.fetch(channelId)
       if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
       const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
-      await this.createClient(channel, roomData, { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true })
+      const client = await this.createClient(
+        channel,
+        roomData,
+        { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true }
+      )
+      client.createdAt = createdAt
     }
     this.#multiworlds = multiworlds
   }
@@ -82,6 +87,7 @@ export class ArchipelagoClientManager {
       const newMultiworld = await DB.addActiveMultiworld(channel.guildId, channel.id, roomData)
       this.#multiworlds.push(newMultiworld)
     }
+    return archClient
   }
 
   async startClient(channelId: DC.Snowflake) {
