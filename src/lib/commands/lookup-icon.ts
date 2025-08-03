@@ -13,7 +13,6 @@ const lookupIcon: Command = {
   async execute(message, tokens = []) {
     const args = tokens.join(' ')
     const [gameName, itemName] = args.split(' : ')
-    console.log(gameName)
     const supportedGames = IconLookupTable.getSupportedGames()
     if (gameName === '') {
       await message.reply(`Supported Games:\n${supportedGames.map(x => `- ${x}`).join('\n')}`)
