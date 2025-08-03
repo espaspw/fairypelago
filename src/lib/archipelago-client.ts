@@ -4,6 +4,7 @@ import * as DC from 'discord.js'
 import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 import { catchAndLogError } from './util/general'
+import { consoleLogger, fileLogger } from './util/logger'
 
 export interface ClientOptions {
   whitelistedMessageTypes: ArchipelagoMessageType[]
@@ -106,9 +107,15 @@ export class ArchipelagoClientWrapper {
         { tags: ['Discord', 'Tracker', 'TextOnly'] },
       )
       this.state = ClientState.Running
+      const logMessage = `Successfully connected to Archipelago server (${this.#roomData.roomUrl}, ${this.#createdAt.toLocaleString()}) with (${this.#discordChannel.id})`
+      consoleLogger.info(logMessage)
+      fileLogger.info(logMessage)
       return true
     } catch (err) {
       if (err instanceof SocketError && err.message.includes('Failed to connect to Archipelago server.')) {
+        const logMessage = `Failed to connect to Archipelago server (${this.#roomData.roomUrl}, ${this.#createdAt.toLocaleString()}) connected to channel (${this.#discordChannel.id})`
+        consoleLogger.warn(logMessage)
+        fileLogger.warn(logMessage)
         this.state = ClientState.Failure
         this.lastError = err
       }
@@ -141,11 +148,13 @@ export class ArchipelagoClientWrapper {
     this.#client.socket.on('disconnected', () => {
       this.state = ClientState.Failure
       this.lastError = new Error('Websocket was disconnected.')
+      fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) disconnected.`)
     })
 
     this.#client.socket.on('invalidPacket', () => {
       this.state = ClientState.Failure
       this.lastError = new Error('Websocket encountered invalid socket.')
+      fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) had invalid packet.`)
     })
 
     this.#client.messages.on('connected', catchAndLogError(async (content, player, tags) => {

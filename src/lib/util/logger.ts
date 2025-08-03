@@ -30,7 +30,7 @@ export const fileLogger = winston.createLogger({
 })
 
 export const consoleLogger = winston.createLogger({
-  level: 'warn',
+  level: process.env.LOG_LEVEL ?? 'info',
   format: combine(
     align(),
     colorize({ all: true }),
