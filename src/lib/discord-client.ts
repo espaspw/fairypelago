@@ -27,7 +27,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
     if (message.author.id === discordClient.user.id) return;
     if (message.author.bot) return;
     const commandPrefix = DB.getCommandPrefix(message.guildId)
-    if (message.content.startsWith(commandPrefix)) {
+    if (!message.content.startsWith(commandPrefix)) return;
       const truncatedMsg = message.content.substring(commandPrefix.length)
       const tokens = truncatedMsg.split(' ')
       const commandName = tokens.shift()?.toLocaleLowerCase()
@@ -46,8 +46,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
           message.react('❗')
         }
       }
-    }
-  })
+  }))
 
   // Handle forward of messages from a discord channel of an active multiworld
   discordClient.on(DC.Events.MessageCreate, async (message) => {
