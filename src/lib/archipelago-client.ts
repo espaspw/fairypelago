@@ -3,6 +3,7 @@ import * as DC from 'discord.js'
 
 import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
+import { catchAndLogError } from './util/general'
 
 export interface ClientOptions {
   whitelistedMessageTypes: ArchipelagoMessageType[]
@@ -123,7 +124,7 @@ export class ArchipelagoClientWrapper {
     this.#client = cilent
   }
 
-  sendMessage(message: string) {
+  async sendMessage(message: string) {
     await this.#client.messages.say(message)
   }
 
@@ -138,19 +139,19 @@ export class ArchipelagoClientWrapper {
       this.lastError = new Error('Websocket encountered invalid socket.')
     })
 
-    this.#client.messages.on('connected', async (content, player, tags) => {
+    this.#client.messages.on('connected', catchAndLogError(async (content, player, tags) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.Connected)) return;
       const responseMsg = this.#eventFormatter.connected(content, player, tags)
       if (responseMsg === null) return;
       await this.#discordChannel.send(responseMsg)
-    })
+    }))
 
-    this.#client.messages.on('disconnected', async (content, player) => {
+    this.#client.messages.on('disconnected', catchAndLogError(async (content, player) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.Disconnected)) return;
       await this.#discordChannel.send(this.#eventFormatter.disconnected(content, player))
-    })
+    }))
 
-    this.#client.messages.on('itemSent', async (content, item) => {
+    this.#client.messages.on('itemSent', catchAndLogError(async (content, item) => {
       if (item.progression && !this.isWhitelisted(ArchipelagoMessageType.ItemSentProgression)) return;
       if (item.useful && !item.progression && !this.isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return;
       if (item.filler && !this.isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return;
@@ -158,45 +159,45 @@ export class ArchipelagoClientWrapper {
       // TODO: Make this configurable in formatter settings
       if (this.#goalCache.has(item.sender.alias) && !item.progression) return;
       await this.#discordChannel.send(this.#eventFormatter.itemSent(content, item))
-    })
+    }))
 
-    this.#client.messages.on('itemHinted', async (content, item) => {
+    this.#client.messages.on('itemHinted', catchAndLogError(async (content, item) => {
       if (!this.isWhitelisted(ArchipelagoMessageType.ItemHinted)) return;
       if (this.#options.hideFoundHints && content.includes('(found)')) return;
       await this.#discordChannel.send(this.#eventFormatter.itemHinted(content, item))
-    })
+    }))
 
-    this.#client.messages.on('itemCheated', async (content, item) => {
+    this.#client.messages.on('itemCheated', catchAndLogError(async (content, item) => {
       if (!this.isWhitelisted(ArchipelagoMessageType.ItemCheated)) return;
       await this.#discordChannel.send(this.#eventFormatter.itemCheated(content, item))
-    })
+    }))
 
-    this.#client.messages.on('chat', async (content, player) => {
+    this.#client.messages.on('chat', catchAndLogError(async (content, player) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.UserChat)) return;
       const responseMsg = this.#eventFormatter.chat(content, player)
       if (responseMsg === null) return;
       await this.#discordChannel.send(responseMsg)
-    })
+    }))
     
-    this.#client.messages.on('serverChat', async (content) => {
+    this.#client.messages.on('serverChat', catchAndLogError(async (content) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.ServerChat)) return;
       await this.#discordChannel.send(this.#eventFormatter.serverChat(content))
-    })
+    }))
 
-    this.#client.messages.on('userCommand', async (content) => {
+    this.#client.messages.on('userCommand', catchAndLogError(async (content) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.UserCommand)) return;
       await this.#discordChannel.send(this.#eventFormatter.userCommand(content))
-    })
+    }))
 
-    this.#client.messages.on('adminCommand', async (content) => {
+    this.#client.messages.on('adminCommand', catchAndLogError(async (content) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.ServerCommand)) return;
       await this.#discordChannel.send(this.#eventFormatter.adminCommand(content))
-    })
+    }))
 
-    this.#client.messages.on('goaled', async (content, player) => {
+    this.#client.messages.on('goaled', catchAndLogError(async (content, player) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.Goal)) return;
       this.#goalCache.add(player.name)
       await this.#discordChannel.send(this.#eventFormatter.goaled(content, player))
-    })
+    }))
   }
 }
