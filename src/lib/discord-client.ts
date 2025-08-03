@@ -104,8 +104,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       return message;
     })();
     const newThread = await threadBaseMessage.startThread({
-      // TODO: Give this a proper name
-      name: 'Test thread',
+      name: `archipelago.gg:${roomData.port} : ${new Date().toLocaleString().split(',')[0]}`,
       autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
     });
     if (newThread.joinable) {
@@ -115,6 +114,10 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
 
     await archClients.createClient(newThread, roomData)
     await archClients.startClient(newThread.id)
+
+    if (message.channelId !== targetChannelId) {
+      await  message.reply(newThread.url)
+    }
   })
 
   return discordClient
