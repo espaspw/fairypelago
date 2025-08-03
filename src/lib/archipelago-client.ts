@@ -123,7 +123,21 @@ export class ArchipelagoClientWrapper {
     this.#client = cilent
   }
 
+  sendMessage(message: string) {
+    await this.#client.messages.say(message)
+  }
+
   attachListeners() {
+    this.#client.socket.on('disconnected', () => {
+      this.state = ClientState.Failure
+      this.lastError = new Error('Websocket was disconnected.')
+    })
+
+    this.#client.socket.on('invalidPacket', () => {
+      this.state = ClientState.Failure
+      this.lastError = new Error('Websocket encountered invalid socket.')
+    })
+
     this.#client.messages.on('connected', async (content, player, tags) => {
       if(!this.isWhitelisted(ArchipelagoMessageType.Connected)) return;
       const responseMsg = this.#eventFormatter.connected(content, player, tags)

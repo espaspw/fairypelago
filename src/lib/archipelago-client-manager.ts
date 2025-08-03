@@ -98,6 +98,6 @@ export class ArchipelagoClientManager {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
     if (archClient.state !== ClientState.Running) return;
-    await archClient.client.messages.say(message)
+    await archClient.sendMessage(message)
   }
 }
