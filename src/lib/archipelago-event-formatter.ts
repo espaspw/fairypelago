@@ -7,12 +7,12 @@ function makeTimestamp() {
 }
 
 function formatItemTagList(item: Item) {
-  const tokens = [' |']
-  if (item.progression) tokens.push(':purple_circle: Progression');
-  if (item.useful) tokens.push(':blue_circle: Useful');
-  if (item.filler) tokens.push(':white_circle: Junk');
-  if (item.trap) tokens.push(':red_circle: Trap');
-  if (tokens.length === 1) return '';
+  const tokens = []
+  if (item.progression) tokens.push(IconLookupTable.getItemTierIcon('progression') ?? 'Progression');
+  if (item.useful) tokens.push(IconLookupTable.getItemTierIcon('useful') ?? 'Useful');
+  if (item.filler) tokens.push(IconLookupTable.getItemTierIcon('filler') ?? 'Junk');
+  if (item.trap) tokens.push(IconLookupTable.getItemTierIcon('trap') ?? 'Trap');
+  if (tokens.length === 0) return '';
   return tokens.join(' ')
 }
 
@@ -49,12 +49,12 @@ export class ArchipelagoEventFormatter {
   }
 
   itemSent(content: string, item: Item): MessageCreateOptions {
-    const header = `> -# ${makeTimestamp()} | ${this.#formatGame(item)} - **${item.locationName}**${formatItemTagList(item)}`
+    const header = `> -# ${makeTimestamp()} | ${this.#formatGame(item)} - **${item.locationName}**`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> __${item.sender.alias}__ found their **${this.#formatItem(item)}**`
+        return `> ${formatItemTagList(item)} __${item.sender.alias}__ found their **${this.#formatItem(item)}**`
       } else {
-        return `> __${item.sender.alias}__ sent **${this.#formatItem(item)}** to __${item.receiver.alias}__` 
+        return `> ${formatItemTagList(item)} __${item.sender.alias}__ sent **${this.#formatItem(item)}** to __${item.receiver.alias}__` 
       }
     })()
     return { content: [header, body].join('\n') }

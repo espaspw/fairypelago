@@ -1,4 +1,4 @@
-import { IconMatcher, GameIcons, ItemIcons } from '../types/icon-types'
+import { IconMatcher, GameIcons, ItemTierIcons, ItemIcons } from '../types/icon-types'
 
 const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Yarn'], emoji: '<:ahit_yarn:1400022862542143550>' },
@@ -294,4 +294,11 @@ export const itemIcons: ItemIcons = {
   'Super Mario World': smwIcons,
   'The Wind Waker': twwIcons,
   'Yacht Dice': yachtDiceIcons,
+}
+
+export const itemTierIcons: ItemTierIcons = {
+  progression: '<:circle_progression:1401781467008209007>',
+  useful: '<:circle_useful:1401781448494678048>',
+  filler: '<:circle_junk:1401781438654841003>',
+  trap: '<:circle_trap:1401781456841216050>',
 }

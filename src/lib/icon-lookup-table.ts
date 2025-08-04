@@ -1,4 +1,4 @@
-import { type GameIcons } from '../types/icon-types'
+import type { ItemTierIcons, ItemTier, GameIcons } from '../types/icon-types'
 
 interface LookupTable {
   [key: string]: {
@@ -8,6 +8,7 @@ interface LookupTable {
 }
 
 let gameIcons: GameIcons = {}
+let itemTierIcons: ItemTierIcons = {}
 let lookupTable: LookupTable = {}
 
 function createLookupTable(itemIcons: ItemIcons) {
@@ -34,12 +35,14 @@ function createLookupTable(itemIcons: ItemIcons) {
 
 export function populateGameIcons(_gameIcons: GameIcons) {
   gameIcons = _gameIcons
-  return this
 }
 
 export function populateItemIcons(itemIcons: ItemIcons) {
   lookupTable = createLookupTable(itemIcons)
-  return this
+}
+
+export function populateItemTierIcons(_itemTierIcons: ItemTierIcons) {
+  itemTierIcons = _itemTierIcons
 }
 
 export function lookupItem(gameName: string, itemName: string) {
@@ -77,4 +80,8 @@ export function getEmojiList(gameName: string) {
     output.add(e)
   }
   return [...output]
+}
+
+export function getItemTierIcon(tier: ItemTier) {
+  return itemTierIcons[tier] ?? null
 }
