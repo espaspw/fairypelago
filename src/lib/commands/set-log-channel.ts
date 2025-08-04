@@ -6,7 +6,7 @@ import { PermissionFlagsBits } from 'discord.js'
 const setLogChannel: Command = {
   name: 'Set Log Channel',
   aliases: ['logchannel', 'setlogchannel'],
-  categories: ['Utility', 'Admin'],
+  categories: ['Settings', 'Admin'],
   description: 'Sets the log channel for archipelago game logs. Note that existing logs will continue to exist in their original channel.',
   usageHelpText: 'logchannel `channel-id`',
   async execute(message, tokens) {

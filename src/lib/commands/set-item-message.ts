@@ -2,17 +2,18 @@ import { Command } from '../../types/command'
 import * as DB from '../../db/db'
 
 import { PermissionFlagsBits } from 'discord.js'
+import { replyWithError } from '../util/message-utils'
 
-const setPrefix: Command = {
-  name: 'Set Prefix',
-  aliases: ['prefix', 'setprefix'],
-  categories: ['Settings', 'Admin'],
+const setItemMessage: Command = {
+  name: 'Set Item Message',
+  aliases: ['itemmessage', 'setitemmessage'],
+  categories: ['Utility', 'Admin'],
   description: 'Sets the command prefix for the current guild.',
   usageHelpText: 'prefix `new-prefix`',
   async execute(message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
         && message.author.id !== process.env.OWNER_ID) {
-      await message.reply('Only admins can use this command.')
+      await replyWithError(message, 'Only admins can use this command.')
       return;
     }
     if (tokens[0] === undefined) {
@@ -24,4 +25,4 @@ const setPrefix: Command = {
   },
 }
 
-export default setPrefix
+export default setItemMessage
