@@ -19,9 +19,9 @@ function formatItemTagList(item: Item) {
 export class ArchipelagoEventFormatter {
 
   private #formatGame(item: Item) {
-    const r = IconLookupTable.lookupGame(item.game)
-    if (r === null) return item.game;
-    return `${r} ${item.game}`
+    const r = IconLookupTable.lookupGame(item.sender.game)
+    if (r === null) return item.sender.game;
+    return `${r} ${item.sender.game}`
   }
 
   private #formatItem(item: Item) {
