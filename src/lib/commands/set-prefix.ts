@@ -8,7 +8,7 @@ const setPrefix: Command = {
   aliases: ['prefix', 'setprefix'],
   categories: ['Utility', 'Admin'],
   description: 'Sets the command prefix for the current guild.',
-  helpMessage: 'prefix `new-prefix`',
+  usageHelpText: 'prefix `new-prefix`',
   async execute(message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
         && message.author.id !== process.env.OWNER_ID) {

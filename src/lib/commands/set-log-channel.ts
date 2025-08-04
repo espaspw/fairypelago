@@ -8,7 +8,7 @@ const setLogChannel: Command = {
   aliases: ['logchannel', 'setlogchannel'],
   categories: ['Utility', 'Admin'],
   description: 'Sets the log channel for archipelago game logs. Note that existing logs will continue to exist in their original channel.',
-  helpMessage: 'logchannel `channel-id`',
+  usageHelpText: 'logchannel `channel-id`',
   async execute(message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
         && message.author.id !== process.env.OWNER_ID) {

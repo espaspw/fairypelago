@@ -1,12 +1,15 @@
-import { Command, CommandLookup } from '../../types/command'
+import { Command, FlagDefinition, FlagType } from '../../types/command'
+import { EmbedBuilder } from 'discord.js'
+import { findAlias } from '../util/command-utils'
 
-function findAlias(commands: CommandLookup, alias: string) {
-  for (const command of Object.values(commands)) {
-    for (const a of command.aliases) {
-      if (alias === a) return command
+function formatFlagDefinitions(flags: FlagDefinition[]) {
+  return flags.map(flag => {
+    if (flag.type === FlagType.Argless) {
+      return `\`--${flag.name}\`${flag.description ? `: ${flag.description}` : ''}`
+    } else {
+      return `\`--${flag.name}=<${flag.argName ?? '...'}>\`${flag.description ? `: ${flag.description}` : ''}`
     }
-  }
-  return null
+  }).join('\n')
 }
 
 const help: Command = {
@@ -14,25 +17,9 @@ const help: Command = {
   aliases: ['help', 'h'],
   categories: ['Utility'],
   description: 'Get information about commands.',
-  helpMessage: 'help <`command`>',
+  usageHelpText: 'help <`command`>',
   async execute(message, tokens, commands = {}) {
-    if (tokens[0] !== undefined) {
-      const possibleCommand = tokens[0]
-      const matchingCommand = findAlias(commands, possibleCommand)
-      if (matchingCommand === null) {
-        await message.reply('Command not found.')
-      } else {
-        const helpMessageTokens = []
-        helpMessageTokens.push(`**${matchingCommand.name}**`)
-        helpMessageTokens.push(`-# ${matchingCommand.aliases.map(a => `"${a}"`).join(', ')}`)
-        helpMessageTokens.push(matchingCommand.description)
-        if (matchingCommand.helpMessage) {
-          helpMessageTokens.push(' ')
-          helpMessageTokens.push(matchingCommand.helpMessage)
-        }
-        await message.reply(helpMessageTokens.join('\n'))
-      }
-    } else {
+    if (tokens[0] === undefined) {
       const seen = new Set<string>()
       const commandList = []
       for (const command of Object.values(commands)) {
@@ -41,6 +28,41 @@ const help: Command = {
         commandList.push(`> ${command.name}: ${command.aliases.join(', ')}\n-# ${command.description ?? 'No description'}`)
       }
       await message.reply(commandList.join('\n'))
+    } else {
+      const possibleCommand = tokens[0]
+      const matchingCommand = findAlias(commands, possibleCommand)
+      if (matchingCommand === null) {
+        await message.reply('Command not found.')
+      } else {
+        const embed = new EmbedBuilder()
+          .setTitle(matchingCommand.name)
+          .addFields([{
+            name: 'Aliases',
+            value: matchingCommand.aliases.map(a => `"${a}"`).join(', '),
+          }])
+        if (matchingCommand.description) {
+          embed.setDescription(matchingCommand.description)
+        }
+        if (matchingCommand.categories.length > 0) {
+          embed.addFields([{
+            name: 'Categories',
+            value: matchingCommand.categories.join(', '),
+          }])
+        }
+        if (matchingCommand.helpMessage) {
+          embed.addFields([{
+            name: 'Usage',
+            value: matchingCommand.usageHelpText,
+          }])
+        }
+        if (matchingCommand.flags && matchingCommand.flags.length > 0) {
+          embed.addFields([{
+            name: 'Flags',
+            value: formatFlagDefinitions(matchingCommand.flags)
+          }])
+        }
+        await message.reply({ embeds: [embed] })
+      }
     }
   },
 }
