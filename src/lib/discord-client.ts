@@ -118,8 +118,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         }
         return message;
       })();
+      const newThreadName = `${roomData.port} : ${roomData.players.length} Players : ${new Date().toLocaleString().split(',')[0]}`
       const newThread = await threadBaseMessage.startThread({
-        name: `archipelago.gg:${roomData.port} : ${new Date().toLocaleString().split(',')[0]}`,
+        name: newThreadName,
         autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
       });
       if (newThread.joinable) {
