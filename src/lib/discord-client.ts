@@ -39,7 +39,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       const avaliableCommands = getAvaliableCommands()
       if (commandName === 'reload' && message.author.id === process.env.OWNER_ID) {
         await reloadAvaliableCommands()
-        message.react('✅')
+        await message.react('✅')
+        await new Promise(r => setTimeout(() => r(), 2000))
+        await message.delete()
       } else if (!(commandName in avaliableCommands)) {
         message.react('❓')
       } else {
