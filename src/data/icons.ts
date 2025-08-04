@@ -151,6 +151,17 @@ const sm64Icons: IconMatcher[] = [
   { pattern: [/Cannon Unlock.*/], emoji: '<:sm64_cannon:1401049999768555612>' },
 ]
 
+const smsIcons: IconMatcher[] = [
+  { pattern: ['Spray Nozzle'], emoji: '<:sms_spraynozzle:1401722527159423159>' },
+  { pattern: ['Hover Nozzle'], emoji: '<:sms_hovernozzle:1401722501071110174>' },
+  { pattern: ['Rocket Nozzle'], emoji: '<:sms_rocketnozzle:1401722508175999078>' },
+  { pattern: ['Turbo Nozzle'], emoji: '<:sms_turbonozzle:1401722534562631913>' },
+  { pattern: ['Yoshi'], emoji: '<:sms_yoshi:1401722543865331792>' },
+  { pattern: [/.*Ticket/], emoji: '<:sms_areaticket:1401722484151287868>' },
+  { pattern: ['Shine Sprite'], emoji: '<:sms_shinesprite:1401722516552024114>' },
+  { pattern: ['Blue Coin'], emoji: '<:sms_bluecoin:1401722493017915493>' },
+]
+
 const smwIcons: IconMatcher[] = [
   { pattern: [/[0-9]+ coins?/], emoji: '<:smw_coin:1401072615073906729>' },
   { pattern: ['Yoshi Egg'], emoji: '<:smw_yoshiegg:1401072571411202149>' },
@@ -244,6 +255,7 @@ export const gameIcons: GameIcons = {
   "Luigi's Mansion": '<:lm:1401056594501832734>',
   'Risk of Rain 2': '<:ror2:1401722262041919569>',
   'Super Mario 64': '<:sm64:1401049975227678751>',
+  'Super Mario Sunshine': '<:sms:1401722466107396106>',
   'Super Mario World': '<:smw:1401071744550178929>',
   'The Wind Waker': '<:tww:1401333834846437470>',
   'Yacht Dice': '<:yd:1400759208655192074>',
@@ -255,6 +267,7 @@ export const itemIcons: ItemIcons = {
   "Luigi's Mansion": lmIcons,
   'Risk of Rain 2': ror2Icons,
   'Super Mario 64': sm64Icons,
+  'Super Mario Sunshine': smsIcons,
   'Super Mario World': smwIcons,
   'The Wind Waker': twwIcons,
   'Yacht Dice': yachtDiceIcons,
