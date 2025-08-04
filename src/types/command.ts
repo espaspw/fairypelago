@@ -1,4 +1,4 @@
-import { Message } from 'discord.js'
+import { Message, OmitPartialGroupDMChannel } from 'discord.js'
 
 export type CommandLookup = {
   [key: string]: Command
@@ -19,7 +19,11 @@ export type FlagSchema = {
 }
 
 export interface Command {
-  execute: (discordMessage: Message, tokens?: string[], commands?: CommandLookup) => Promise<void>
+  execute: (
+    discordMessage: OmitPartialGroupDMChannel<Message<boolean>>,
+    tokens?: string[],
+    commands?: CommandLookup
+  ) => Promise<void>
   name: string
   aliases: string[]
   categories: string[]
