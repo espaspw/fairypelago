@@ -20,9 +20,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
   discordClient.once(DC.Events.ClientReady, async (client) => {
     consoleLogger.info(`Client ready as "${client.user.tag}"`)
     fileLogger.info(`Client ready as "${client.user.tag}"`)
+    await reloadAvaliableCommands()
     await archClients.initFromDb(discordClient)
     await archClients.startAllClients()
-    await reloadAvaliableCommands()
   })
 
   // Handle general bot commands

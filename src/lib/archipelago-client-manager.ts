@@ -21,22 +21,26 @@ export class ArchipelagoClientManager {
     this.#defaultEventFormatter = defaultEventfFormatter
   }
 
+  private async #createClientFromDbMultiworld(discordClient: DC.Client, multiworld: DB.DBActiveMultiworld) {
+    const { guildId, channelId, roomData, createdAt } = multiworld
+    const guild = await discordClient.guilds.fetch(guildId)
+    if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
+    const channel = await guild.channels.fetch(channelId)
+    if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
+    const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
+    const client = await this.createClient(
+      channel,
+      roomData,
+      { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true }
+    )
+    client.createdAt = createdAt
+    return client
+  }
+
   async initFromDb(discordClient: DC.Client) {
     const multiworlds = await DB.getActiveMultiworlds()
-    for (const { guildId, channelId, roomData, createdAt } of multiworlds) {
-      const guild = await discordClient.guilds.fetch(guildId)
-      if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
-      const channel = await guild.channels.fetch(channelId)
-      if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
-      const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
-      const client = await this.createClient(
-        channel,
-        roomData,
-        { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true }
-      )
-      client.createdAt = createdAt
-    }
     this.#multiworlds = multiworlds
+    await Promise.all(multiworlds.map((multiworld) => this.#createClientFromDbMultiworld(discordClient, multiworld)))
   }
 
   // Starts clients that aren't started, skipping already running clients.
