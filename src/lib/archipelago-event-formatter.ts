@@ -21,7 +21,7 @@ export class ArchipelagoEventFormatter {
   private #formatGame(item: Item) {
     const r = IconLookupTable.lookupGame(item.sender.game)
     if (r === null) return item.sender.game;
-    return `${r} ${item.sender.game}`
+    return r
   }
 
   private #formatItem(item: Item) {
@@ -52,7 +52,7 @@ export class ArchipelagoEventFormatter {
     const header = `> -# ${makeTimestamp()} | ${this.#formatGame(item)} - **${item.locationName}**`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> ${formatItemTagList(item)} __${item.sender.alias}__ found their **${this.#formatItem(item)}**`
+        return `> ${formatItemTagList(item)} __${item.sender.alias}__ found **${this.#formatItem(item)}**`
       } else {
         return `> ${formatItemTagList(item)} __${item.sender.alias}__ sent **${this.#formatItem(item)}** to __${item.receiver.alias}__` 
       }
