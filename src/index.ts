@@ -8,13 +8,14 @@ import { ArchipelagoEventFormatter } from './lib/archipelago-event-formatter'
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 
-IconLookupTable.populateGameIcons(gameIcons)
-IconLookupTable.populateItemIcons(itemIcons)
-IconLookupTable.populateItemTierIcons(itemTierIcons)
-
 const archEventFormatter = new ArchipelagoEventFormatter()
 
 const archClients = new ArchipelagoClientManager(archEventFormatter)
 const discordClient = makeDiscordClient(archClients)
 
 await discordClient.login(DISCORD_BOT_TOKEN)
+
+await IconLookupTable.fetchApplicationEmojis(discordClient)
+IconLookupTable.populateGameIcons(gameIcons)
+IconLookupTable.populateItemIcons(itemIcons)
+IconLookupTable.populateItemTierIcons(itemTierIcons)
