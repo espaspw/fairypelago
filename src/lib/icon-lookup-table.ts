@@ -82,6 +82,20 @@ export function getEmojiList(gameName: string) {
   return [...output]
 }
 
+export function getFlatNamedEmojiList(gameName: string) {
+  const matchers = lookupTable[gameName]
+  if (matchers === undefined) return {};
+  const output: { [key: string]: string } = {}
+  const { exactMatchers, regexMatchers } = matchers
+  for (const [name, emoji] of Object.entries(exactMatchers)) {
+    output[name] = emoji
+  }
+  for (const { e, r } of regexMatchers) {
+    output[r.toString()] = e
+  }
+  return output
+}
+
 export function getItemTierIcon(tier: ItemTier) {
   return itemTierIcons[tier] ?? null
 }
