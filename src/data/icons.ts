@@ -112,6 +112,22 @@ const lmIcons: IconMatcher[] = [
   { pattern: ['Diamond'], emoji: '<:lm_diamond:1401332464508731482>' },
 ]
 
+const ror2Icons: IconMatcher[] = [
+  { pattern: ['Common Item'], emoji: '<:ror2_commonitem:1401722302768611408>' },
+  { pattern: ['Uncommon Item'], emoji: '<:ror2_uncommonitem:1401722379482435808>' },
+  { pattern: ['Legendary Item'], emoji: '<:ror2_legendaryitem:1401722341968580628>' },
+  { pattern: ['Boss Item'], emoji: '<:ror2_bossitem:1401722293985611898>' },
+  { pattern: ['Equipment'], emoji: '<:ror2_equipment:1401722322209083503>' },
+  { pattern: [/Item Scrap, .*/], emoji: '<:ror2_itemscrap:1401722331906310196>' },
+  { pattern: ['Void Item'], emoji: '<:ror2_voiditem:1401722388634407013>' },
+  { pattern: ['Lunar Item'], emoji: '<:ror2_lunaritem:1401722362071744704>' },
+  { pattern: ["Dio's Best Friend"], emoji: '<:ror2_diosbestfriend:1401722312968896512>' },
+  { pattern: ['Beads of Fealty'], emoji: '<:ror2_beadsoffealty:1401722283927670891>' },
+  { pattern: ['Radar Scanner'], emoji: '<:ror2_radarscanner:1401722371278372894>' },
+  { pattern: ['Lunar Coin'], emoji: '<:ror2_lunarcoin:1401722352374644737>' },
+  { pattern: [/Stage [0-9]+/, 'Progressive Stage'], emoji: '<:ror2_area:1401722274507390986>' },
+]
+
 const sm64Icons: IconMatcher[] = [
   { pattern: ['Power Star'], emoji: '<:sm64_star:1401050056752365709>' },
   { pattern: [/.*Key/], emoji: '<:sm64_key:1401050009985745007>' },
@@ -226,6 +242,7 @@ export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
   'Celeste (Open World)': '<:celeste:1401120728950112357>',
   "Luigi's Mansion": '<:lm:1401056594501832734>',
+  'Risk of Rain 2': '<:ror2:1401722262041919569>',
   'Super Mario 64': '<:sm64:1401049975227678751>',
   'Super Mario World': '<:smw:1401071744550178929>',
   'The Wind Waker': '<:tww:1401333834846437470>',
@@ -236,6 +253,7 @@ export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
   'Celeste (Open World)': celesteIcons,
   "Luigi's Mansion": lmIcons,
+  'Risk of Rain 2': ror2Icons,
   'Super Mario 64': sm64Icons,
   'Super Mario World': smwIcons,
   'The Wind Waker': twwIcons,
