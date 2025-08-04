@@ -68,9 +68,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       if (message.content === 'restart') {
         const startStatus = await archClients.startClient(message.channelId)
         if (startStatus === StartClientStatus.Success) {
-          message.react('<:greentick:567088336166977536>')
+          message.react('✔️')
         } else if (startStatus === StartClientStatus.Failed) {
-          message.react('<:redtick:567088349484023818>')
+          message.react('❌')
         } else {
           message.react('☑️')
         }

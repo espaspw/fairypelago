@@ -118,6 +118,7 @@ export class ArchipelagoClientWrapper {
         fileLogger.warn(logMessage)
         this.state = ClientState.Failure
         this.lastError = err
+        return false
       }
       this.state = ClientState.Stopped
       return false
