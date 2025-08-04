@@ -4,29 +4,18 @@ export type CommandLookup = {
   [key: string]: Command
 }
 
-export enum FlagType {
-  Argless,
-  Argful,
-}
-
 export type FlagDefinition = {
-  type: FlagType.Argful
   name: string
+  type: unknown
+  default: unknown
+  alias?: string
   description?: string
   argName?: string
-} | {
-  type: FlagType.Argless
-  name: string
-  description?: string
+  isHiddenDefault?: boolean
 }
 
-export type Flag = {
-  type: FlagType.Argful,
-  name: string
-  arg: string
-} | {
-  type: FlagType.Argless,
-  name: string
+export type FlagSchema = {
+  [key: string]: FlagDefinition
 }
 
 export interface Command {
@@ -34,7 +23,7 @@ export interface Command {
   name: string
   aliases: string[]
   categories: string[]
-  flags?: FlagDefinition[]
+  flags?: FlagSchema
   description?: string
   usageHelpText?: string
 }

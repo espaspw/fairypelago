@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import { Command, FlagType } from '../../types/command'
+import { Command } from '../../types/command'
 import * as IconLookupTable from '../icon-lookup-table'
 import { extractFlags } from '../util/command-utils'
 import { replyWithError, sendNewlineSplitDiscordTextMessage } from '../util/message-utils'
@@ -55,26 +55,24 @@ const lookupIcon: Command = {
   categories: ['Utility'],
   description: 'Lookup icons for supported games.',
   usageHelpText: lookupIconHelpMsg,
-  flags: [{
-    type: FlagType.Argless,
-    name: 'show-name',
-    description: 'If listing all icons of a game, list all names/matchers with its icons.',
-  }, {
-    type: FlagType.Argful,
-    name: 'num-cols',
-    argName: '#',
-    description: 'If listing all icons, limits number of columns per row. No-op if show-name enabled.',
-  }],
+  flags: {
+    showName: {
+      name: 'show-name',
+      type: Boolean,
+      default: false,
+      alias: 'n',
+      description: 'If listing all icons of a game, list all names/matchers with its icons.',
+    },
+    numCols: {
+      name: 'num-cols',
+      type: Number,
+      default: NUM_COLUMNS,
+      alias: 'c',
+      description: 'If listing all icons, limits number of columns per row. No-op if show-name enabled.',
+    },
+  },
   async execute(message, tokens = []) {
-    const { flags, splicedTokens } = extractFlags(tokens)
-
-    const showName = flags.findIndex(flag => flag.name === 'show-name') !== -1
-    const numCols = (() => {
-      const maybeNumCols = Number.parseInt(flags.find(flag => flag.name === 'num-cols')?.arg)
-      if (Number.isNaN(maybeNumCols)) return NUM_COLUMNS;
-      return maybeNumCols
-    })()
-
+    const { flags, splicedTokens } = extractFlags(this.flags, tokens)
     const args = splicedTokens.join(' ')
     const [gameName, itemName] = args.split(' : ')
     const supportedGames = IconLookupTable.getSupportedGames()
@@ -87,10 +85,10 @@ const lookupIcon: Command = {
       return;
     }
     if (itemName === undefined) {
-      if (showName) {
+      if (flags.showName) {
         await sendNamedIconListToDiscord(message, gameName)
       } else {
-        await sendNamelessIconListToDiscord(message, gameName, numCols)
+        await sendNamelessIconListToDiscord(message, gameName, flags.numCols)
       }
       return;
     }
