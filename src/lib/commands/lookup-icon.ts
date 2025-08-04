@@ -98,9 +98,11 @@ const lookupIcon: Command = {
     const itemIcon = IconLookupTable.lookupItem(gameName, itemName)
     if (itemIcon === null) {
       await replyWithError(message, `Item (${itemName}) not found.`)
-      return;
+    } else if (itemIcon === '') {
+      await replyWithError(message, `Item (${itemName}) found but empty.`)
+    } else {
+      await message.reply(itemIcon)
     }
-    await message.reply(itemIcon)
   },
 }
 
