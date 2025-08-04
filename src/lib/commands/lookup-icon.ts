@@ -77,7 +77,10 @@ const lookupIcon: Command = {
     const [gameName, itemName] = args.split(' : ')
     const supportedGames = IconLookupTable.getSupportedGames()
     if (gameName === '') {
-      await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), (`Supported Games:\n${supportedGames.map(x => `- ${x}`).join('\n')}`))
+      await sendNewlineSplitDiscordTextMessage(
+        message.reply.bind(message),
+        (`Supported Games:\n${supportedGames.map(x => `- ${IconLookupTable.lookupGame(x)} ${x}`).join('\n')}`)
+      )
       return;
     }
     if (!supportedGames.includes(gameName)) {
