@@ -112,6 +112,30 @@ const lmIcons: IconMatcher[] = [
   { pattern: ['Diamond'], emoji: '<:lm_diamond:1401332464508731482>' },
 ]
 
+const mfIcons: IconMatcher[] = [
+  { pattern: ['Missle Tank'], emoji: '<:mf_missiletank:1401723154555994192>' },
+  { pattern: ['Energy Tank'], emoji: '<:mf_energytank:1401723100801925204>' },
+  { pattern: ['Power Bomb Tank'], emoji: '<:mf_powerbombtank:1401723181898924082>' },
+  { pattern: ['Infant Metroid'], emoji: '<:mf_infantmetroid:1401723136680005723>' },
+  { pattern: [/.*Data/], emoji: '<:mf_data:1401723092958445669>' },
+  { pattern: ['Morph Ball'], emoji: '<:mf_morphball:1401723162185568346>' },
+  { pattern: ['Charge Beam'], emoji: '<:mf_chargebeam:1401723083563335700>' },
+  { pattern: ['Hi-Jump'], emoji: '<:mf_hijump:1401723117650317425>' },
+  { pattern: ['Speed Booster'], emoji: '<:mf_speedbooster:1401723207379058831>' },
+  { pattern: [/Level [0-9]+ Keycard/], emoji: '<:mf_keycard:1401723144955367445>' },
+  { pattern: ['Varia Suit'], emoji: '<:mf_variasuit:1401723215725723699>' },
+  { pattern: ['Ice Missile'], emoji: '<:mf_icebeam:1401723128027025438>' },
+  { pattern: ['Wide Beam'], emoji: '<:mf_widebeam:1401723231001645157>' },
+  { pattern: ['Space Jump'], emoji: '<:mf_spacejump:1401723197031710812>' },
+  { pattern: ['Plasma Beam'], emoji: '<:mf_plasmabeam:1401723172252029029>' },
+  { pattern: ['Gravity Suit'], emoji: '<:mf_gravitysuit:1401723109274288129>' },
+  { pattern: ['Wave Beam'], emoji: '<:mf_wavebeam:1401723223707484241>' },
+  { pattern: ['Screw Attack'], emoji: '<:mf_screwattack:1401723189477904426>' },
+  { pattern: ['Ice Beam'], emoji: '<:mf_icebeam:1401723128027025438>' },
+  { pattern: ['Super Missile'], emoji: '' },
+  { pattern: ['Diffusion Missile'], emoji: '' },
+]
+
 const mzmIcons: IconMatcher[] = [
   { pattern: ['Energy Tank'], emoji: '<:mzm_energytank:1401722871432216618>' },
   { pattern: ['Missile Tank'], emoji: '<:mzm_missiletank:1401722920518025427>' },
@@ -274,6 +298,7 @@ export const gameIcons: GameIcons = {
   'A Hat in Time': '<:ahit:1400024234683662477>',
   'Celeste (Open World)': '<:celeste:1401120728950112357>',
   "Luigi's Mansion": '<:lm:1401056594501832734>',
+  'Metroid Fusion': '<:mf:1401723074046464112>',
   'Metroid Zero Mission': '<:mzm:1401722846173991012>',
   'Risk of Rain 2': '<:ror2:1401722262041919569>',
   'Super Mario 64': '<:sm64:1401049975227678751>',
@@ -287,6 +312,7 @@ export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
   'Celeste (Open World)': celesteIcons,
   "Luigi's Mansion": lmIcons,
+  'Metroid Fusion': mfIcons,
   'Metroid Zero Mission': mzmIcons,
   'Risk of Rain 2': ror2Icons,
   'Super Mario 64': sm64Icons,
