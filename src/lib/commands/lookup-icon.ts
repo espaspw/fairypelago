@@ -36,10 +36,14 @@ async function sendNamelessIconListToDiscord(message: Message, gameName: string,
   }
 }
 
-async function sendNamedIconListToDiscord(message: Message, gameName: string) {
+async function sendNamedIconListToDiscord(message: Message, gameName: string, emptyOnly = false) {
   const emojiList = IconLookupTable.getFlatNamedEmojiList(gameName)
-  const output = Object.entries(emojiList).map(([matcher, emoji]) => `\`${matcher}\`: ${emoji}`).join('\n')
-  await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), output)
+  const output = Object.entries(emojiList).map(([matcher, emoji]) => {
+    if (emptyOnly && emoji !== '') return null;
+    return `\`${matcher}\`: ${emoji}`
+  }).filter(x => x !== null)
+  if (output.length === 0) await message.reply('No icons found.');
+  await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), output.join('\n'))
 }
 
 const lookupIconHelpMsg = `**Usage:**
@@ -70,9 +74,17 @@ const lookupIcon: Command = {
       alias: 'c',
       description: 'If listing all icons, limits number of columns per row. No-op if show-name enabled.',
     },
+    emptyOnly: {
+      name: 'empty-only',
+      type: Boolean,
+      default: false,
+      alias: 'e',
+      description: 'If show-name is enabled, only show matchers that do not have a corresponding emoji.',
+    }
   },
   async execute(message, tokens = []) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
+    console.log(flags)
     const args = splicedTokens.join(' ')
     const [gameName, itemName] = args.split(' : ')
     const supportedGames = IconLookupTable.getSupportedGames()
@@ -89,7 +101,7 @@ const lookupIcon: Command = {
     }
     if (itemName === undefined) {
       if (flags.showName) {
-        await sendNamedIconListToDiscord(message, gameName)
+        await sendNamedIconListToDiscord(message, gameName, flags.emptyOnly)
       } else {
         await sendNamelessIconListToDiscord(message, gameName, flags.numCols)
       }
