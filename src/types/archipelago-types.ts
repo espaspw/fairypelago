@@ -35,3 +35,7 @@ export enum ArchipelagoMessageType {
   ServerCommand,
   Goal
 }
+
+export type ItemCounts = {
+  [key: string]: number
+}

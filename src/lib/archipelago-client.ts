@@ -1,7 +1,7 @@
-import { Client as ArchClient, SocketError } from 'archipelago.js'
+import { Client as ArchClient, DataPackage, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
-import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types'
+import { ArchipelagoMessageType, ItemCounts, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 import { catchAndLogError } from './util/general'
 import { consoleLogger, fileLogger } from './util/logger'
@@ -54,6 +54,7 @@ export class ArchipelagoClientWrapper {
   private #whitelistedTypes: Set<ArchipelagoMessageType>
   private #options: ClientOptions
   private #createdAt: Date = new Date()
+  private #dataPackage: DataPackage | null = null
 
   // Quick lookups when a user goals. Mainly used to prevent
   // message spam after a goal, so persistence not needed.
@@ -110,6 +111,7 @@ export class ArchipelagoClientWrapper {
       const logMessage = `Successfully connected to Archipelago server (${this.#roomData.roomUrl}, ${this.#createdAt.toLocaleString()}) with (${this.#discordChannel.id})`
       consoleLogger.info(logMessage)
       fileLogger.info(logMessage)
+      await this.fetchPackage()
       return true
     } catch (err) {
       if (err instanceof SocketError && err.message.includes('Failed to connect to Archipelago server.')) {
@@ -123,6 +125,45 @@ export class ArchipelagoClientWrapper {
       this.state = ClientState.Stopped
       return false
     }
+  }
+
+  async fetchPackage(forceUpdate = false) {
+    if (this.state !== ClientState.Running) return this.#dataPackage;
+    if (!forceUpdate && this.#dataPackage) {
+      return this.#dataPackage
+    }
+    const dataPackage = await this.#client.package.exportPackage()
+    this.#dataPackage = dataPackage
+    return dataPackage
+  }
+
+  getGameList() {
+    if (!this.#dataPackage) return [];
+    return Object.keys(this.#dataPackage.games)
+  }
+
+  getItemList(gameName: string) {
+    if (!this.#dataPackage) return [];
+    const gamePackage = this.#dataPackage.games[gameName]
+    if (!gamePackage) return [];
+    return Object.keys(this.#dataPackage.games[gameName]['item_name_to_id'])
+  }
+
+  getLocationList(gameName: string) {
+    if (!this.#dataPackage) return [];
+    const gamePackage = this.#dataPackage.games[gameName]
+    if (!gamePackage) return [];
+    return Object.keys(this.#dataPackage.games[gameName]['location_name_to_id'])
+  }
+
+  getItemCounts() {
+    if (!this.#dataPackage) return {};
+    const output: ItemCounts = {}
+    const games = this.getGameList()
+    for (const game of games) {
+      output[game] = this.getItemList(game)?.length ?? 0
+    }
+    return output
   }
 
   get createdAt() {

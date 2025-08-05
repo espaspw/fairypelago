@@ -103,6 +103,26 @@ export class ArchipelagoClientManager {
     return StartClientStatus.Failed
   }
 
+  getItemCounts(channelId: DC.Snowflake) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    const itemCounts = archClient.getItemCounts()
+    return itemCounts
+  }
+
+  getItemList(channelId: DC.Snowflake, gameName?: string) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    return archClient.getItemList(gameName)
+  }
+
+  async fetchPackage(channelId: DC.Snowflake) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    const dataPackage = await archClient.fetchPackage()
+    return dataPackage
+  }
+
   // Will not send a message if client is not running.
   async sendMessage(channelId: DC.Snowflake, message: string) {
     const archClient = this.#clients.get(channelId)

@@ -1,4 +1,5 @@
 import * as DC from 'discord.js'
+import FuzzySearch from 'fuzzy-search'
 import * as DB from '../db/db'
 import { ArchipelagoClientManager, StartClientStatus } from './archipelago-client-manager'
 import { parseArchipelagoRoomUrl, getRoomData } from './archipelago-room-scrape'
@@ -6,6 +7,7 @@ import { createRoomDataDisplay } from './discord-formatting'
 import { reloadAvaliableCommands, getAvaliableCommands } from './commands'
 import { catchAndLogError } from './util/general'
 import { consoleLogger, fileLogger } from './util/logger'
+import { sendNewlineSplitDiscordTextMessage } from './util/message-utils'
 
 const intents = [
   DC.GatewayIntentBits.MessageContent,
@@ -74,6 +76,25 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         } else {
           message.react('☑️')
         }
+      } else if(message.content.toLowerCase().startsWith('find')) {
+        const itemNameQuery = message.content.split(' ').splice(1).join(' ')
+        const dataPackage = await archClients.fetchPackage(message.channelId)
+        if (!dataPackage) return;
+        const matches: { [key: string]: string[] } = {}
+        for (const [game, gamePackage] of Object.entries(dataPackage.games)) {
+          const searcher = new FuzzySearch(Object.keys(gamePackage.item_name_to_id)).search(itemNameQuery) as string[]
+          matches[game] = searcher
+        }
+        const outputTokens = ['I found these possible matches:']
+        for (const [game, results] of Object.entries(matches)) {
+          if (results.length === 0) continue;
+          outputTokens.push(`**${game}**\n-# ${results.map(r => `${r}`).join(', ')}`)
+        }
+        if (outputTokens.length === 1) {
+          await message.reply('I couldn\'t find any matches...')
+        } else {
+          await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
+        }
       } else {
         await archClients.sendMessage(message.channelId, `[DISCORD] ${message.author.username} :: ${message.content}`)
         fileLogger.info(`Forwarded message "${message.content}" to archipelago.`)
@@ -120,7 +141,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         }
         return message;
       })();
-      const newThreadName = `${roomData.port} : ${roomData.players.length} Players : ${new Date().toLocaleString().split(',')[0]}`
+      const newThreadName = `${roomData.port} : ${roomData.players.length}P : ${new Date().toLocaleString().split(',')[0]}`
       const newThread = await threadBaseMessage.startThread({
         name: newThreadName,
         autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
@@ -128,11 +149,14 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       if (newThread.joinable) {
         await newThread.join()
       }
-      await newThread.send(createRoomDataDisplay(roomData))
+
       fileLogger.info(`New thread (${newThread.channelId}) created for URL (${archRoomUrl.url})`)
 
       await archClients.createClient(newThread, roomData)
       await archClients.startClient(newThread.id)
+      const itemCounts = archClients.getItemCounts(newThread.id)
+
+      await newThread.send(createRoomDataDisplay(roomData, itemCounts))
 
       if (message.channelId !== targetChannelId) {
         await message.reply(newThread.url)
