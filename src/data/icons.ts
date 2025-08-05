@@ -34,6 +34,23 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Parade Trap'], emoji: '' },
 ]
 
+const celeste64Icons: IconMatcher[] = [
+  { pattern: ['Strawberry', 'Raspberry'], emoji: 'celeste_strawberry' },
+  { pattern: ['Dash Refills'], emoji: 'celeste_dashrefill' },
+  { pattern: ['Double Dash Refills'], emoji: 'celeste_doubledashrefill' },
+  { pattern: ['Feathers'], emoji: 'celeste_feather' },
+  { pattern: ['Coins'], emoji: 'celeste_coin' },
+  { pattern: ['Cassettes'], emoji: 'celeste_cassette' },
+  { pattern: ['Traffic Blocks'], emoji: 'celeste_trafficblock' },
+  { pattern: ['Springs'], emoji: 'celeste_springs' },
+  { pattern: ['Breakable Blocks'], emoji: '' },
+  { pattern: ['Ground Dash'], emoji: '' },
+  { pattern: ['Air Dash'], emoji: '' },
+  { pattern: ['Skid Jump'], emoji: '' },
+  { pattern: ['Climb'], emoji: '' },
+  { pattern: [/.*Checkpoint/], emoji: '' },
+]
+
 const celesteIcons: IconMatcher[] = [
   { pattern: ['Strawberry', 'Raspberry'], emoji: 'celeste_strawberry' },
   { pattern: [/.*Key [0-9]?/], emoji: 'celeste_key' },
@@ -416,6 +433,7 @@ const yachtDiceIcons: IconMatcher[] = [
 
 export const gameIcons: GameIcons = {
   'A Hat in Time': 'ahit',
+  'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
   "Luigi's Mansion": 'lm',
   'Metroid Fusion': 'mf',
@@ -433,6 +451,7 @@ export const gameIcons: GameIcons = {
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
+  'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
   "Luigi's Mansion": lmIcons,
   'Metroid Fusion': mfIcons,
