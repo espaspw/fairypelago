@@ -29,6 +29,9 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Metro Ticket - Pink'], emoji: 'ahit_metroticketpink' },
   { pattern: [/Snatcher's Contract.*/], emoji: 'ahit_contract' },
   { pattern: [/Zipline Unlock.*/], emoji: 'ahit_zipline' },
+  { pattern: ['Baby Trap'], emoji: '' },
+  { pattern: ['Laser Trap'], emoji: '' },
+  { pattern: ['Parade Trap'], emoji: '' },
 ]
 
 const celesteIcons: IconMatcher[] = [
@@ -80,6 +83,18 @@ const celesteIcons: IconMatcher[] = [
   { pattern: ['White Block'], emoji: 'celeste_whiteblock' },
   { pattern: ['Torches'], emoji: 'celeste_torch' },
   { pattern: ['Bird'], emoji: 'celeste_bird' },
+  { pattern: ["Granny's House Keys"], emoji: '' },
+  { pattern: ['Bald Trap'], emoji: '' },
+  { pattern: ['Stun Trap'], emoji: '' },
+  { pattern: ['Invisible Trap'], emoji: '' },
+  { pattern: ['Fast Trap'], emoji: '' },
+  { pattern: ['Slow Trap'], emoji: '' },
+  { pattern: ['Ice Trap'], emoji: '' },
+  { pattern: ['Reverse Trap'], emoji: '' },
+  { pattern: ['Screen Flip Trap'], emoji: '' },
+  { pattern: ['Laughter Trap'], emoji: '' },
+  { pattern: ['Hiccup Trap'], emoji: '' },
+  { pattern: ['Zoom Trap'], emoji: '' },
 ]
 
 const lmIcons: IconMatcher[] = [
@@ -110,6 +125,16 @@ const lmIcons: IconMatcher[] = [
   { pattern: ['Emerald'], emoji: 'lm_emerald' },
   { pattern: ['Ruby'], emoji: 'lm_ruby' },
   { pattern: ['Diamond'], emoji: 'lm_diamond' },
+  { pattern: ['Small Heart'], emoji: '' },
+  { pattern: ['Large Heart'], emoji: '' },
+  { pattern: ['Nothing'], emoji: '' },
+  { pattern: ['Possession Trap'], emoji: '' },
+  { pattern: ['Bonk Trap'], emoji: '' },
+  { pattern: ['Bomb'], emoji: '' },
+  { pattern: ['Ice Trap'], emoji: '' },
+  { pattern: ['Banana Trap'], emoji: '' },
+  { pattern: ['Poison Mushroom'], emoji: '' },
+  { pattern: ['Ghost'], emoji: '' },
 ]
 
 const mfIcons: IconMatcher[] = [
@@ -134,6 +159,7 @@ const mfIcons: IconMatcher[] = [
   { pattern: ['Ice Beam'], emoji: 'mf_icebeam' },
   { pattern: ['Super Missile'], emoji: '' },
   { pattern: ['Diffusion Missile'], emoji: '' },
+  { pattern: ['Nothing'], emoji: '' },
 ]
 
 const mzmIcons: IconMatcher[] = [
@@ -155,6 +181,7 @@ const mzmIcons: IconMatcher[] = [
   { pattern: ['Screw Attack'], emoji: 'mzm_screwattack' },
   { pattern: ['Space Jump'], emoji: 'mzm_spacejump' },
   { pattern: ['Power Grip'], emoji: 'mzm_powergrip' },
+  { pattern: ['Nothing'], emoji: '' },
 ]
 
 const ror2Icons: IconMatcher[] = [
@@ -171,6 +198,10 @@ const ror2Icons: IconMatcher[] = [
   { pattern: ['Radar Scanner'], emoji: 'ror2_radarscanner' },
   { pattern: ['Lunar Coin'], emoji: 'ror2_lunarcoin' },
   { pattern: [/Stage [0-9]+/, 'Progressive Stage'], emoji: 'ror2_area' },
+  { pattern: ['Mountain Trap'], emoji: '' },
+  { pattern: ['Time Warp Trap'], emoji: '' },
+  { pattern: ['Combat Trap'], emoji: '' },
+  { pattern: ['Teleport Trap'], emoji: '' },
 ]
 
 const sm64Icons: IconMatcher[] = [
@@ -205,6 +236,7 @@ const smsIcons: IconMatcher[] = [
   { pattern: [/.*Ticket/], emoji: 'sms_areaticket' },
   { pattern: ['Shine Sprite'], emoji: 'sms_shinesprite' },
   { pattern: ['Blue Coin'], emoji: 'sms_bluecoin' },
+  { pattern: ['1-UP'], emoji: '' },
 ]
 
 const smwIcons: IconMatcher[] = [
@@ -224,6 +256,12 @@ const smwIcons: IconMatcher[] = [
   { pattern: ['Green Switch Palace'], emoji: 'smw_greenswitch' },
   { pattern: ['Red Switch Palace'], emoji: 'smw_redswitch' },
   { pattern: ['Blue Switch Palace'], emoji: 'smw_blueswitch' },
+  { pattern: ['Ice Trap'], emoji: '' },
+  { pattern: ['Stun Trap'], emoji: '' },
+  { pattern: ['Literature Trap'], emoji: '' },
+  { pattern: ['Timer Trap'], emoji: '' },
+  { pattern: ['Reverse Trap'], emoji: '' },
+  { pattern: ['Thwimp Trap'], emoji: '' },
   { pattern: ['Special Zone Clear'], emoji: 'smw_specialworldclear' },
 ]
 
@@ -367,6 +405,13 @@ const yachtDiceIcons: IconMatcher[] = [
   { pattern: ['Roll Fragment'], emoji: 'yd_rollfragment' },
   { pattern: [/Category.*/], emoji: 'yd_category' },
   { pattern: [/.*Multiplier/], emoji: 'yd_multiplier' },
+  { pattern: ['Encouragement'], emoji: '' },
+  { pattern: ['Fun Fact'], emoji: '' },
+  { pattern: ['Story Chapter'], emoji: '' },
+  { pattern: ['Good RNG'], emoji: '' },
+  { pattern: ['Bad RNG'], emoji: '' },
+  { pattern: ['Bonus Point'], emoji: '' },
+  { pattern: [/[0-9]+ Points?/], emoji: '' },
 ]
 
 export const gameIcons: GameIcons = {
