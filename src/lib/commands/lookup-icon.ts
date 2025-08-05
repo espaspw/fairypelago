@@ -84,7 +84,6 @@ const lookupIcon: Command = {
   },
   async execute(message, tokens = []) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
-    console.log(flags)
     const args = splicedTokens.join(' ')
     const [gameName, itemName] = args.split(' : ')
     const supportedGames = IconLookupTable.getSupportedGames()
