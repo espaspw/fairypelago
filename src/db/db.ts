@@ -28,13 +28,13 @@ const baseData: DBData = {
   activeMultiworlds: [],
 }
 
-const defaultCommandPrefix = '..'
+const defaultCommandPrefix = '.'
 
 const createDefaultGuildSettingObject = (): DBGuildSettings => ({
   whitelistedMessageTypes: defaultWhitelistedTypes,
 })
 
-const db = await JSONFilePreset('db.json', baseData)
+const db = await JSONFilePreset('./storage/db.json', baseData)
 
 export function getLogChannelId(guildId: DC.Snowflake): DC.Snowflake | null {
   return db.data.guildSettings[guildId]?.logChannelId ?? null

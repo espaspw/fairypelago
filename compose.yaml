@@ -1,0 +1,9 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - ./storage:/usr/src/app/storage

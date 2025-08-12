@@ -1,5 +1,5 @@
 node_modules/
 .env
-db.json
-*.log
-*-audit.json
+storage/
+logs/
+build/

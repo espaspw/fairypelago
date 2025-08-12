@@ -2,19 +2,19 @@ import winston from 'winston'
 import 'winston-daily-rotate-file'
 
 const fileRotateTransport = new winston.transports.DailyRotateFile({
-  filename: 'all-%DATE%.log',
+  filename: 'logs/all-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
 });
 
 const exceptionRotateTransport = new winston.transports.DailyRotateFile({
-  filename: 'exceptions-%DATE%.log',
+  filename: 'logs/exceptions-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
 });
 
 const rejectionRotateTransport = new winston.transports.DailyRotateFile({
-  filename: 'rejections-%DATE%.log',
+  filename: 'logs/rejections-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
 });
