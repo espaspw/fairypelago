@@ -79,7 +79,10 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       } else if(message.content.toLowerCase().startsWith('find')) {
         const itemNameQuery = message.content.split(' ').splice(1).join(' ')
         const dataPackage = await archClients.fetchPackage(message.channelId)
-        if (!dataPackage) return;
+        if (!dataPackage) {
+          await message.reply(`Could not get the data, perhaps the room needs to be refreshed?`)
+          return;
+        }
         const matches: { [key: string]: string[] } = {}
         for (const [game, gamePackage] of Object.entries(dataPackage.games)) {
           const searcher = new FuzzySearch(Object.keys(gamePackage.item_name_to_id)).search(itemNameQuery) as string[]
