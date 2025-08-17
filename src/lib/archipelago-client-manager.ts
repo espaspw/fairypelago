@@ -15,12 +15,6 @@ export class ArchipelagoClientManager {
   private #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
   private #multiworlds: DB.DBActiveMultiworld[] = []
 
-  private #defaultEventFormatter: ArchipelagoEventFormatter
-
-  constructor(defaultEventfFormatter: ArchipelagoEventFormatter) {
-    this.#defaultEventFormatter = defaultEventfFormatter
-  }
-
   private async #createClientFromDbMultiworld(discordClient: DC.Client, multiworld: DB.DBActiveMultiworld) {
     const { guildId, channelId, roomData, createdAt } = multiworld
     const guild = await discordClient.guilds.fetch(guildId)
@@ -76,10 +70,12 @@ export class ArchipelagoClientManager {
   }
 
   async createClient(channel: DC.GuildBasedChannel, roomData: ArchipelagoRoomData, options?: ClientOptions) {
+    const eventFormatter = new ArchipelagoEventFormatter(channel.guildId)
+
     const archClient = await ArchipelagoClientWrapper.makeClient(
       channel,
       roomData,
-      { eventFormatter: this.#defaultEventFormatter },
+      { eventFormatter },
       options,
     )
 

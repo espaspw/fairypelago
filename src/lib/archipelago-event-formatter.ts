@@ -1,6 +1,7 @@
 import { Item, Player } from "archipelago.js";
 import * as IconLookupTable from "./icon-lookup-table";
-import { EmbedBuilder, type MessageCreateOptions } from "discord.js";
+import { EmbedBuilder, Snowflake, type MessageCreateOptions } from "discord.js";
+import * as DB from '../db/db';
 
 function makeTimestamp() {
   return `<t:${Math.floor(Date.now() / 1000)}:T>`
@@ -17,6 +18,11 @@ function formatItemTagList(item: Item) {
 }
 
 export class ArchipelagoEventFormatter {
+  #guildId: Snowflake
+
+  constructor(guildId: Snowflake) {
+    this.#guildId = guildId
+  }
 
   private #formatGame(item: Item) {
     const r = IconLookupTable.lookupGame(item.sender.game)
@@ -29,10 +35,21 @@ export class ArchipelagoEventFormatter {
     if (r === null) return item.name;
     return `${r} ${item.name}`
   }
+  
+  private #formatPlayer(alias: string) {
+    const shouldReplace = DB.getFlag(this.#guildId, 'replace-alias-with-emoji-if-exists')
+    const playerEmoji = DB.getEmojiForPlayerAlias(this.#guildId, alias)
+    if (!playerEmoji) return `__${alias}__`;
+    if (shouldReplace) {
+      return playerEmoji
+    } else {
+      return `${playerEmoji} __${alias}__`
+    }
+  }
 
   connected(content: string, player: Player, tags: string[]): MessageCreateOptions | null {
     if(tags.includes('Discord')) return null; // Prevent triggering on its own join
-    const descriptionTokens = [`${makeTimestamp()} | **${player.alias}** playing __${player.game}__ has joined.`]
+    const descriptionTokens = [`${makeTimestamp()} | **${this.#formatPlayer(player.alias)}** playing __${player.game}__ has joined.`]
     if (tags.length !== 0) { descriptionTokens.push(`(${tags.join(', ')})`) }
     const embed = new EmbedBuilder()
       .setColor(0xC8E9A0)
@@ -41,7 +58,7 @@ export class ArchipelagoEventFormatter {
   }
 
   disconnected(content: string, player: Player): MessageCreateOptions {
-    const description = `${makeTimestamp()} | **${player.alias}** playing ${player.game} has left.`
+    const description = `${makeTimestamp()} | **${this.#formatPlayer(player.alias)}** playing ${player.game} has left.`
     const embed = new EmbedBuilder()
       .setColor(0xA13D63)
       .setDescription(description)
@@ -52,9 +69,9 @@ export class ArchipelagoEventFormatter {
     const header = `> -# ${makeTimestamp()} | ${this.#formatGame(item)} - **${item.locationName}**`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> ${formatItemTagList(item)} __${item.sender.alias}__ found **${this.#formatItem(item)}**`
+        return `> ${formatItemTagList(item)} ${this.#formatPlayer(item.sender.alias)} found **${this.#formatItem(item)}**`
       } else {
-        return `> ${formatItemTagList(item)} __${item.sender.alias}__ sent **${this.#formatItem(item)}** to __${item.receiver.alias}__` 
+        return `> ${formatItemTagList(item)} ${this.#formatPlayer(item.sender.alias)} sent **${this.#formatItem(item)}** to ${this.#formatPlayer(item.receiver.alias)}` 
       }
     })()
     return { content: [header, body].join('\n') }
@@ -85,9 +102,9 @@ export class ArchipelagoEventFormatter {
     const header = `> -# ${makeTimestamp()} | Cheat`
     const body = (() => {
       if (item.sender.slot === item.receiver.slot) {
-        return `> **${this.#formatItem(item)}** was given to __${item.receiver.alias}__, which was located at **${item.locationName}`
+        return `> **${this.#formatItem(item)}** was given to ${this.#formatPlayer(item.receiver.alias)}, which was located at **${item.locationName}`
       } else {
-        return `> **${this.#formatItem(item)}** was forcefully transfered from __${item.sender.alias}__ to __${item.receiver.alias}__, which was located at **${item.locationName}`
+        return `> **${this.#formatItem(item)}** was forcefully transfered from ${this.#formatPlayer(item.sender.alias)} to ${this.#formatPlayer(item.receiver.alias)}, which was located at **${item.locationName}`
       }
     })()
     return { content: [header, body].join('\n') }
@@ -127,7 +144,7 @@ export class ArchipelagoEventFormatter {
   goaled(content: string, player: Player): MessageCreateOptions {
     const embed = new EmbedBuilder()
       .setColor(0xEFAAC4)
-      .setDescription(`${makeTimestamp()} | **${player.alias}** has reached their objective!`)
+      .setDescription(`${makeTimestamp()} | **${this.#formatPlayer(player.alias)}** has reached their objective!`)
       .setImage('https://64.media.tumblr.com/e93889ced23679be7a390829ff4f08c2/tumblr_on14f9HeMl1v857c1o1_400.gif')
     return { embeds: [embed] }
   }
