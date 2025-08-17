@@ -21,7 +21,7 @@ export type FlagSchema = {
 export interface Command {
   execute: (
     discordMessage: OmitPartialGroupDMChannel<Message<boolean>>,
-    tokens?: string[],
+    tokens: string[],
     commands?: CommandLookup
   ) => Promise<void>
   name: string
