@@ -77,7 +77,7 @@ const help: Command = {
             value: matchingCommand.categories.join(', '),
           }])
         }
-        if (matchingCommand.helpMessage) {
+        if (matchingCommand.usageHelpText) {
           embed.addFields([{
             name: 'Usage',
             value: matchingCommand.usageHelpText,
