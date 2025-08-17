@@ -9,9 +9,9 @@ function makeTimestamp() {
 function formatItemTagList(item: Item) {
   const tokens = []
   if (item.progression) tokens.push(IconLookupTable.getItemTierIcon('progression') ?? 'Progression');
-  if (item.useful) tokens.push(IconLookupTable.getItemTierIcon('useful') ?? 'Useful');
-  if (item.filler) tokens.push(IconLookupTable.getItemTierIcon('filler') ?? 'Junk');
-  if (item.trap) tokens.push(IconLookupTable.getItemTierIcon('trap') ?? 'Trap');
+  else if (item.useful) tokens.push(IconLookupTable.getItemTierIcon('useful') ?? 'Useful');
+  else if (item.filler) tokens.push(IconLookupTable.getItemTierIcon('filler') ?? 'Junk');
+  else if (item.trap) tokens.push(IconLookupTable.getItemTierIcon('trap') ?? 'Trap');
   if (tokens.length === 0) return '';
   return tokens.join(' ')
 }
