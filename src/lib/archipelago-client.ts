@@ -1,4 +1,4 @@
-import { Client as ArchClient, DataPackage, SocketError } from 'archipelago.js'
+import { Client as ArchClient, DataPackage, Item, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
 import { ArchipelagoMessageType, ItemCounts, LocationCounts, type ArchipelagoRoomData } from '../types/archipelago-types'
@@ -227,6 +227,7 @@ export class ArchipelagoClientWrapper {
       if (item.trap && !this.isWhitelisted(ArchipelagoMessageType.ItemSentTrap)) return;
       // TODO: Make this configurable in formatter settings
       if (this.#goalCache.has(item.sender.alias) && !item.progression) return;
+      if (this.#goalCache.has(item.receiver.alias)) return;
       await this.#discordChannel.send(this.#eventFormatter.itemSent(content, item))
     }))
 
