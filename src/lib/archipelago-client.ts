@@ -193,10 +193,9 @@ export class ArchipelagoClientWrapper {
       fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) disconnected.`)
     })
 
-    this.#client.socket.on('invalidPacket', () => {
-      this.state = ClientState.Failure
-      this.lastError = new Error('Websocket encountered invalid socket.')
-      fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) had invalid packet.`)
+    this.#client.socket.on('invalidPacket', (packet) => {
+      this.lastError = new Error(`Websocket encountered invalid packet: Packet(type: ${packet.type}, text: ${packet.text}))}`)
+      fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) had invalid packet: Packet(type: ${packet.type}, text: ${packet.text}))`)
     })
 
     this.#client.messages.on('connected', catchAndLogError(async (content, player, tags) => {
