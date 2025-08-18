@@ -22,8 +22,16 @@ const setPlayerEmoji: Command = {
         await message.reply('No emojis are currently set.')
         return;
       }
+      const groupByEmoji: Record<string, string[]> = {}
       for (const [alias, emoji] of Object.entries(mappings)) {
-        responseTokens.push(`- ${alias}: ${emoji}`)
+        if (emoji in groupByEmoji) {
+          groupByEmoji[emoji].push(alias)
+        } else {
+          groupByEmoji[emoji] = [alias]
+        }
+      }
+      for (const [emoji, aliases] of Object.entries(groupByEmoji)) {
+        responseTokens.push(`- ${aliases.sort().map(x => `\`${x}\``).join(', ')}: ${emoji}`)
       }
       await message.reply(responseTokens.join('\n'))
     } else {
