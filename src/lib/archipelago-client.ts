@@ -1,7 +1,7 @@
 import { Client as ArchClient, DataPackage, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
-import { ArchipelagoMessageType, ItemCounts, type ArchipelagoRoomData } from '../types/archipelago-types'
+import { ArchipelagoMessageType, ItemCounts, LocationCounts, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 import { catchAndLogError } from './util/general'
 import { consoleLogger, fileLogger } from './util/logger'
@@ -162,6 +162,16 @@ export class ArchipelagoClientWrapper {
     const games = this.getGameList()
     for (const game of games) {
       output[game] = this.getItemList(game)?.length ?? 0
+    }
+    return output
+  }
+
+  getLocationCounts() {
+    if (!this.#dataPackage) return {};
+    const output: LocationCounts = {}
+    const games = this.getGameList()
+    for (const game of games) {
+      output[game] = this.getLocationList(game)?.length ?? 0
     }
     return output
   }

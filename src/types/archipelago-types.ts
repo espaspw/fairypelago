@@ -39,3 +39,7 @@ export enum ArchipelagoMessageType {
 export type ItemCounts = {
   [key: string]: number
 }
+
+export type LocationCounts = {
+  [key: string]: number
+}

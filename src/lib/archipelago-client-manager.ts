@@ -112,6 +112,19 @@ export class ArchipelagoClientManager {
     return archClient.getItemList(gameName)
   }
 
+  getLocationList(channelId: DC.Snowflake, gameName: string) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    return archClient.getLocationList(gameName)
+  }
+
+  getLocationCounts(channelId: DC.Snowflake) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    const locationCounts = archClient.getLocationCounts()
+    return locationCounts
+  }
+
   async fetchPackage(channelId: DC.Snowflake) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
