@@ -123,7 +123,14 @@ export class ArchipelagoClientManager {
   async sendMessage(channelId: DC.Snowflake, message: string) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
-    if (archClient.state !== ClientState.Running) return;
+    if (archClient.state !== ClientState.Running) return false;
     await archClient.sendMessage(message)
+    return true
+  }
+
+  getLastError(channelId: DC.Snowflake) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    return archClient.lastError
   }
 }

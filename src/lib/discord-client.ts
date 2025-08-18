@@ -101,8 +101,14 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         }
       } else {
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
-        await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)
-        fileLogger.info(`Forwarded message "${message.content}" to archipelago.`)
+        const res = await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)
+        if (res) {
+          fileLogger.info(`Forwarded message "${messageWithShortEmojis}" to archipelago.`)
+        } else {
+          const lastError = archClients.getLastError(message.channelId)
+          const errorMsgAddon = lastError ? lastError.message : 'Unknown'
+          fileLogger.info(`Failed to forward message "${messageWithShortEmojis}" to archipelago. Last error: ${errorMsgAddon}`)
+        }
       }
     }
   ))
