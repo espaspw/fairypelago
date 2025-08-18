@@ -7,7 +7,7 @@ import { createRoomDataDisplay } from './discord-formatting'
 import { reloadAvaliableCommands, getAvaliableCommands } from './commands'
 import { catchAndLogError } from './util/general'
 import { consoleLogger, fileLogger } from './util/logger'
-import { sendNewlineSplitDiscordTextMessage } from './util/message-utils'
+import { sendNewlineSplitDiscordTextMessage, stripDiscordEmojis } from './util/message-utils'
 
 const intents = [
   DC.GatewayIntentBits.MessageContent,
@@ -67,6 +67,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       if (message.author.id === discordClient.user.id) return;
       if (message.author.bot) return;
       if (!archClients.isChannelOfExistingMultiworld(message.channelId)) return;
+      if (message.content.length <= 0) return;
       if (message.content === 'restart') {
         const startStatus = await archClients.startClient(message.channelId)
         if (startStatus === StartClientStatus.Success) {
@@ -99,7 +100,8 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
           await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
         }
       } else {
-        await archClients.sendMessage(message.channelId, `[DISCORD] ${message.author.username} :: ${message.content}`)
+        const messageWithShortEmojis = stripDiscordEmojis(message.content)
+        await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)
         fileLogger.info(`Forwarded message "${message.content}" to archipelago.`)
       }
     }

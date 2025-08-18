@@ -51,3 +51,9 @@ export async function replyWithError(message: Message, text: string) {
     .setColor(0xb71c1c)
   await message.reply({ embeds: [embed] })
 }
+
+// Converts all discord emojis with shortened version: i.e. <:my_emoji:1219077623821504623> -> :my_emoji:
+const discordEmojiCapture = /<a?:([a-zA-Z0-9_]+):[0-9]+>/g
+export function stripDiscordEmojis(text: string) {
+  return text.replace(discordEmojiCapture, ':$1:')
+}
