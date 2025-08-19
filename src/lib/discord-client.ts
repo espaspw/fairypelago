@@ -168,7 +168,8 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       const itemCounts = archClients.getItemCounts(newThread.id)
       const locationCounts = archClients.getLocationCounts(newThread.id)
 
-      await newThread.send(createRoomDataDisplay(roomData, itemCounts, locationCounts))
+      const initialMessage = await newThread.send(createRoomDataDisplay(roomData, itemCounts, locationCounts))
+      await initialMessage.pin()
 
       if (message.channelId !== targetChannelId) {
         await message.reply(newThread.url)
