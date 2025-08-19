@@ -4,7 +4,7 @@ import { Client } from 'discord.js'
 
 import { Job, Jobs } from '../types/job'
 import { ArchipelagoClientManager } from './archipelago-client-manager'
-import { consoleLogger } from './util/logger'
+import { consoleLogger, fileLogger } from './util/logger'
 
 let jobs: Jobs = {}
 
@@ -23,9 +23,14 @@ export async function loadJobs() {
 
 export function scheduleJobs(archClients: ArchipelagoClientManager, discordClient: Client) {
   for (const [jobName, jobDetails] of Object.entries(jobs)) {
-    setInterval(() => {
-      consoleLogger.info(`Running job "${jobName}".`)
-      jobDetails.do({ archClients, discordClient })
+    setInterval(async () => {
+      try {
+        consoleLogger.info(`Running job "${jobName}".`)
+        await jobDetails.do({ archClients, discordClient })
+      } catch (err) {
+        consoleLogger.error(err)
+        fileLogger.error(err)
+      }
     }, jobDetails.intervalMs)
   }
 }

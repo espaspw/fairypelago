@@ -9,7 +9,7 @@ export interface JobOptionalDeps {
 export interface Job {
   name: string
   intervalMs: number
-  do: (deps: JobOptionalDeps) => Promise<void> | void
+  do: (deps: JobOptionalDeps) => Promise<void>
 }
 
 export type Jobs = Record<string, Job>
