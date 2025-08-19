@@ -17,7 +17,7 @@ function formatItemTagList(item: Item) {
   return tokens.join(' ')
 }
 
-const forwardedMsgRegex = /\[[a-zA-Z0-9_\.]+\] :: .*/
+const forwardedMsgRegex = /\[[a-zA-Z0-9_.]+\] :: .*/
 function isForwardedMessage(message: string) {
   return forwardedMsgRegex.test(message)
 }
