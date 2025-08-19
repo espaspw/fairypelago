@@ -115,8 +115,8 @@ export class ArchipelagoClientWrapper {
     } catch (err) {
       if (err instanceof SocketError && err.message.includes('Failed to connect to Archipelago server.')) {
         const logMessage = `Failed to connect to Archipelago server (${this.#roomData.roomUrl}, ${this.#createdAt.toLocaleString()}) connected to channel (${this.#discordChannel.id})`
-        consoleLogger.warn(logMessage)
-        fileLogger.warn(logMessage)
+        consoleLogger.info(logMessage)
+        fileLogger.info(logMessage)
         this.lastError = err
         return false
       }
