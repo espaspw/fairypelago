@@ -7,7 +7,7 @@ import { extractFlags } from '../util/command-utils'
 const echo: Command = {
   name: 'echo',
   aliases: ['echo', 'e'],
-  categories: ['Utility', 'Admin'],
+  categories: ['Utility', 'Owner'],
   description: 'Repeat after me.',
   usageHelpText: 'echo `message`',
   flags: {
