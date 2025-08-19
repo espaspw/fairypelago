@@ -146,4 +146,19 @@ export class ArchipelagoClientManager {
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
     return archClient.lastError
   }
+
+  _getClients(guildId?: DC.Snowflake, channelId?: DC.Snowflake) {
+    if (!guildId && !channelId) {
+      return [...this.#clients.values()];
+    }
+    if (!guildId && channelId) {
+      const archClient = this.#clients.get(channelId)
+      if (archClient === undefined) return null;
+      return [archClient]
+    }
+    if (guildId && !channelId) {
+      return [...this.#clients.values()].filter(client => client.channel.guildId === guildId)
+    }
+    return [...this.#clients.values()].filter(client => client.channel.guildId === guildId && client.channel.id === channelId)
+  }
 }

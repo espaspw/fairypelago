@@ -47,9 +47,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       } else if (!(commandName in avaliableCommands)) {
         message.react('❓')
       } else {
-        const command = avaliableCommands[commandName]
+        const command = avaliableCommands[commandName as string]
         try {
-          await command.execute(message, tokens, avaliableCommands)
+          await command.execute(message, tokens, avaliableCommands, archClients)
           fileLogger.info(`Executed command (${commandName}) with args (${tokens})`)
         } catch(err) {
           consoleLogger.error(err)
@@ -77,7 +77,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         } else {
           message.react('☑️')
         }
-      } else if(message.content.toLowerCase().startsWith('find')) {
+      } else if (message.content.toLowerCase().startsWith('find')) {
         const itemNameQuery = message.content.split(' ').splice(1).join(' ')
         const dataPackage = await archClients.fetchPackage(message.channelId)
         if (!dataPackage) {

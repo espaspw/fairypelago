@@ -1,4 +1,5 @@
 import { Message, OmitPartialGroupDMChannel } from 'discord.js'
+import { ArchipelagoClientManager } from '../lib/archipelago-client-manager'
 
 export type CommandLookup = {
   [key: string]: Command
@@ -22,7 +23,8 @@ export interface Command {
   execute: (
     discordMessage: OmitPartialGroupDMChannel<Message<boolean>>,
     tokens: string[],
-    commands?: CommandLookup
+    commands?: CommandLookup,
+    archClients: ArchipelagoClientManager,
   ) => Promise<void>
   name: string
   aliases: string[]

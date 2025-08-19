@@ -192,6 +192,10 @@ export class ArchipelagoClientWrapper {
     this.#client = cilent
   }
 
+  get channel() {
+    return this.#discordChannel
+  }
+
   async sendMessage(message: string) {
     await this.#client.messages.say(message)
   }
