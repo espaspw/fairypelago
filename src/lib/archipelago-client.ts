@@ -41,7 +41,6 @@ export interface ClientDeps {
 export enum ClientState {
   Stopped,
   Running,
-  Failure,
 }
 
 export class ArchipelagoClientWrapper {
@@ -118,7 +117,6 @@ export class ArchipelagoClientWrapper {
         const logMessage = `Failed to connect to Archipelago server (${this.#roomData.roomUrl}, ${this.#createdAt.toLocaleString()}) connected to channel (${this.#discordChannel.id})`
         consoleLogger.warn(logMessage)
         fileLogger.warn(logMessage)
-        this.state = ClientState.Failure
         this.lastError = err
         return false
       }
@@ -201,9 +199,9 @@ export class ArchipelagoClientWrapper {
   }
 
   attachListeners() {
-    this.#client.socket.on('disconnected', () => {
-      this.state = ClientState.Failure
-      this.lastError = new Error('Websocket was disconnected.')
+    this.#client.socket.on('disconnected', async () => {
+      this.state = ClientState.Stopped
+      await this.#discordChannel.send('Connection to server ended. I\'ll periodically attempt to reconnect, or tell me "restart" to attempt it any time.')
       fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) disconnected.`)
     })
 
