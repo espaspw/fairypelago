@@ -4,11 +4,19 @@ import * as DB from '../db/db'
 import { ArchipelagoClientWrapper, ClientState, ClientOptions } from './archipelago-client'
 import { ArchipelagoRoomUrl, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
+import { fileLogger } from './util/logger'
 
 export enum StartClientStatus {
   Success,
   Failed,
   AlreadyRunning,
+}
+
+const oneWeekMs = 7 * 24 * 60 * 60 * 1000
+const twoWeeksMs = 2 * oneWeekMs
+
+function dateIsOlderThan(date: Date, ms: number) {
+  return ((new Date()).getTime() - (new Date(date)).getTime()) >= ms
 }
 
 export class ArchipelagoClientManager {
@@ -47,6 +55,32 @@ export class ArchipelagoClientManager {
         await client.start()
       }
     }
+  }
+
+  async removeStaleClients() {
+    const staleClientChannelIds: string[] = []
+    for (const client of this.#clients.values()) {
+      if (client.state === ClientState.Running) {
+        continue;
+      }
+      if (!client.lastConnected && !client.lastDisconnected && dateIsOlderThan(client.createdAt, twoWeeksMs)) {
+        // If no connection dates except created at, mark stale client if created more than two weeks ago
+        staleClientChannelIds.push(client.channel.id)
+      } else if (client.lastConnected && !client.lastDisconnected && dateIsOlderThan(client.lastConnected, twoWeeksMs)) {
+        // Either a really long running game or bot crashed during an active game and never reconnected
+        staleClientChannelIds.push(client.channel.id)
+      } else if (client.lastDisconnected && dateIsOlderThan(client.lastDisconnected, oneWeekMs)) {
+        // Stale is last disconnected date is more than a week ago
+        staleClientChannelIds.push(client.channel.id)
+      }
+    }
+
+    fileLogger.info(`Removing clients with channel ids: ${staleClientChannelIds.join(',')}.`)
+    for (const channelId of staleClientChannelIds) {
+      this.#clients.delete(channelId)
+    }
+    await DB.removeActiveMultiworlds(staleClientChannelIds)
+    this.#multiworlds = await DB.getActiveMultiworlds()
   }
 
   isChannelOfExistingMultiworld(channelId: DC.Snowflake) {

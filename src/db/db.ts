@@ -181,6 +181,12 @@ export async function removeActiveMultiworld(guildId: DC.Snowflake, channelId: D
   await db.write()
 }
 
+export async function removeActiveMultiworlds(channelIds: DC.Snowflake[]) {
+  const channelIdsSet = new Set(channelIds)
+  db.data.activeMultiworlds = db.data.activeMultiworlds.filter(w => !(channelIdsSet.has(w.channelId)))
+  await db.write()
+}
+
 export function getActiveMultiworlds() {
   return db.data.activeMultiworlds
 }
