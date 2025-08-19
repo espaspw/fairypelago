@@ -17,6 +17,11 @@ function formatItemTagList(item: Item) {
   return tokens.join(' ')
 }
 
+const forwardedMsgRegex = /\[[a-zA-Z0-9_\.]+\] :: .*/
+function isForwardedMessage(message: string) {
+  return forwardedMsgRegex.test(message)
+}
+
 export class ArchipelagoEventFormatter {
   #guildId: Snowflake
 
@@ -112,7 +117,7 @@ export class ArchipelagoEventFormatter {
 
   chat(content: string, player: Player): MessageCreateOptions | null {
     // Prevent triggering on forwarded messages from discord
-    if (content.includes('[DISCORD]')) return null;
+    if (isForwardedMessage(content)) return null;
 
     const embed = new EmbedBuilder()
       .setColor(0xDBABBE)
