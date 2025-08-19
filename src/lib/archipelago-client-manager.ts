@@ -16,7 +16,7 @@ export class ArchipelagoClientManager {
   private #multiworlds: DB.DBActiveMultiworld[] = []
 
   private async #createClientFromDbMultiworld(discordClient: DC.Client, multiworld: DB.DBActiveMultiworld) {
-    const { guildId, channelId, roomData, createdAt } = multiworld
+    const { guildId, channelId, roomData, createdAt, lastConnected, lastDisconnected } = multiworld
     const guild = await discordClient.guilds.fetch(guildId)
     if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
     const channel = await guild.channels.fetch(channelId)
@@ -28,6 +28,8 @@ export class ArchipelagoClientManager {
       { whitelistedMessageTypes, enableGameIcons: true, enableItemIcons: true, hideFoundHints: true }
     )
     client.createdAt = createdAt
+    client.lastConnected = lastConnected ?? null
+    client.lastDisconnected = lastDisconnected ?? null
     return client
   }
 

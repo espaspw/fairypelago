@@ -22,6 +22,8 @@ export interface DBActiveMultiworld {
   channelId: DC.Snowflake
   roomData: ArchipelagoRoomData
   createdAt: Date
+  lastConnected?: Date
+  lastDisconnected?: Date
 }
 
 export interface DBData {
@@ -181,4 +183,16 @@ export async function removeActiveMultiworld(guildId: DC.Snowflake, channelId: D
 
 export function getActiveMultiworlds() {
   return db.data.activeMultiworlds
+}
+
+export function setLastConnected(guildId: DC.Snowflake, channelId: DC.Snowflake, lastConnected: Date) {
+  const idx = db.data.activeMultiworlds.findIndex(w => w.guildId === guildId && w.channelId === channelId)
+  if (idx === -1) return;
+  db.data.activeMultiworlds[idx].lastConnected = lastConnected
+}
+
+export function setLastDisconnected(guildId: DC.Snowflake, channelId: DC.Snowflake, lastDisconnected: Date) {
+  const idx = db.data.activeMultiworlds.findIndex(w => w.guildId === guildId && w.channelId === channelId)
+  if (idx === -1) return;
+  db.data.activeMultiworlds[idx].lastDisconnected = lastDisconnected
 }

@@ -1,6 +1,7 @@
 import { Client as ArchClient, DataPackage, Item, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
+import * as DB from '../db/db'
 import { ArchipelagoMessageType, ItemCounts, LocationCounts, type ArchipelagoRoomData } from '../types/archipelago-types'
 import { ArchipelagoEventFormatter } from './archipelago-event-formatter'
 import { catchAndLogError } from './util/general'
@@ -53,6 +54,8 @@ export class ArchipelagoClientWrapper {
   private #whitelistedTypes: Set<ArchipelagoMessageType>
   private #options: ClientOptions
   private #createdAt: Date = new Date()
+  private #lastConnected: Date | null = null
+  private #lastDisconnected: Date | null = null
   private #dataPackage: DataPackage | null = null
 
   // Quick lookups when a user goals. Mainly used to prevent
@@ -111,6 +114,8 @@ export class ArchipelagoClientWrapper {
       consoleLogger.info(logMessage)
       fileLogger.info(logMessage)
       await this.fetchPackage()
+      this.#lastConnected = new Date()
+      await DB.setLastConnected(this.#discordChannel.guildId, this.#discordChannel.id, this.#lastConnected)
       return true
     } catch (err) {
       if (err instanceof SocketError && err.message.includes('Failed to connect to Archipelago server.')) {
@@ -118,7 +123,6 @@ export class ArchipelagoClientWrapper {
         consoleLogger.info(logMessage)
         fileLogger.info(logMessage)
         this.lastError = err
-        return false
       }
       this.state = ClientState.Stopped
       return false
@@ -182,6 +186,22 @@ export class ArchipelagoClientWrapper {
     this.#createdAt = _createdAt
   }
 
+  get lastConnected(): Date | null {
+    return this.#lastConnected
+  }
+
+  set lastConnected(_lastConnected: Date) {
+    this.#lastConnected = _lastConnected
+  }
+
+  get lastDisconnected(): Date | null {
+    return this.#lastDisconnected
+  }
+
+  set lastDisconnected(_lastDisconnected: Date) {
+    this.#lastConnected = _lastDisconnected
+  }
+
   get client() {
     return this.#client
   }
@@ -200,9 +220,11 @@ export class ArchipelagoClientWrapper {
 
   attachListeners() {
     this.#client.socket.on('disconnected', async () => {
-      this.state = ClientState.Stopped
-      await this.#discordChannel.send('Connection to server ended. I\'ll periodically attempt to reconnect, or tell me "restart" to attempt it any time.')
       fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) disconnected.`)
+      this.state = ClientState.Stopped
+      this.#lastDisconnected = new Date()
+      await this.#discordChannel.send('Connection to server ended. I\'ll periodically attempt to reconnect, or tell me "restart" to attempt it any time.')
+      await DB.setLastConnected(this.#discordChannel.guildId, this.#discordChannel.id, this.#lastDisconnected)
     })
 
     this.#client.socket.on('invalidPacket', (packet) => {
