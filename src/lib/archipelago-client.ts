@@ -1,4 +1,4 @@
-import { Client as ArchClient, DataPackage, Item, SocketError } from 'archipelago.js'
+import { Client as ArchClient, DataPackage, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
 import * as DB from '../db/db'
