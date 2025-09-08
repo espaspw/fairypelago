@@ -155,12 +155,13 @@ const lmIcons: IconMatcher[] = [
 ]
 
 const mfIcons: IconMatcher[] = [
-  { pattern: ['Missle Tank'], emoji: 'mf_missiletank' },
+  { pattern: ['Missile Tank'], emoji: 'mf_missiletank' },
   { pattern: ['Energy Tank'], emoji: 'mf_energytank' },
   { pattern: ['Power Bomb Tank'], emoji: 'mf_powerbombtank' },
   { pattern: ['Infant Metroid'], emoji: 'mf_infantmetroid' },
   { pattern: ['Bomb Data'], emoji: 'mf_bombdata' },
   { pattern: ['Power Bomb Data'], emoji: 'mf_powerbombdata' },
+  { pattern: ['Missile Data'], emoji: 'mf_missiledata' },
   { pattern: ['Morph Ball'], emoji: 'mf_morphball' },
   { pattern: ['Charge Beam'], emoji: 'mf_chargebeam' },
   { pattern: ['Hi-Jump'], emoji: 'mf_hijump' },
@@ -171,7 +172,7 @@ const mfIcons: IconMatcher[] = [
   { pattern: ['Level 3 Keycard'], emoji: 'mf_level3keycard' },
   { pattern: ['Level 4 Keycard'], emoji: 'mf_level4keycard' },
   { pattern: ['Varia Suit'], emoji: 'mf_variasuit' },
-  { pattern: ['Ice Missile'], emoji: 'mf_icebeam' },
+  { pattern: ['Ice Missile'], emoji: 'mf_icemissile' },
   { pattern: ['Wide Beam'], emoji: 'mf_widebeam' },
   { pattern: ['Space Jump'], emoji: 'mf_spacejump' },
   { pattern: ['Plasma Beam'], emoji: 'mf_plasmabeam' },
