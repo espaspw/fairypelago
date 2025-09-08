@@ -158,6 +158,32 @@ export class ArchipelagoClientWrapper {
     return Object.keys(this.#dataPackage.games[gameName]['location_name_to_id'])
   }
 
+  getLocationIdToNameMap(gameName: string) {
+    if (!this.#dataPackage) return [];
+    const gamePackage = this.#dataPackage.games[gameName]
+    if (!gamePackage) return [];
+    const nameToId = this.#dataPackage.games[gameName]['location_name_to_id']
+    const inverseMap: Record<number, string> = {}
+    for (const [name, id] of Object.entries(nameToId)) {
+      inverseMap[id] = name
+    }
+    return inverseMap
+  }
+
+  getMissingLocations(gameName: string) {
+    const allLocationIds = this.#client.room.allLocations
+    const checkedLocationIds = new Set(this.#client.room.checkedLocations)
+    const locationIdToNames = this.getLocationIdToNameMap(gameName)
+    const missingLocations: string[] = []
+    for (const id of allLocationIds) {
+      if (checkedLocationIds.has(id)) continue;
+      const name = locationIdToNames[id]
+      if (!name) continue;
+      missingLocations.push(name)
+    }
+    return missingLocations
+  }
+
   getItemCounts() {
     if (!this.#dataPackage) return {};
     const output: ItemCounts = {}

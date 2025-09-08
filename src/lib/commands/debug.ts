@@ -34,9 +34,32 @@ const debug: Command = {
           await message.reply('No clients found.')
           return;
         }
-        const statuses = clients.map(c => `- Channel: ${c.channel.id} | State: ${c.state} | Err: ${c.lastError?.message ?? 'N/A'}`)
+        const statuses = clients.map(c => {
+          const cols = []
+          if (c.channel.guildId !== message.guildId)
+            cols.push(`\`${message.guild.name}\``);
+          cols.push(c.channel.url)
+          cols.push(`Cr <t:${Math.floor(new Date(c.createdAt).getTime() / 1000)}>`)
+          if (c.lastConnected)
+            cols.push(`Cn <t:${Math.floor(new Date(c.lastConnected / 1000).getTime())}>`);
+          if (c.lastDisconnected)
+            cols.push(`Dc <t:${Math.floor(new Date(c.lastDisconnected / 1000).getTime())}>`);
+          cols.push(`State: \`${c.state}\``)
+          if (c.lastError)
+            cols.push(`Err: \`${c.lastError.message}\``)
+          return `- ${cols.join(' ')}`
+        })
         await message.reply(statuses.join('\n'))
       }
+    } else if (subcommand === 'missing') {
+      const guildId = (flags.guildId as string) ?? message.guildId
+      const clients = archClients._getClients(guildId)
+      const first = clients[0]
+      if (!first) return;
+      const games = first.getGameList()
+      await first.fetchPackage()
+      await message.reply(games.join(', ') ?? 'None')
+      await message.reply(first.getMissingLocations(games[0]))
     }
   },
 }
