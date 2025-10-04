@@ -135,6 +135,13 @@ export class ArchipelagoClientManager {
     return StartClientStatus.Failed
   }
 
+  async removeClient(channelId: DC.Snowflake) {
+    fileLogger.info(`Removing client with channel id: ${channelId}.`)
+    this.#clients.delete(channelId)
+    await DB.removeActiveMultiworlds([channelId])
+    this.#multiworlds = await DB.getActiveMultiworlds()
+  }
+
   getItemCounts(channelId: DC.Snowflake) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);

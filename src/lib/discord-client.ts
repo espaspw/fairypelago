@@ -99,6 +99,9 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         } else {
           await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
         }
+      } else if (message.content.toLowerCase().startsWith('this world is finished')) {
+        await archClients.removeClient(message.channelId)
+        await message.reply("Alright, I'll stop tracking this room.")
       } else {
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
         const res = await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)
