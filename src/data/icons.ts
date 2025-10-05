@@ -546,7 +546,7 @@ const ttIcons: IconMatcher[] = [
   ], emoji: 'tt_sellbot' },
   { pattern: [
     'CBHQ Access Key',
-    `/.Office.*/`,
+    /.*Mint Key/,
   ], emoji: 'tt_cashbot' },
   { pattern: [
     'LBHQ Access Key',
