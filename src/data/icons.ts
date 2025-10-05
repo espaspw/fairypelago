@@ -671,7 +671,7 @@ export const gameIcons: GameIcons = {
   'Metroid Fusion': 'mf',
   'Metroid Zero Mission': 'mzm',
   'Risk of Rain 2': 'ror2',
-  'Super Mario 64': 'sm64',
+  'Super Mario 64': 'sm64alt',
   'Super Mario Sunshine': 'sms',
   'Super Mario World': 'smw',
   'Super Metroid': 'sm',
