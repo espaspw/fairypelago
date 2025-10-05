@@ -75,7 +75,9 @@ export class ArchipelagoClientManager {
       }
     }
 
-    fileLogger.info(`Removing clients with channel ids: ${staleClientChannelIds.join(',')}.`)
+    if (staleClientChannelIds.length > 0) {
+      fileLogger.info(`Removing clients with channel ids: ${staleClientChannelIds.join(',')}.`)
+    }
     for (const channelId of staleClientChannelIds) {
       this.#clients.delete(channelId)
     }
