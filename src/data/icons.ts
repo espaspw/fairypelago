@@ -531,7 +531,7 @@ const ttIcons: IconMatcher[] = [
   { pattern: ['Throw Training Frame'], emoji: 'tt_throwtrainingframe' },
   { pattern: ['Squirt Training Frame'], emoji: 'tt_squirttrainingframe' },
   { pattern: ['Drop Training Frame'], emoji: 'tt_droptrainingframe' },
-  { pattern: [/.Organic.*/], emoji: 'tt_organicupgrade' },
+  { pattern: [/Organic.*/], emoji: 'tt_organicupgrade' },
   { pattern: [/.*Gag Capacity/], emoji: 'tt_gagcapacity' },
   { pattern: [/.*Gag XP Multiplier/], emoji: 'tt_gagxpmultiplier' },
   { pattern: ['TTC Access Key'], emoji: 'tt_ttcaccesskey' },
@@ -550,7 +550,7 @@ const ttIcons: IconMatcher[] = [
   ], emoji: 'tt_cashbot' },
   { pattern: [
     'LBHQ Access Key',
-    /.Office.*/,
+    /Office.*/,
   ], emoji: 'tt_lawbot' },
   { pattern: [
     'BBHQ Access Key',
@@ -700,7 +700,7 @@ export const itemIcons: ItemIcons = {
   'SMZ3': smz3Icons,
   'The Wind Waker': twwIcons,
   'Toontown': ttIcons,
-  'Wario Land 4': twwIcons,
+  'Wario Land 4': wl4Icons,
   'Yacht Dice': yachtDiceIcons,
 }
 
