@@ -521,9 +521,9 @@ const ttIcons: IconMatcher[] = [
   { pattern: ['Progressive Task Capacity'], emoji: 'tt_progressivetaskcapacity' },
   { pattern: ['Progressive Fishing Rod'], emoji: 'tt_progressivefishingrod' },
   { pattern: [
-    "Fish"
+    'Fish',
     /.*Fishing License/,
-   ], emoji: 'tt_fishinglicense' },
+  ], emoji: 'tt_fishinglicense' },
   { pattern: ['Toon-Up Training Frame'], emoji: 'tt_toonuptrainingframe' },
   { pattern: ['Trap Training Frame'], emoji: 'tt_traptrainingframe' },
   { pattern: ['Lure Training Frame'], emoji: 'tt_luretrainingframe' },
