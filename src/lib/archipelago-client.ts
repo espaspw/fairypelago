@@ -199,7 +199,7 @@ export class ArchipelagoClientWrapper {
     const output: LocationCounts = {}
     const games = this.getGameList()
     for (const game of games) {
-      output[game] = this.getLocationList(game)?.length ?? 0
+      output[game] = this.getMissingLocations(game)?.length ?? 0
     }
     return output
   }
