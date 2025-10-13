@@ -78,7 +78,7 @@ export async function removeAllEmojisForPlayerAlias(guildId: DC.Snowflake) {
 }
 
 export function getFlag(guildId: DC.Snowflake, flagName: SupportedFlags): boolean {
-  return db.data.guildSettings[guildId]?.flags[flagName] ?? false
+  return db.data.guildSettings[guildId]?.flags?.[flagName] ?? false
 }
 
 export async function enableFlag(guildId: DC.Snowflake, flagName: SupportedFlags) {
