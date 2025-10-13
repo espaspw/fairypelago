@@ -63,7 +63,9 @@ export class ArchipelagoClientManager {
       if (client.state === ClientState.Running) {
         continue;
       }
-      if (!client.lastConnected && !client.lastDisconnected && dateIsOlderThan(client.createdAt, twoWeeksMs)) {
+      if (client.isComplete) {
+        staleClientChannelIds.push(client.channel.id)
+      } else if (!client.lastConnected && !client.lastDisconnected && dateIsOlderThan(client.createdAt, twoWeeksMs)) {
         // If no connection dates except created at, mark stale client if created more than two weeks ago
         staleClientChannelIds.push(client.channel.id)
       } else if (client.lastConnected && !client.lastDisconnected && dateIsOlderThan(client.lastConnected, twoWeeksMs)) {

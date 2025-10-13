@@ -1,4 +1,4 @@
-import { Client as ArchClient, DataPackage, SocketError } from 'archipelago.js'
+import { Client as ArchClient, clientStatuses, DataPackage, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
 import * as DB from '../db/db'
@@ -56,6 +56,7 @@ export class ArchipelagoClientWrapper {
   private #createdAt: Date = new Date()
   private #lastConnected: Date | null = null
   private #lastDisconnected: Date | null = null
+  private #isComplete: boolean = false
   private #dataPackage: DataPackage | null = null
 
   // Quick lookups when a user goals. Mainly used to prevent
@@ -137,6 +138,17 @@ export class ArchipelagoClientWrapper {
     const dataPackage = await this.#client.package.exportPackage()
     this.#dataPackage = dataPackage
     return dataPackage
+  }
+
+  async isEveryoneGoaled() {
+    const slots = this.#client.players.slots
+    for (const slotId of Object.keys(slots)) {
+      const player = this.#client.players.findPlayer(Number.parseInt(slotId))
+      if (!player) continue;
+      const status = await player.fetchStatus()
+      if (status !== clientStatuses.goal) return false;
+    }
+    return true
   }
 
   getGameList() {
@@ -228,6 +240,14 @@ export class ArchipelagoClientWrapper {
     this.#lastConnected = _lastDisconnected
   }
 
+  get isComplete(): boolean {
+    return this.#isComplete
+  }
+
+  set isComplete(_isComplete: boolean) {
+    this.#isComplete = _isComplete
+  }
+
   get client() {
     return this.#client
   }
@@ -249,8 +269,15 @@ export class ArchipelagoClientWrapper {
       fileLogger.warn(`Websocket for client on channel (${this.#discordChannel.id}) disconnected.`)
       this.state = ClientState.Stopped
       this.#lastDisconnected = new Date()
-      await this.#discordChannel.send('Connection to server ended. I\'ll periodically attempt to reconnect, or tell me "restart" to attempt it any time.')
-      await DB.setLastConnected(this.#discordChannel.guildId, this.#discordChannel.id, this.#lastDisconnected)
+      await DB.setLastDisconnected(this.#discordChannel.guildId, this.#discordChannel.id, this.#lastDisconnected)
+      if (this.isComplete) return;
+      const isEveryoneGoaled = await this.isEveryoneGoaled()
+      if (isEveryoneGoaled) {
+        this.isComplete = true
+        await this.#discordChannel.send('It seems everyone has goaled, so I\'ll stop tracking this room.')
+      } else {
+        await this.#discordChannel.send('Connection to server ended. I\'ll periodically attempt to reconnect, or tell me "restart" to attempt it any time.')
+      }
     })
 
     this.#client.socket.on('invalidPacket', (packet) => {
