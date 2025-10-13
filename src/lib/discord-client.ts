@@ -102,6 +102,20 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
       } else if (message.content.toLowerCase().startsWith('this world is finished')) {
         await archClients.removeClient(message.channelId)
         await message.reply("Alright, I'll stop tracking this room.")
+      } else if (message.content.toLowerCase().startsWith('hint')) {
+        const playerName = message.content.split(' ').splice(1).join(' ')
+        if (playerName.trim() === '') {
+          await message.reply('I need a player name like "hint <player>".')
+          return;
+        }
+        const hints = await archClients.getPlayerHints(message.channelId, playerName)
+        if (hints === null) {
+          await message.reply(`I couldn't find a player named "${playerName}"...`)
+        } else if (hints.length === 0) {
+          await message.reply(`There aren't any unfound hints for this player yet.`)
+        } else {
+          await message.reply(hints.map(hint => `- **${hint.item.name}** at **${hint.item.locationName}** in __${hint.item.sender.alias}__'s world (${hint.item.flags})`).join('\n'))
+        }
       } else {
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
         const res = await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)

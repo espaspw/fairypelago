@@ -140,6 +140,19 @@ export class ArchipelagoClientWrapper {
     return dataPackage
   }
 
+  async getPlayerHints(playerName: string, onlyNotFound = true) {
+    const slots = this.#client.players.slots
+    for (const slotId of Object.keys(slots)) {
+      const player = this.#client.players.findPlayer(Number.parseInt(slotId))
+      if (!player) continue;
+      if (!(player.name === playerName)) continue;
+      const hints = await player.fetchHints()
+      if (!onlyNotFound) return hints;
+      return hints.filter(hint => !hint.found)
+    }
+    return null
+  }
+
   async isEveryoneGoaled() {
     const slots = this.#client.players.slots
     for (const slotId of Object.keys(slots)) {

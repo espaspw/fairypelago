@@ -146,6 +146,13 @@ export class ArchipelagoClientManager {
     this.#multiworlds = await DB.getActiveMultiworlds()
   }
 
+  async getPlayerHints(channelId: DC.Snowflake, playerName: string) {
+    const archClient = this.#clients.get(channelId)
+    if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
+    const playerHints = await archClient.getPlayerHints(playerName)
+    return playerHints
+  }
+
   getItemCounts(channelId: DC.Snowflake) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
