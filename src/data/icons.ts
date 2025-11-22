@@ -282,6 +282,7 @@ const mfIcons: IconMatcher[] = [
 const mlssIcons: IconMatcher[] = [
   { pattern: ['5 Coins'], emoji: 'mlss_coins' },
   { pattern: [/.*Mushroom/,], emoji: 'mlss_mushroom' },
+  { pattern: [/.*Nuts/,], emoji: 'mlss_nuts' },
   { pattern: [/.*Syrup/,], emoji: 'mlss_syrup' },
   { pattern: ['1-UP Mushroom'], emoji: 'mlss_1up' },
   { pattern: ['1-UP Super'], emoji: 'mlss_1up' },
