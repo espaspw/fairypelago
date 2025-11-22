@@ -77,6 +77,17 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         } else {
           message.react('☑️')
         }
+      } else if (message.content.toLowerCase().startsWith('debug')) {
+        const clients = archClients._getClients(message.guildId, message.channelId)
+        if (!client) return;
+        const games = client[0].getGameList()
+        await message.reply(`State: ${clients[0].state}
+          CreatedAt: ${new Date(clients[0].createdAt).toDateString()}
+          Last Conn: ${new Date(clients[0].lastConnected).toDateString()}
+          Last Disconn: ${new Date(clients[0].lastDisconnected).toDateString()}
+          Games: ${games.join('|')}
+          isGoaled: ${await client[0].isEveryoneGoaled()}
+        `)
       } else if (message.content.toLowerCase().startsWith('find')) {
         const itemNameQuery = message.content.split(' ').splice(1).join(' ')
         const dataPackage = await archClients.fetchPackage(message.channelId)
