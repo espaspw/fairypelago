@@ -304,7 +304,7 @@ const mlssIcons: IconMatcher[] = [
   { pattern: ["Peasley's Rose"], emoji: 'mlss_peasleyrose' },
   { pattern: ['Beanbean Brooch'], emoji: 'mlss_beanbeanbrooch' },
   { pattern: ['Red Goblet'], emoji: 'mlss_redgoblet' },
-  { pattern: ['Green Goblet'], emoji: 'mlss_redgoblet' },
+  { pattern: ['Green Goblet'], emoji: 'mlss_greengoblet' },
   { pattern: ['Red Chuckola Fruit'], emoji: 'mlss_redchuckolafruit' },
   { pattern: ['White Chuckola Fruit'], emoji: 'mlss_whitechuckolafruit' },
   { pattern: ['Purple Chuckola Fruit'], emoji: 'mlss_purplechuckolafruit' },
