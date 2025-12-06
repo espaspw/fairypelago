@@ -681,6 +681,7 @@ const pikmin2Icons: IconMatcher[] = [
   { pattern: ['Comedy Bomb'], emoji: 'pikmin2_comedybomb' },
   { pattern: ['Dream Material'], emoji: 'pikmin2_dreammaterial' },
   { pattern: ['Five-man Napsack'], emoji: 'pikmin2_fivemannapsack' },
+  { pattern: ['Flare Cannon'], emoji: 'pikmin2_flarecannon' },
   { pattern: ['Forged Courage'], emoji: 'pikmin2_forgedcourage' },
   { pattern: ['Geographic Projection'], emoji: 'pikmin2_geographicprojection' },
   { pattern: ['Justice Alloy'], emoji: 'pikmin2_justicealloy' },
