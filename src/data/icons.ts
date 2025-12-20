@@ -770,7 +770,6 @@ const oot_sohIcons: IconMatcher[] = [
 ]
 
 const ppwiiIcons: IconMatcher[] = [
-  emoji:  },
   { pattern: [/.*Friendship/,], emoji: 'ppwii_friendship' },
   { pattern: [/.*Berries/,], emoji: 'ppwii_berries' },
   { pattern: [/.*Prisma/,], emoji: 'ppwii_prisma' },
