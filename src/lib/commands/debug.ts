@@ -1,5 +1,6 @@
 import { Command } from '../../types/command'
 import { extractFlags } from '../util/command-utils'
+import { replyWithError } from '../util/message-utils';
 
 const debug: Command = {
   name: 'debug',
@@ -41,9 +42,9 @@ const debug: Command = {
           cols.push(c.channel.url)
           cols.push(`Cr <t:${Math.floor(new Date(c.createdAt).getTime() / 1000)}>`)
           if (c.lastConnected)
-            cols.push(`Cn <t:${Math.floor(new Date(c.lastConnected / 1000).getTime())}>`);
+            cols.push(`Cn <t:${Math.floor(new Date(c.lastConnected.getTime() / 1000).getTime())}>`);
           if (c.lastDisconnected)
-            cols.push(`Dc <t:${Math.floor(new Date(c.lastDisconnected / 1000).getTime())}>`);
+            cols.push(`Dc <t:${Math.floor(new Date(c.lastDisconnected.getTime() / 1000).getTime())}>`);
           cols.push(`State: \`${c.state}\``)
           if (c.lastError)
             cols.push(`Err: \`${c.lastError.message}\``)

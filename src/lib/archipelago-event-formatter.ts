@@ -29,19 +29,19 @@ export class ArchipelagoEventFormatter {
     this.#guildId = guildId
   }
 
-  private #formatGame(item: Item) {
+  #formatGame(item: Item) {
     const r = IconLookupTable.lookupGame(item.sender.game)
     if (r === null) return item.sender.game;
     return r
   }
 
-  private #formatItem(item: Item) {
+  #formatItem(item: Item) {
     const r = IconLookupTable.lookupItem(item.game, item.name)
     if (r === null) return item.name;
     return `${r} ${item.name}`
   }
-  
-  private #formatPlayer(alias: string) {
+
+  #formatPlayer(alias: string) {
     const shouldReplace = DB.getFlag(this.#guildId, 'replace-alias-with-emoji-if-exists')
     const playerEmoji = DB.getEmojiForPlayerAlias(this.#guildId, alias)
     if (!playerEmoji) return `__${alias}__`;
@@ -53,7 +53,7 @@ export class ArchipelagoEventFormatter {
   }
 
   connected(content: string, player: Player, tags: string[]): MessageCreateOptions | null {
-    if(tags.includes('Discord')) return null; // Prevent triggering on its own join
+    if (tags.includes('Discord')) return null; // Prevent triggering on its own join
     const descriptionTokens = [`${makeTimestamp()} | **${this.#formatPlayer(player.alias)}** playing __${player.game}__ has joined.`]
     if (tags.length !== 0) { descriptionTokens.push(`(${tags.join(', ')})`) }
     const embed = new EmbedBuilder()
@@ -76,7 +76,7 @@ export class ArchipelagoEventFormatter {
       if (item.sender.slot === item.receiver.slot) {
         return `> ${formatItemTagList(item)} ${this.#formatPlayer(item.sender.alias)} found **${this.#formatItem(item)}**`
       } else {
-        return `> ${formatItemTagList(item)} ${this.#formatPlayer(item.sender.alias)} sent **${this.#formatItem(item)}** to ${this.#formatPlayer(item.receiver.alias)}` 
+        return `> ${formatItemTagList(item)} ${this.#formatPlayer(item.sender.alias)} sent **${this.#formatItem(item)}** to ${this.#formatPlayer(item.receiver.alias)}`
       }
     })()
     return { content: [header, body].join('\n') }
@@ -135,7 +135,7 @@ export class ArchipelagoEventFormatter {
   userCommand(content: string): MessageCreateOptions {
     const embed = new EmbedBuilder()
       .setColor(0xDBABBE)
-      .setDescription(`${makeTimestamp()} | **${player.alias}** :: ${content}`)
+      .setDescription(`${makeTimestamp()} | **USER** :: ${content}`)
     return { embeds: [embed] }
   }
 

@@ -15,7 +15,7 @@ export async function loadJobs() {
     try {
       const job = (await import(`./jobs/${file.replace('.ts', '')}`)).default as Job
       jobs[job.name] = job
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }

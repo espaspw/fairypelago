@@ -30,7 +30,7 @@ const echo: Command = {
   },
   async execute(message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
-        && message.author.id !== process.env.OWNER_ID) {
+      && message.author.id !== process.env.OWNER_ID) {
       await replyWithError(message, 'Only admins can use this command.')
       return;
     }

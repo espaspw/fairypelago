@@ -51,18 +51,18 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         try {
           await command.execute(message, tokens, avaliableCommands, archClients)
           fileLogger.info(`Executed command (${commandName}) with args (${tokens})`)
-        } catch(err) {
+        } catch (err) {
           consoleLogger.error(err)
           fileLogger.error(err)
           message.react('❗')
         }
       }
     }
-  ))
+    ))
 
   // Handle forward of messages from a discord channel of an active multiworld
   discordClient.on(
-    DC.Events.MessageCreate, 
+    DC.Events.MessageCreate,
     catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
       if (message.author.id === discordClient.user.id) return;
       if (message.author.bot) return;
@@ -79,14 +79,14 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         }
       } else if (message.content.toLowerCase().startsWith('debug')) {
         const clients = archClients._getClients(message.guildId, message.channelId)
-        if (!client) return;
-        const games = client[0].getGameList()
+        if (!clients) return;
+        const games = clients[0].getGameList()
         await message.reply(`State: ${clients[0].state}
           CreatedAt: ${new Date(clients[0].createdAt).toDateString()}
-          Last Conn: ${new Date(clients[0].lastConnected).toDateString()}
-          Last Disconn: ${new Date(clients[0].lastDisconnected).toDateString()}
+          Last Conn: ${new Date(clients[0].lastConnected ?? 0).toDateString()}
+          Last Disconn: ${new Date(clients[0].lastDisconnected ?? 0).toDateString()}
           Games: ${games.join('|')}
-          isGoaled: ${await client[0].isEveryoneGoaled()}
+          isGoaled: ${await clients[0].isEveryoneGoaled()}
         `)
       } else if (message.content.toLowerCase().startsWith('find')) {
         const itemNameQuery = message.content.split(' ').splice(1).join(' ')
@@ -139,7 +139,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         }
       }
     }
-  ))
+    ))
 
   // Handle the initialization of one active multiworld
   discordClient.on(
@@ -204,7 +204,7 @@ export function makeDiscordClient(archClients: ArchipelagoClientManager) {
         fileLogger.info(`URL (${archRoomUrl.url}) posted outside log channel, forwarding link.`)
       }
     }
-  ))
+    ))
 
   return discordClient
 }

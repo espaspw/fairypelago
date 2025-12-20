@@ -41,6 +41,7 @@ const defaultCommandPrefix = '.'
 const createDefaultGuildSettingObject = (): DBGuildSettings => ({
   whitelistedMessageTypes: defaultWhitelistedTypes,
   playerAliasToEmoji: {},
+  flags: { 'replace-alias-with-emoji-if-exists': true },
 })
 
 const db = await JSONFilePreset('./storage/db.json', baseData)
@@ -122,7 +123,7 @@ export function getWhitelistedMessageTypes(guildId: DC.Snowflake): ArchipelagoMe
   return db.data.guildSettings[guildId]?.whitelistedMessageTypes ?? null
 }
 
-export async function addWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType) {
+export async function addWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType[]) {
   if (db.data.guildSettings[guildId] === undefined) {
     db.data.guildSettings[guildId] = createDefaultGuildSettingObject()
   }
@@ -130,7 +131,7 @@ export async function addWhitelistedMessageType(guildId: DC.Snowflake, ...messag
   await db.write()
 }
 
-export async function removeWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType) {
+export async function removeWhitelistedMessageType(guildId: DC.Snowflake, ...messageTypes: ArchipelagoMessageType[]) {
   if (db.data.guildSettings[guildId] === undefined) return;
 
   const currentTypes = new Set(db.data.guildSettings[guildId].whitelistedMessageTypes)

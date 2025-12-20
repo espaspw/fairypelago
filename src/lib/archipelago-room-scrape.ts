@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { parse } from 'node-html-parser'
-import { ArchipelagoRoomData, ArchipelagoRoomUrl } from '../types/archipelago-types'
+import { ArchipelagoRoomData, ArchipelagoRoomPlayerData, ArchipelagoRoomUrl } from '../types/archipelago-types'
 
 const ARCHIPELAGO_ROOM_REGEX = /^(http(s)?:\/\/)?archipelago.gg\/room\/[A-Za-z0-9\-_]{22}$/
 const PORT_CAPTURE_REGEX = /archipelago\.gg:([0-9]{4,5})/
 
-export function parseArchipelagoRoomUrl(url: string) : ArchipelagoRoomUrl | null {
+export function parseArchipelagoRoomUrl(url: string): ArchipelagoRoomUrl | null {
   const regexResult = ARCHIPELAGO_ROOM_REGEX.exec(url)
   if (regexResult === null) return null;
   return { url: regexResult[0] }
@@ -18,12 +18,12 @@ async function getRoomPageDom(url: string) {
   return dom
 }
 
-export async function getRoomData(archRoomUrl: ArchipelagoRoomUrl): ArchipelagoRoomData {
+export async function getRoomData(archRoomUrl: ArchipelagoRoomUrl): Promise<ArchipelagoRoomData> {
   const dom = await getRoomPageDom(archRoomUrl.url)
   const hostRoomInfo = dom.getElementById('host-room-info')
   if (hostRoomInfo === undefined)
     throw new Error('DOM retrieved had unexpected format: id="host-room-info" not found.')
-  const capture = PORT_CAPTURE_REGEX.exec(hostRoomInfo?.innerText)
+  const capture = PORT_CAPTURE_REGEX.exec(hostRoomInfo?.innerText ?? '')
   if (capture === null || capture.length != 2)
     throw new Error('DOM retrieved had unexpected format: Could not get port.')
   const port = capture[1]
@@ -31,7 +31,7 @@ export async function getRoomData(archRoomUrl: ArchipelagoRoomUrl): ArchipelagoR
   const tableRows = playerTable?.lastElementChild?.children
   if (tableRows === undefined)
     throw new Error('DOM retrieved had unexpected format: Slots table not found or malformed.')
-  const roomData: ArchipelagoRoomData = []
+  const roomData: ArchipelagoRoomPlayerData[] = []
   for (const row of tableRows) {
     const columns = row.children
     if (columns.length !== 5)

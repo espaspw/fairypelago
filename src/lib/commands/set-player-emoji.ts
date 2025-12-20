@@ -11,7 +11,7 @@ const setPlayerEmoji: Command = {
   usageHelpText: '- pe\n- pe get `player-alias`\n- pe set `player-alias` `emoji`\n- pe delete `player-alias`\n- pe delete-all\n- pe toggle-replace-name',
   async execute(message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
-        && message.author.id !== process.env.OWNER_ID) {
+      && message.author.id !== process.env.OWNER_ID) {
       await message.reply('Only admins can use this command.')
       return;
     }

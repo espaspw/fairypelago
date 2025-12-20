@@ -10,7 +10,7 @@ export function findAlias(commands: CommandLookup, alias: string) {
   return null
 }
 
-export function extractFlags(schema?: FlagSchema, tokens: string[]) {
+export function extractFlags(schema: FlagSchema | undefined, tokens: string[]) {
   if (!schema) return { flags: {}, splicedTokens: tokens, unknown: {} };
   const tokenCopy = [...tokens]
   const parsed = typeFlag(schema, tokenCopy)

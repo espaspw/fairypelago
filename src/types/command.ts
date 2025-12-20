@@ -23,7 +23,7 @@ export interface Command {
   execute: (
     discordMessage: OmitPartialGroupDMChannel<Message<boolean>>,
     tokens: string[],
-    commands?: CommandLookup,
+    commands: CommandLookup | undefined,
     archClients: ArchipelagoClientManager,
   ) => Promise<void>
   name: string

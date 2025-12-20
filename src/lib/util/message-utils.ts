@@ -1,4 +1,6 @@
-import { EmbedBuilder, Message } from 'discord.js'
+import { EmbedBuilder, Message, MessagePayload, MessageReplyOptions, OmitPartialGroupDMChannel } from 'discord.js'
+
+type DiscordMessageReplyFunc = (options: string | MessagePayload | MessageReplyOptions) => Promise<OmitPartialGroupDMChannel<Message<boolean>>>
 
 export function splitMessage(text: string, len = 2000) {
   if (text.length <= len) return [text];
@@ -9,13 +11,13 @@ export function splitMessage(text: string, len = 2000) {
   return output
 }
 
-export async function sendSplitDiscordTextMessage(method: (input: string) => Promise<void>, textMessage: string, len = 2000) {
+export async function sendSplitDiscordTextMessage(method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
   for (const part of splitMessage(textMessage, len)) {
     await method(part)
   }
 }
 
-export async function sendNewlineSplitDiscordTextMessage(method: (input: string) => Promise<void>, textMessage: string, len = 2000) {
+export async function sendNewlineSplitDiscordTextMessage(method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
   if (textMessage.length <= len) {
     await method(textMessage);
     return;
@@ -23,7 +25,7 @@ export async function sendNewlineSplitDiscordTextMessage(method: (input: string)
   const tokens = textMessage.split('\n')
   const output = []
   let runningLen = 0
-  let currMessageParts = []
+  let currMessageParts: string[] = []
   for (const token of tokens) {
     if (token.length >= len) {
       await sendSplitDiscordTextMessage(method, token, len)

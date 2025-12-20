@@ -5,11 +5,13 @@ export interface IconMatcher {
 
 export type DiscordEmojiString = string
 
+export interface LookupTableMatchers {
+  exactMatchers: { [key: string]: DiscordEmojiString }
+  regexMatchers: { r: RegExp, e: DiscordEmojiString }[]
+}
+
 export interface LookupTable {
-  [key: string]: {
-    exactMatchers: { [key: string]: DiscordEmojiString },
-    regexMatchers: { r: RegExp, e: DiscordEmojiString }[],
-  }
+  [key: string]: LookupTableMatchers
 }
 
 export type ItemTier = 'progression' | 'useful' | 'filler' | 'trap'

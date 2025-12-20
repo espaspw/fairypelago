@@ -20,16 +20,16 @@ function dateIsOlderThan(date: Date, ms: number) {
 }
 
 export class ArchipelagoClientManager {
-  private #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
-  private #multiworlds: DB.DBActiveMultiworld[] = []
+  #clients = new Map<DC.Snowflake, ArchipelagoClientWrapper>
+  #multiworlds: DB.DBActiveMultiworld[] = []
 
-  private async #createClientFromDbMultiworld(discordClient: DC.Client, multiworld: DB.DBActiveMultiworld) {
+  async #createClientFromDbMultiworld(discordClient: DC.Client, multiworld: DB.DBActiveMultiworld) {
     const { guildId, channelId, roomData, createdAt, lastConnected, lastDisconnected } = multiworld
     const guild = await discordClient.guilds.fetch(guildId)
     if (!guild) throw new Error(`Failed to find guild with id (${guildId})`);
-    const channel = await guild.channels.fetch(channelId)
+    const channel = await guild.channels.fetch(channelId) as DC.TextChannel | DC.PublicThreadChannel
     if (!channel) throw new Error(`Failed to find channel with id (${channelId}) in guild "${guild.name}" (${guildId})`);
-    const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? undefined
+    const whitelistedMessageTypes = await DB.getWhitelistedMessageTypes(guildId) ?? []
     const client = await this.createClient(
       channel,
       roomData,
@@ -109,7 +109,7 @@ export class ArchipelagoClientManager {
     return null
   }
 
-  async createClient(channel: DC.GuildBasedChannel, roomData: ArchipelagoRoomData, options?: ClientOptions) {
+  async createClient(channel: DC.TextChannel | DC.PublicThreadChannel, roomData: ArchipelagoRoomData, options?: ClientOptions) {
     const eventFormatter = new ArchipelagoEventFormatter(channel.guildId)
 
     const archClient = await ArchipelagoClientWrapper.makeClient(
@@ -160,7 +160,7 @@ export class ArchipelagoClientManager {
     return itemCounts
   }
 
-  getItemList(channelId: DC.Snowflake, gameName?: string) {
+  getItemList(channelId: DC.Snowflake, gameName: string) {
     const archClient = this.#clients.get(channelId)
     if (archClient === undefined) throw new Error(`No client found for channel id (${channelId})`);
     return archClient.getItemList(gameName)

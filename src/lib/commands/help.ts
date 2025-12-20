@@ -46,7 +46,7 @@ const help: Command = {
       for (const command of Object.values(commands)) {
         if (flags.category === '__default' && command.categories.includes('Admin')) continue;
         if (flags.category !== 'all' && flags.category !== '__default'
-            && !command.categories.find(c => (c.toLocaleLowerCase() === flags.category))) continue;
+          && !command.categories.find(c => (c.toLocaleLowerCase() === flags.category))) continue;
         if (seen.has(command.name)) continue;
         seen.add(command.name)
         commandList.push(`> ${command.name}: ${command.aliases.join(', ')}\n-# ${command.description ?? 'No description'}`)

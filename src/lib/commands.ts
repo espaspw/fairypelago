@@ -4,7 +4,7 @@ import { Command, CommandLookup } from '../types/command'
 
 let avaliableCommands: CommandLookup = {}
 
-async function loadAvaliableCommands(): CommandLookup {
+async function loadAvaliableCommands(): Promise<CommandLookup> {
   avaliableCommands = {}
   const files = await fs.readdir(path.join(import.meta.dirname, 'commands'))
   for (const file of files) {
@@ -13,7 +13,7 @@ async function loadAvaliableCommands(): CommandLookup {
       command.aliases.forEach(alias => {
         avaliableCommands[alias] = command
       })
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }

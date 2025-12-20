@@ -1,4 +1,4 @@
-import { Client as ArchClient, clientStatuses, DataPackage, SocketError } from 'archipelago.js'
+import { Client as ArchClient, clientStatuses, DataPackage, MessageNode, Player, SocketError } from 'archipelago.js'
 import * as DC from 'discord.js'
 
 import * as DB from '../db/db'
@@ -45,23 +45,23 @@ export enum ClientState {
 }
 
 export class ArchipelagoClientWrapper {
-  private #client: ArchClient
-  private #roomData: ArchipelagoRoomData
-  private #discordChannel: DC.TextChannel | DC.PublicThreadChannel
-  private #eventFormatter: ArchipelagoEventFormatter
+  #client: ArchClient
+  #roomData: ArchipelagoRoomData
+  #discordChannel: DC.TextChannel | DC.PublicThreadChannel
+  #eventFormatter: ArchipelagoEventFormatter
   state: ClientState = ClientState.Stopped
   lastError: Error | null = null
-  private #whitelistedTypes: Set<ArchipelagoMessageType>
-  private #options: ClientOptions
-  private #createdAt: Date = new Date()
-  private #lastConnected: Date | null = null
-  private #lastDisconnected: Date | null = null
-  private #isComplete: boolean = false
-  private #dataPackage: DataPackage | null = null
+  #whitelistedTypes: Set<ArchipelagoMessageType>
+  #options: ClientOptions
+  #createdAt: Date = new Date()
+  #lastConnected: Date | null = null
+  #lastDisconnected: Date | null = null
+  #isComplete: boolean = false
+  #dataPackage: DataPackage | null = null
 
   // Quick lookups when a user goals. Mainly used to prevent
   // message spam after a goal, so persistence not needed.
-  private #goalCache = new Set<string>()
+  #goalCache = new Set<string>()
 
   constructor(
     client: ArchClient,
@@ -82,7 +82,7 @@ export class ArchipelagoClientWrapper {
     channel: DC.TextChannel | DC.PublicThreadChannel,
     roomData: ArchipelagoRoomData,
     deps: ClientDeps,
-    options?: ClientOptions = defaultClientOptions,
+    options: ClientOptions = defaultClientOptions,
   ) {
     const client = new ArchClient()
     const wrapper = new this(client, roomData, channel, deps, options)
@@ -107,7 +107,7 @@ export class ArchipelagoClientWrapper {
       await this.#client.login(
         `archipelago.gg:${this.#roomData.port}`,
         this.#roomData.players[0].name,
-        null,
+        undefined,
         { tags: ['Discord', 'Tracker', 'TextOnly'] },
       )
       this.state = ClientState.Running
@@ -241,7 +241,7 @@ export class ArchipelagoClientWrapper {
     return this.#lastConnected
   }
 
-  set lastConnected(_lastConnected: Date) {
+  set lastConnected(_lastConnected: Date | null) {
     this.#lastConnected = _lastConnected
   }
 
@@ -249,7 +249,7 @@ export class ArchipelagoClientWrapper {
     return this.#lastDisconnected
   }
 
-  set lastDisconnected(_lastDisconnected: Date) {
+  set lastDisconnected(_lastDisconnected: Date | null) {
     this.#lastConnected = _lastDisconnected
   }
 
@@ -299,14 +299,14 @@ export class ArchipelagoClientWrapper {
     })
 
     this.#client.messages.on('connected', catchAndLogError(async (content, player, tags) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.Connected)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.Connected)) return;
       const responseMsg = this.#eventFormatter.connected(content, player, tags)
       if (responseMsg === null) return;
       await this.#discordChannel.send(responseMsg)
     }))
 
     this.#client.messages.on('disconnected', catchAndLogError(async (content, player) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.Disconnected)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.Disconnected)) return;
       await this.#discordChannel.send(this.#eventFormatter.disconnected(content, player))
     }))
 
@@ -333,29 +333,29 @@ export class ArchipelagoClientWrapper {
     }))
 
     this.#client.messages.on('chat', catchAndLogError(async (content, player) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.UserChat)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.UserChat)) return;
       const responseMsg = this.#eventFormatter.chat(content, player)
       if (responseMsg === null) return;
       await this.#discordChannel.send(responseMsg)
     }))
-    
+
     this.#client.messages.on('serverChat', catchAndLogError(async (content) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.ServerChat)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.ServerChat)) return;
       await this.#discordChannel.send(this.#eventFormatter.serverChat(content))
     }))
 
     this.#client.messages.on('userCommand', catchAndLogError(async (content) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.UserCommand)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.UserCommand)) return;
       await this.#discordChannel.send(this.#eventFormatter.userCommand(content))
     }))
 
     this.#client.messages.on('adminCommand', catchAndLogError(async (content) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.ServerCommand)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.ServerCommand)) return;
       await this.#discordChannel.send(this.#eventFormatter.adminCommand(content))
     }))
 
     this.#client.messages.on('goaled', catchAndLogError(async (content, player) => {
-      if(!this.isWhitelisted(ArchipelagoMessageType.Goal)) return;
+      if (!this.isWhitelisted(ArchipelagoMessageType.Goal)) return;
       this.#goalCache.add(player.name)
       await this.#discordChannel.send(this.#eventFormatter.goaled(content, player))
     }))

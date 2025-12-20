@@ -1,5 +1,5 @@
 import { Client } from 'discord.js'
-import type { ItemTierIcons, ItemTier, GameIcons, ItemIcons, DiscordEmojiString, LookupTable } from '../types/icon-types'
+import type { ItemTierIcons, ItemTier, GameIcons, ItemIcons, DiscordEmojiString, LookupTable, LookupTableMatchers } from '../types/icon-types'
 
 let gameIconsText: GameIcons = {}
 let itemTierIconsText: ItemTierIcons = {}
@@ -10,7 +10,7 @@ let nameToEmojiString: Map<string, DiscordEmojiString> = new Map()
 function createLookupTable(itemIcons: ItemIcons) {
   const lookupTable: LookupTable = {}
   for (const [game, matchers] of Object.entries(itemIcons)) {
-    const gameTable = {
+    const gameTable: LookupTableMatchers = {
       exactMatchers: {},
       regexMatchers: [],
     }
@@ -35,13 +35,14 @@ export async function fetchApplicationEmojis(discordClient: Client) {
   const allEmojis = await discordClient.application?.emojis.fetch()
   const reverseMap = new Map<string, string>()
   for (const emoji of allEmojis.values()) {
+    if (!emoji.name) continue;
     reverseMap.set(emoji.name, emoji.toString())
   }
   nameToEmojiString = reverseMap
 }
 
 export function populateGameIcons(gameIcons: GameIcons) {
-  const output = {}
+  const output: GameIcons = {}
   for (const [itemName, emojiName] of Object.entries(gameIcons)) {
     const emojiString = nameToEmojiString.get(emojiName) ?? ''
     output[itemName] = emojiString
@@ -54,10 +55,10 @@ export function populateItemIcons(itemIcons: ItemIcons) {
 }
 
 export function populateItemTierIcons(itemTierIcons: ItemTierIcons) {
-  const output = {}
+  const output: ItemTierIcons = {}
   for (const [itemName, emojiName] of Object.entries(itemTierIcons)) {
     const emojiString = nameToEmojiString.get(emojiName) ?? ''
-    output[itemName] = emojiString
+    output[itemName as keyof ItemTierIcons] = emojiString
   }
   itemTierIconsText = output
 }
