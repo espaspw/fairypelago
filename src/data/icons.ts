@@ -28,7 +28,8 @@ const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Metro Ticket - Blue'], emoji: 'ahit_metroticketblue' },
   { pattern: ['Metro Ticket - Pink'], emoji: 'ahit_metroticketpink' },
   { pattern: [/Snatcher's Contract.*/], emoji: 'ahit_contract' },
-  { pattern: [/Zipline Unlock.*/], emoji: 'ahit_zipline' },
+  { pattern: [/Snatcher's Contract.*/], emoji: 'ahit_contract' },
+  { pattern: ['Progressive Painting Unlock'], emoji: 'ahit_painting' },
   { pattern: ['Baby Trap'], emoji: '' },
   { pattern: ['Laser Trap'], emoji: '' },
   { pattern: ['Parade Trap'], emoji: '' },
@@ -225,7 +226,12 @@ const lmIcons: IconMatcher[] = [
   { pattern: ["Mario's Star"], emoji: 'lm_mariostar' },
   { pattern: ["Mario's Shoe"], emoji: 'lm_marioshoe' },
   { pattern: ['Boo Radar'], emoji: 'lm_booradar' },
-  { pattern: ['Poltergust 4000'], emoji: 'lm_poltergust4000' },
+  {
+    pattern: [
+      'Poltergust 4000',
+      'Vacuum Upgrade',
+    ], emoji: 'lm_poltergust4000'
+  },
   { pattern: ['Gold Diamond'], emoji: 'lm_golddiamond' },
   { pattern: ['Progressive Flower'], emoji: 'lm_flower' },
   { pattern: [/.*Boo.*/], emoji: 'lm_boo' },
@@ -1161,7 +1167,7 @@ const smsIcons: IconMatcher[] = [
   { pattern: [/.*Ticket/], emoji: 'sms_areaticket' },
   { pattern: ['Shine Sprite'], emoji: 'sms_shinesprite' },
   { pattern: ['Blue Coin'], emoji: 'sms_bluecoin' },
-  { pattern: ['1-UP'], emoji: '' },
+  { pattern: ['1-UP'], emoji: 'sms_1up' },
 ]
 
 const smwIcons: IconMatcher[] = [
