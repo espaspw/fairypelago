@@ -6,23 +6,29 @@
   "type": "module",
   "scripts": {
     "start": "tsx --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"hot-esm\", pathToFileURL(\"./\"));' src/index.ts",
+    "migrate:up": "kysely migrate:up",
+    "migrate:down": "kysely migrate:down",
     "lint": "eslint src/"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@types/better-sqlite3": "^7.6.13",
     "eslint": "^9.32.0",
+    "kysely-ctl": "^0.20.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0"
   },
   "dependencies": {
     "archipelago.js": "^2.0.4",
     "axios": "^1.11.0",
+    "better-sqlite3": "^12.6.2",
     "discord.js": "^14.21.0",
     "dotenv": "^17.2.1",
-    "fuzzy-search": "^3.2.1",
+    "fast-fuzzy": "^1.12.0",
     "hot-esm": "^1.6.0",
+    "kysely": "^0.28.11",
     "lowdb": "^7.0.1",
     "node-html-parser": "^7.0.1",
     "normalize-url": "^8.0.2",

@@ -1,12 +1,12 @@
 /** Multiworld data taken from the room page */
-export interface ArchipelagoRoomData {
-  players: ArchipelagoRoomPlayerData[]
+export interface ArchipelagoScrapeRoomData {
+  players: ArchipelagoScrapeRoomPlayerData[]
   port: string
   roomUrl: string
 }
 
 /** Player data taken from the room page */
-export interface ArchipelagoRoomPlayerData {
+export interface ArchipelagoScrapeRoomPlayerData {
   id: string
   name: string
   game: string
@@ -14,9 +14,11 @@ export interface ArchipelagoRoomPlayerData {
   trackerPage: string
 }
 
-/** Type wrapper for a parsed archipelago.gg/room url */
-export interface ArchipelagoRoomUrl {
+/** Type wrapper for a parsed AP webhost room url */
+export interface ArchipelagoRoomData {
   url: string
+  domain: string
+  roomId: string
 }
 
 /** Enum representing possible message types from the archipelago websocket */
@@ -34,12 +36,4 @@ export enum ArchipelagoMessageType {
   UserCommand,
   ServerCommand,
   Goal
-}
-
-export type ItemCounts = {
-  [key: string]: number
-}
-
-export type LocationCounts = {
-  [key: string]: number
 }

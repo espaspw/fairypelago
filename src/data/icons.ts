@@ -1,4 +1,4 @@
-import { IconMatcher, GameIcons, ItemTierIcons, ItemIcons } from '../types/icon-types'
+import { IconMatcher, GameIcons, ItemTierIcons, ItemIcons } from '../types/icon-types.js'
 
 const ahitItemIcons: IconMatcher[] = [
   { pattern: ['Yarn'], emoji: 'ahit_yarn' },

@@ -1,13 +1,15 @@
 import * as DC from 'discord.js'
-import FuzzySearch from 'fuzzy-search'
-import * as DB from '../db/db'
-import { ArchipelagoClientManager, StartClientStatus } from './archipelago-client-manager'
-import { parseArchipelagoRoomUrl, getRoomData } from './archipelago-room-scrape'
-import { createRoomDataDisplay } from './discord-formatting'
-import { reloadAvaliableCommands, getAvaliableCommands } from './commands'
-import { catchAndLogError } from './util/general'
-import { consoleLogger, fileLogger } from './util/logger'
-import { sendNewlineSplitDiscordTextMessage, stripDiscordEmojis } from './util/message-utils'
+
+import { parseArchipelagoRoomUrl } from './util/archipelago-room-scrape.js'
+import { createRoomDataDisplay } from './util/discord-formatting.js'
+import { reloadAvaliableCommands, getAvaliableCommands } from './commands.js'
+import { catchAndLogError } from './util/general.js'
+import { logger } from './util/logger.js'
+import { replyWithError, stripDiscordEmojis } from './util/message-utils.js'
+import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
+import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
+import { sessionCommands } from './session-commands.js'
+import { ArchipelagoWebhostClient } from './archipelago-webhost-client.js'
 
 const intents = [
   DC.GatewayIntentBits.MessageContent,
@@ -16,195 +18,241 @@ const intents = [
   DC.GatewayIntentBits.GuildMembers,
 ]
 
-export function makeDiscordClient(archClients: ArchipelagoClientManager) {
-  const discordClient = new DC.Client({ intents })
+export class DiscordClient {
+  #client: DC.Client
 
-  discordClient.once(DC.Events.ClientReady, async (client) => {
-    consoleLogger.info(`Client ready as "${client.user.tag}"`)
-    fileLogger.info(`Client ready as "${client.user.tag}"`)
-    await reloadAvaliableCommands()
-    await archClients.initFromDb(discordClient)
-    await archClients.startAllClients()
-  })
+  constructor(
+    private sessionRegistry: ArchipelagoSessionRegistry,
+    private sessionRepo: ISessionRepository,
+    private settingsRepo: IGuildSettingsRepository,
+  ) {
+    this.#client = new DC.Client({ intents })
+  }
 
-  // Handle general bot commands
-  discordClient.on(
-    DC.Events.MessageCreate,
-    catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-      if (message.author.id === discordClient.user.id) return;
-      if (message.author.bot) return;
-      const commandPrefix = DB.getCommandPrefix(message.guildId)
-      if (!message.content.startsWith(commandPrefix)) return;
-      const truncatedMsg = message.content.substring(commandPrefix.length)
-      const tokens = truncatedMsg.split(' ')
-      const commandName = tokens.shift()?.toLocaleLowerCase()
-      const avaliableCommands = getAvaliableCommands()
-      if (commandName === 'reload' && message.author.id === process.env.OWNER_ID) {
-        await reloadAvaliableCommands()
-        await message.react('✅')
-        await new Promise(r => setTimeout(() => r(), 2000))
-        await message.delete()
-      } else if (!(commandName in avaliableCommands)) {
-        message.react('❓')
-      } else {
-        const command = avaliableCommands[commandName as string]
-        try {
-          await command.execute(message, tokens, avaliableCommands, archClients)
-          fileLogger.info(`Executed command (${commandName}) with args (${tokens})`)
-        } catch (err) {
-          consoleLogger.error(err)
-          fileLogger.error(err)
-          message.react('❗')
-        }
-      }
-    }
-    ))
+  async login(token: string) {
+    await this.#client.login(token)
+  }
 
-  // Handle forward of messages from a discord channel of an active multiworld
-  discordClient.on(
-    DC.Events.MessageCreate,
-    catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-      if (message.author.id === discordClient.user.id) return;
-      if (message.author.bot) return;
-      if (!archClients.isChannelOfExistingMultiworld(message.channelId)) return;
-      if (message.content.length <= 0) return;
-      if (message.content === 'restart') {
-        const startStatus = await archClients.startClient(message.channelId)
-        if (startStatus === StartClientStatus.Success) {
-          message.react('✔️')
-        } else if (startStatus === StartClientStatus.Failed) {
-          message.react('❌')
+  get client() {
+    return this.#client
+  }
+
+  registerListeners() {
+    this.#client.once(DC.Events.ClientReady, async (client) => {
+      logger.info(`Client ready`, { tag: client.user.tag })
+      await reloadAvaliableCommands()
+      await this.sessionRegistry.initFromDb(this.#client)
+      await Promise.all(this.sessionRegistry.getAllSessions().map(async session => {
+        if (!session.isSocketConnected) await session.start()
+      }))
+    })
+
+    // Handle general bot commands
+    this.#client.on(
+      DC.Events.MessageCreate,
+      catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
+        if (!this.#client.user) return;
+        if (message.author.id === this.#client.user.id) return;
+        if (message.author.bot) return;
+        if (!message.guildId) return;
+
+        const guildSettings = await this.settingsRepo.getSettings(message.guildId)
+        if (!message.content.startsWith(guildSettings.commandPrefix)) return;
+
+        const truncatedMsg = message.content.substring(guildSettings.commandPrefix.length)
+        const tokens = truncatedMsg.split(' ')
+        const commandName = tokens.shift()?.toLocaleLowerCase()
+        if (!commandName) return;
+
+        const avaliableCommands = getAvaliableCommands()
+
+        if (commandName === 'reload' && message.author.id === process.env.OWNER_ID) {
+          await reloadAvaliableCommands()
+          await message.react('✅')
+          await new Promise<void>(r => setTimeout(() => r(), 2000))
+          await message.delete()
+        } else if (!(commandName in avaliableCommands)) {
+          message.react('❓')
         } else {
-          message.react('☑️')
+          const command = avaliableCommands[commandName as string]
+          try {
+            await command.execute(message, tokens, avaliableCommands, {
+              sessionRegistry: this.sessionRegistry,
+              guildSettingsRepo: this.settingsRepo,
+              sessionRepo: this.sessionRepo,
+            })
+            logger.info(`Executed command`, { commandName, tokens })
+          } catch (err) {
+            logger.error(`Failed to execute command`, { err })
+            message.react('❗')
+          }
         }
-      } else if (message.content.toLowerCase().startsWith('debug')) {
-        const clients = archClients._getClients(message.guildId, message.channelId)
-        if (!clients) return;
-        const games = clients[0].getGameList()
-        await message.reply(`State: ${clients[0].state}
-          CreatedAt: ${new Date(clients[0].createdAt).toDateString()}
-          Last Conn: ${new Date(clients[0].lastConnected ?? 0).toDateString()}
-          Last Disconn: ${new Date(clients[0].lastDisconnected ?? 0).toDateString()}
-          Games: ${games.join('|')}
-          isGoaled: ${await clients[0].isEveryoneGoaled()}
-        `)
-      } else if (message.content.toLowerCase().startsWith('find')) {
-        const itemNameQuery = message.content.split(' ').splice(1).join(' ')
-        const dataPackage = await archClients.fetchPackage(message.channelId)
-        if (!dataPackage) {
-          await message.reply(`Could not get the data, perhaps the room needs to be refreshed?`)
-          return;
+      })
+    )
+
+    // Handles session commands within a session room, or forward the messages to AP server
+    this.#client.on(
+      DC.Events.MessageCreate,
+      catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
+        if (!this.#client.user) return;
+        if (message.author.id === this.#client.user.id) return;
+        if (message.author.bot) return;
+
+        const existingSession = this.sessionRegistry.getSessionByChannelId(message.channelId)
+        if (!existingSession) return;
+
+        const guildSettings = await this.settingsRepo.getSettings(message.guildId!)
+        const prefix = guildSettings.sessionCommandPrefix
+
+        if (message.content.startsWith(prefix)) {
+          const fullContent = message.content.slice(prefix.length).trim()
+          const tokens = fullContent.split(/\s+/)
+          const commandName = tokens.shift()?.toLowerCase()
+
+          if (commandName && sessionCommands[commandName]) {
+            await sessionCommands[commandName].execute(message, tokens, existingSession);
+            logger.info(`Executed session command`, { commandName, tokens, sessionId: existingSession.sessionId });
+            return;
+          }
         }
-        const matches: { [key: string]: string[] } = {}
-        for (const [game, gamePackage] of Object.entries(dataPackage.games)) {
-          const searcher = new FuzzySearch(Object.keys(gamePackage.item_name_to_id)).search(itemNameQuery) as string[]
-          matches[game] = searcher
-        }
-        const outputTokens = ['I found these possible matches:']
-        for (const [game, results] of Object.entries(matches)) {
-          if (results.length === 0) continue;
-          outputTokens.push(`**${game}**\n-# ${results.map(r => `${r}`).join(', ')}`)
-        }
-        if (outputTokens.length === 1) {
-          await message.reply('I couldn\'t find any matches...')
-        } else {
-          await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
-        }
-      } else if (message.content.toLowerCase().startsWith('this world is finished')) {
-        await archClients.removeClient(message.channelId)
-        await message.reply("Alright, I'll stop tracking this room.")
-      } else if (message.content.toLowerCase().startsWith('hint')) {
-        const playerName = message.content.split(' ').splice(1).join(' ')
-        if (playerName.trim() === '') {
-          await message.reply('I need a player name like "hint <player>".')
-          return;
-        }
-        const hints = await archClients.getPlayerHints(message.channelId, playerName)
-        if (hints === null) {
-          await message.reply(`I couldn't find a player named "${playerName}"...`)
-        } else if (hints.length === 0) {
-          await message.reply(`There aren't any unfound hints for this player yet.`)
-        } else {
-          await message.reply(hints.map(hint => `- **${hint.item.name}** at **${hint.item.locationName}** in __${hint.item.sender.alias}__'s world (${hint.item.flags})`).join('\n'))
-        }
-      } else {
+        // } else if (message.content.toLowerCase().startsWith('find')) {
+        //   // const itemNameQuery = message.content.split(' ').splice(1).join(' ')
+        //   // const dataPackage = await archClients.fetchPackage(message.channelId)
+        //   // if (!dataPackage) {
+        //   //   await message.reply(`Could not get the data, perhaps the room needs to be refreshed?`)
+        //   //   return;
+        //   // }
+        //   // const matches: { [key: string]: string[] } = {}
+        //   // for (const [game, gamePackage] of Object.entries(dataPackage.games)) {
+        //   //   const searcher = new FuzzySearch(Object.keys(gamePackage.item_name_to_id)).search(itemNameQuery) as string[]
+        //   //   matches[game] = searcher
+        //   // }
+        //   // const outputTokens = ['I found these possible matches:']
+        //   // for (const [game, results] of Object.entries(matches)) {
+        //   //   if (results.length === 0) continue;
+        //   //   outputTokens.push(`**${game}**\n-# ${results.map(r => `${r}`).join(', ')}`)
+        //   // }
+        //   // if (outputTokens.length === 1) {
+        //   //   await message.reply('I couldn\'t find any matches...')
+        //   // } else {
+        //   //   await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
+        //   // }
+        // }
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
-        const res = await archClients.sendMessage(message.channelId, `[${message.author.username}] :: ${messageWithShortEmojis}`)
-        if (res) {
-          fileLogger.info(`Forwarded message "${messageWithShortEmojis}" to archipelago.`)
-        } else {
-          const lastError = archClients.getLastError(message.channelId)
-          const errorMsgAddon = lastError ? lastError.message : 'Unknown'
-          fileLogger.info(`Failed to forward message "${messageWithShortEmojis}" to archipelago. Last error: ${errorMsgAddon}`)
+        try {
+          await existingSession.sendMessage(`[${message.author.username}] :: ${messageWithShortEmojis}`)
+          logger.info(`Forwarded message to archipelago`, { message: messageWithShortEmojis })
+        } catch (err) {
+          logger.info(`Failed to forward message`, { message: messageWithShortEmojis, err: err })
         }
-      }
-    }
-    ))
+      })
+    )
 
-  // Handle the initialization of one active multiworld
-  discordClient.on(
-    DC.Events.MessageCreate,
-    catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-      if (message.author.id === discordClient.user.id) return;
-      if (message.author.bot) return;
-      if (message.channel.isThread()) return;
+    // Handle the initialization of AP session
+    this.#client.on(
+      DC.Events.MessageCreate,
+      catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
+        if (!this.#client.user) return;
+        if (message.author.id === this.#client.user.id) return;
+        if (message.author.bot) return;
+        if (message.channel.isThread()) return;
+        if (!message.guildId) return;
 
-      // Checks if message contains archipelago room link
-      const archRoomUrl = parseArchipelagoRoomUrl(message.content)
-      if (archRoomUrl === null) return;
+        // Checks if message contains archipelago room link
+        const archRoomData = parseArchipelagoRoomUrl(message.content)
+        if (archRoomData === null) return;
 
-      const targetChannelId = DB.getLogChannelId(message.guildId)
-      if (targetChannelId === null) {
-        message.channel.send('Log channel has not been setup yet.')
-        return;
-      }
-      const targetChannel = await message.guild.channels.fetch(targetChannelId)
-      if (targetChannel === null) return;
+        logger.info(`AP Room Url detected, attempt to create session`, {
+          channelId: message.channelId,
+          guildId: message.guildId,
+          roomData: archRoomData,
+        })
 
-      // If room already exists, instead reply with link to existing thread
-      if (archClients.isRoomUrlOfExistingMultiworld(archRoomUrl)) {
-        const existingChannelId = archClients.getChannelIdFromRoomUrl(archRoomUrl)
-        if (!existingChannelId) return;
-        const existingChannelUrl = (await message.guild?.channels.fetch(existingChannelId))?.url
-        if (!existingChannelUrl) return;
-        await message.reply(existingChannelUrl)
-        fileLogger.info(`URL (${archRoomUrl.url}) detected but room already existed.`)
-        return;
-      }
-
-      const roomData = await getRoomData(archRoomUrl)
-
-      const threadBaseMessage = await (async () => {
-        if (message.channelId !== targetChannelId) {
-          return await message.forward(targetChannelId)
+        // Check if webhost server endpoint is avaliable. If not, either room link is broken or the server is down.
+        const webhostClient = new ArchipelagoWebhostClient(archRoomData.domain)
+        const sessionStatus = await webhostClient.fetchSessionStatus(archRoomData.roomId)
+        if (!sessionStatus) {
+          await replyWithError(message, 'Failed to fetch info from this AP room, perhaps the url is incorrect or the site is down...')
+          logger.info(`AP room link detected but failed to connect to webhost, `, {
+            channelId: message.channelId,
+            guildId: message.guildId,
+            roomData: archRoomData,
+          })
+          return;
         }
-        return message;
-      })();
-      const newThreadName = `${roomData.port} : ${roomData.players.length}P : ${new Date().toLocaleString().split(',')[0]}`
-      const newThread = await threadBaseMessage.startThread({
-        name: newThreadName,
-        autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
-      });
-      if (newThread.joinable) {
-        await newThread.join()
-      }
 
-      fileLogger.info(`New thread (${newThread.channelId}) created for URL (${archRoomUrl.url})`)
+        const guildSettings = await this.settingsRepo.getSettings(message.guildId)
 
-      await archClients.createClient(newThread, roomData)
-      await archClients.startClient(newThread.id)
-      const itemCounts = archClients.getItemCounts(newThread.id)
-      const locationCounts = archClients.getLocationCounts(newThread.id)
+        const logChannelId = guildSettings.logChannelId
+        if (logChannelId === null) {
+          message.channel.send('Log channel has not been setup yet.')
+          logger.info(`Did not create session due to missing log channel setting`, {
+            channelId: message.channelId,
+            guildId: message.guildId,
+            roomData: archRoomData,
+          })
+          return;
+        }
+        if (!message.guild) return;
+        const logChannel = await message.guild.channels.fetch(logChannelId)
+        if (logChannel === null) return;
 
-      const initialMessage = await newThread.send(createRoomDataDisplay(roomData, itemCounts, locationCounts))
-      await initialMessage.pin()
+        // If room already exists, instead reply with link to existing thread
+        const existingSessionChannelId = await this.sessionRegistry.getChannelIdByRoomUrl(archRoomData.url)
+        if (existingSessionChannelId) {
+          const existingChannelUrl = (await message.guild?.channels.fetch(existingSessionChannelId))?.url
+          if (!existingChannelUrl) return;
+          await message.reply(existingChannelUrl)
+          return;
+        }
 
-      if (message.channelId !== targetChannelId) {
-        await message.reply(newThread.url)
-        fileLogger.info(`URL (${archRoomUrl.url}) posted outside log channel, forwarding link.`)
-      }
-    }
-    ))
+        const threadBaseMessage = await (async () => {
+          if (message.channelId !== logChannelId) {
+            return await message.forward(logChannelId)
+          }
+          return message;
+        })();
+        const currentDay = new Date().toLocaleDateString()
+        const newThreadName = `${sessionStatus.port} with ${Object.keys(sessionStatus.playerStatus).length} worlds on ${currentDay}`
+        const newThread = await threadBaseMessage.startThread({
+          name: newThreadName,
+          autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
+        });
+        if (newThread.joinable) {
+          await newThread.join()
+        }
 
-  return discordClient
+        logger.info(`New thread created for session`, {
+          channelId: message.channelId,
+          guildId: message.guildId,
+          threadId: newThread.id,
+          url: archRoomData.url,
+        })
+
+        const newSession = await this.sessionRegistry.createSession(newThread, archRoomData)
+        if (!newSession) {
+          await replyWithError(message, 'Failed to fetch info from this AP room, perhaps the room is expired or the site is down...')
+          logger.info(`AP roomm link detected but failed to create session, `, {
+            channelId: message.channelId,
+            guildId: message.guildId,
+            threadId: newThread.id,
+            url: archRoomData.url
+          })
+          return;
+        }
+
+        const initialMessage = await newThread.send(createRoomDataDisplay(newSession.staticState))
+        await initialMessage.pin()
+
+        if (message.channelId !== logChannelId) {
+          await message.reply(newThread.url)
+          logger.info(`URL posted outside log channel, forwarded link`, {
+            channelId: message.channelId,
+            guildId: message.guildId,
+            threadId: newThread.id,
+            url: archRoomData.url
+          })
+        }
+      }))
+  }
 }

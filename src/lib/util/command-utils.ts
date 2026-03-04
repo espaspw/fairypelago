@@ -1,5 +1,5 @@
 import { typeFlag } from 'type-flag'
-import { CommandLookup, FlagSchema } from '../../types/command'
+import { CommandLookup, FlagSchema } from '../../types/command.js'
 
 export function findAlias(commands: CommandLookup, alias: string) {
   for (const command of Object.values(commands)) {
@@ -10,8 +10,20 @@ export function findAlias(commands: CommandLookup, alias: string) {
   return null
 }
 
-export function extractFlags(schema: FlagSchema | undefined, tokens: string[]) {
-  if (!schema) return { flags: {}, splicedTokens: tokens, unknown: {} };
+export interface ExtractedFlags {
+  flags: {
+    [flagName: string]: any;
+  },
+  splicedTokens: string[] & {
+    "--": string[];
+  },
+  unknown: {
+    [flagName: string]: (string | boolean)[];
+  }
+}
+
+export function extractFlags(schema: FlagSchema | undefined, tokens: string[]): ExtractedFlags {
+  if (!schema) return { flags: {}, splicedTokens: tokens, unknown: {} }
   const tokenCopy = [...tokens]
   const parsed = typeFlag(schema, tokenCopy)
   return { flags: parsed.flags, splicedTokens: parsed._, unknown: parsed.unknownFlags }

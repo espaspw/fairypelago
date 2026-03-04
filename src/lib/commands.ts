@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { Command, CommandLookup } from '../types/command'
+import { Command, CommandLookup } from '../types/command.js'
+import { logger } from './util/logger.js'
 
 let avaliableCommands: CommandLookup = {}
 
@@ -22,6 +23,9 @@ async function loadAvaliableCommands(): Promise<CommandLookup> {
 
 export async function reloadAvaliableCommands() {
   avaliableCommands = await loadAvaliableCommands()
+  logger.info('Reloaded global commands', {
+    commands: Object.keys(avaliableCommands),
+  })
 }
 
 export function getAvaliableCommands(): CommandLookup {

@@ -1,5 +1,5 @@
 import { Client } from 'discord.js'
-import type { ItemTierIcons, ItemTier, GameIcons, ItemIcons, DiscordEmojiString, LookupTable, LookupTableMatchers } from '../types/icon-types'
+import type { ItemTierIcons, ItemTier, GameIcons, ItemIcons, DiscordEmojiString, LookupTable, LookupTableMatchers } from '../types/icon-types.js'
 
 let gameIconsText: GameIcons = {}
 let itemTierIconsText: ItemTierIcons = {}

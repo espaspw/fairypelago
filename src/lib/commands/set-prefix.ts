@@ -1,7 +1,7 @@
-import { Command } from '../../types/command'
-import * as DB from '../../db/db'
-
 import { PermissionFlagsBits } from 'discord.js'
+
+import { Command } from '../../types/command.js'
+import { replyWithError } from '../util/message-utils.js';
 
 const setPrefix: Command = {
   name: 'Set Prefix',
@@ -9,16 +9,21 @@ const setPrefix: Command = {
   categories: ['Settings', 'Admin'],
   description: 'Sets the command prefix for the current guild.',
   usageHelpText: 'prefix `new-prefix`',
-  async execute(message, tokens) {
+  async execute(message, tokens, _commands, { guildSettingsRepo }) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
       && message.author.id !== process.env.OWNER_ID) {
       await message.reply('Only admins can use this command.')
       return;
     }
+    if (!message.guildId) {
+      await replyWithError(message, `Settings can only be set in a guild.`)
+      return;
+    }
     if (tokens[0] === undefined) {
-      await message.reply(`Current prefix is (${DB.getCommandPrefix(message.guildId)}).`)
+      const currentSettings = await guildSettingsRepo.getSettings(message.guildId)
+      await message.reply(`Main prefix: (${currentSettings.commandPrefix})\nRoom prefix: (${currentSettings.sessionCommandPrefix})`)
     } else {
-      await DB.setCommandPrefix(message.guildId, tokens[0])
+      await guildSettingsRepo.setPrefix(message.guildId, tokens[0])
       await message.reply(`Prefix has been set to (${tokens[0]}).`)
     }
   },

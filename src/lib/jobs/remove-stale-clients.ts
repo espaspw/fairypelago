@@ -1,11 +1,9 @@
-import { Job } from '../../types/job'
+import { Job } from '../../types/job.js'
 
 const removeStaleClients: Job = {
   name: 'remove-stale-clients',
   intervalMs: 30 * 60 * 1000, // 30 minutes
-  async do({ archClients }) {
-    await archClients.removeStaleClients();
-  },
+  async do({ }) { },
 }
 
 export default removeStaleClients
