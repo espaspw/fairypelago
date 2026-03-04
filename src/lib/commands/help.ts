@@ -1,6 +1,7 @@
-import { Command, FlagSchema } from '../../types/command'
 import { EmbedBuilder } from 'discord.js'
-import { extractFlags, findAlias } from '../util/command-utils'
+
+import { Command, FlagSchema } from '../../types/command.js'
+import { extractFlags, findAlias } from '../util/command-utils.js'
 
 function formatFlagDefinitions(flags: FlagSchema) {
   return Object.values(flags).map(flag => {

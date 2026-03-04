@@ -1,5 +1,7 @@
 import { Message, OmitPartialGroupDMChannel } from 'discord.js'
-import { ArchipelagoClientManager } from '../lib/archipelago-client-manager'
+
+import { ArchipelagoSessionRegistry } from '../lib/archipelago-session-registry.js'
+import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
 
 export type CommandLookup = {
   [key: string]: Command
@@ -19,12 +21,18 @@ export type FlagSchema = {
   [key: string]: FlagDefinition
 }
 
+export interface CommandExtraDeps {
+  sessionRegistry: ArchipelagoSessionRegistry,
+  sessionRepo: ISessionRepository,
+  guildSettingsRepo: IGuildSettingsRepository,
+}
+
 export interface Command {
   execute: (
     discordMessage: OmitPartialGroupDMChannel<Message<boolean>>,
     tokens: string[],
     commands: CommandLookup | undefined,
-    archClients: ArchipelagoClientManager,
+    extraDeps: CommandExtraDeps,
   ) => Promise<void>
   name: string
   aliases: string[]

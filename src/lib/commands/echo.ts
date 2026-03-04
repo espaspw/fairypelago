@@ -1,8 +1,8 @@
 import { PermissionFlagsBits } from 'discord.js'
 
-import { Command } from '../../types/command'
-import { replyWithError } from '../util/message-utils'
-import { extractFlags } from '../util/command-utils'
+import { Command } from '../../types/command.js'
+import { replyWithError } from '../util/message-utils.js'
+import { extractFlags } from '../util/command-utils.js'
 
 const echo: Command = {
   name: 'echo',
@@ -47,9 +47,9 @@ const echo: Command = {
     if (flags.channelId) {
       const channel = await message.guild?.channels.fetch(flags.channelId)
       if (!channel) {
-        await replyWithError(`Channel ${flags.channelId} not found.`)
+        await replyWithError(message, `Channel ${flags.channelId} not found.`)
       } else if (!channel.isSendable()) {
-        await replyWithError(`Cannot send message to ${channel.url}.`)
+        await replyWithError(message, `Cannot send message to ${channel.url}.`)
       } else {
         await channel.send(outputMessage)
       }

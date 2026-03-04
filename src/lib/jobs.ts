@@ -2,9 +2,9 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { Client } from 'discord.js'
 
-import { Job, Jobs } from '../types/job'
-import { ArchipelagoClientManager } from './archipelago-client-manager'
-import { consoleLogger, fileLogger } from './util/logger'
+import { Job, Jobs } from '../types/job.js'
+import { logger } from './util/logger.js'
+import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
 
 let jobs: Jobs = {}
 
@@ -21,15 +21,14 @@ export async function loadJobs() {
   }
 }
 
-export function scheduleJobs(archClients: ArchipelagoClientManager, discordClient: Client) {
+export function scheduleJobs(sessionRegistry: ArchipelagoSessionRegistry, discordClient: Client) {
   for (const [jobName, jobDetails] of Object.entries(jobs)) {
     setInterval(async () => {
       try {
-        consoleLogger.info(`Running job "${jobName}".`)
-        await jobDetails.do({ archClients, discordClient })
+        logger.info(`Running job`, { jobName })
+        await jobDetails.do({ sessionRegistry, discordClient })
       } catch (err) {
-        consoleLogger.error(err)
-        fileLogger.error(err)
+        logger.error(err)
       }
     }, jobDetails.intervalMs)
   }

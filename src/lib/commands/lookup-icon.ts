@@ -1,14 +1,15 @@
 import { Message } from 'discord.js'
-import { Command } from '../../types/command'
-import * as IconLookupTable from '../icon-lookup-table'
-import { extractFlags } from '../util/command-utils'
-import { replyWithError, sendNewlineSplitDiscordTextMessage } from '../util/message-utils'
+
+import { Command } from '../../types/command.js'
+import * as IconLookupTable from '../icon-lookup-table.js'
+import { extractFlags } from '../util/command-utils.js'
+import { replyWithError, sendNewlineSplitDiscordTextMessage } from '../util/message-utils.js'
 
 const NUM_COLUMNS = 10
 const MAX_MSG_LENGTH = 1200
 
 async function sendNamelessIconListToDiscord(message: Message, gameName: string, numCols: number) {
-  const gameIcon = IconLookupTable.lookupGame(gameName)
+  const gameIcon = IconLookupTable.lookupGame(gameName) ?? ''
   const emojiList = IconLookupTable.getEmojiList(gameName)
   let runningLength = gameIcon.length + 1
   let messageCounter = 0
