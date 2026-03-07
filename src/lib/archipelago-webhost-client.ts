@@ -1,4 +1,4 @@
-import { NetworkItem, NetworkHint } from 'archipelago.js'
+import { NetworkItem } from 'archipelago.js'
 import axios from 'axios'
 
 import { logger } from './util/logger.js'
@@ -125,96 +125,95 @@ export interface WebhostSessionStatus {
 export class ArchipelagoWebhostClient {
   #baseDomain: string
 
-  constructor(baseDomain = 'archipelago.gg') {
+  constructor (baseDomain = 'archipelago.gg') {
     this.#baseDomain = baseDomain
   }
 
-  async #getRawRoomStatus(roomId: string) {
+  async #getRawRoomStatus (roomId: string) {
     const url = `https://${this.#baseDomain}/api/room_status/${roomId}`
     try {
       const rawRoomStatus = await axios.get<RawWebhostRoomStatus>(url)
       if (rawRoomStatus.status !== 200) {
-        logger.warn(`Received non-200 http code when fetching room status from webhost`, {
+        logger.warn('Received non-200 http code when fetching room status from webhost', {
           status: rawRoomStatus.status,
           statusText: rawRoomStatus.statusText,
           roomId,
         })
-        return null;
+        return null
       }
       return rawRoomStatus.data
     } catch (err) {
-      logger.warn(`Failed to fetch room status from webhost`, {
+      logger.warn('Failed to fetch room status from webhost', {
         roomId,
         error: err,
       })
-      return null;
+      return null
     }
   }
 
-  async #getRawTracker(trackerId: string) {
+  async #getRawTracker (trackerId: string) {
     const url = `https://${this.#baseDomain}/api/tracker/${trackerId}`
     try {
       const rawTracker = await axios.get<RawWebhostTracker>(url)
       if (rawTracker.status !== 200) {
-        logger.warn(`Received non-200 http code when fetching tracker data from webhost`, {
+        logger.warn('Received non-200 http code when fetching tracker data from webhost', {
           status: rawTracker.status,
           statusText: rawTracker.statusText,
           trackerId,
         })
-        return null;
+        return null
       }
       return rawTracker.data
     } catch (err) {
-      logger.warn(`Failed to fetch tracker data from webhost`, {
+      logger.warn('Failed to fetch tracker data from webhost', {
         trackerId,
         error: err,
       })
-      return null;
+      return null
     }
   }
 
-  async #getRawStaticTracker(trackerId: string) {
+  async #getRawStaticTracker (trackerId: string) {
     const url = `https://${this.#baseDomain}/api/static_tracker/${trackerId}`
     try {
       const rawStaticTracker = await axios.get<RawWebhostStaticTracker>(url)
       if (rawStaticTracker.status !== 200) {
-        logger.warn(`Received non-200 http code when fetching static tracker data from webhost`, {
+        logger.warn('Received non-200 http code when fetching static tracker data from webhost', {
           status: rawStaticTracker.status,
           statusText: rawStaticTracker.statusText,
           trackerId,
         })
-        return null;
+        return null
       }
       return rawStaticTracker.data
     } catch (err) {
-      logger.warn(`Failed to fetch static tracker data from webhost`, {
+      logger.warn('Failed to fetch static tracker data from webhost', {
         trackerId,
         error: err,
       })
-      return null;
+      return null
     }
   }
 
-  async fetchInitialSessionData(roomId: string): Promise<WebhostInitialSessionData | null> {
+  async fetchInitialSessionData (roomId: string): Promise<WebhostInitialSessionData | null> {
     const roomStatus = await this.#getRawRoomStatus(roomId)
-    if (!roomStatus) return null;
+    if (!roomStatus) return null
     const trackerId = roomStatus.tracker
     const tracker = await this.#getRawTracker(trackerId)
-    if (!tracker) return null;
+    if (!tracker) return null
     const staticTracker = await this.#getRawStaticTracker(trackerId)
-    if (!staticTracker) return null;
+    if (!staticTracker) return null
 
     const downloadLookup = roomStatus.downloads.reduce((acc, curr) => {
       return acc.set(curr.slot, curr.download)
     }, new Map<number, string>())
     const aliasLookup = tracker.aliases.reduce((acc, curr) => {
-      if (!curr.alias) return acc;
+      if (!curr.alias) return acc
       return acc.set(curr.player, curr.alias)
     }, new Map<number, string>())
     const totalLocationsLookup = staticTracker.player_locations_total.reduce((acc, curr) => {
       return acc.set(curr.player, curr.total_locations)
     }, new Map<number, number>())
-
 
     const playerList: WebhostPlayer[] = staticTracker.player_game.map(playerGame => ({
       slotId: playerGame.player,
@@ -238,11 +237,11 @@ export class ArchipelagoWebhostClient {
     }
   }
 
-  async fetchSessionStatus(roomId: string): Promise<WebhostSessionStatus | null> {
+  async fetchSessionStatus (roomId: string): Promise<WebhostSessionStatus | null> {
     const roomStatus = await this.#getRawRoomStatus(roomId)
-    if (!roomStatus) return null;
+    if (!roomStatus) return null
     const tracker = await this.#getRawTracker(roomStatus.tracker)
-    if (!tracker) return null;
+    if (!tracker) return null
 
     return {
       port: roomStatus.last_port,

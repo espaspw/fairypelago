@@ -12,20 +12,20 @@ which means options by guild and session id could have different states */
 export class SessionOptionsProvider implements IOptionsProvider {
   #sessionCache = new Map<GuildId, SessionOptions>()
 
-  constructor(
+  constructor (
     private sessionRepo: ISessionRepository,
-    private settingsRepo: IGuildSettingsRepository,
+    private settingsRepo: IGuildSettingsRepository
   ) { }
 
   // Create a deep copy of the cached object to prevent later modifications
-  #copySessionOptions(options: SessionOptions): SessionOptions {
+  #copySessionOptions (options: SessionOptions): SessionOptions {
     return {
       ...options,
       whitelistedMessageTypes: [...options.whitelistedMessageTypes],
     }
   }
 
-  async getOptionsByGuildId(guildId: string): Promise<SessionOptions> {
+  async getOptionsByGuildId (guildId: string): Promise<SessionOptions> {
     const cachedSession = this.#sessionCache.get(guildId)
     if (cachedSession) return cachedSession
     const guildSettings = await this.settingsRepo.getSettings(guildId)
@@ -33,20 +33,20 @@ export class SessionOptionsProvider implements IOptionsProvider {
     return guildSettings.sessionOptions
   }
 
-  async setOptionsByGuildId(guildId: string, options: SessionOptions): Promise<void> {
+  async setOptionsByGuildId (guildId: string, options: SessionOptions): Promise<void> {
     this.#sessionCache.set(guildId, this.#copySessionOptions(options))
     await this.settingsRepo.setSessionOptions(guildId, options)
   }
 
-  async getOptionsBySessionId(sessionId: number): Promise<SessionOptions> {
+  async getOptionsBySessionId (sessionId: number): Promise<SessionOptions> {
     const session = await this.sessionRepo.findSessionById(sessionId)
-    if (!session) throw new Error(`Session ${sessionId} not found.`);
+    if (!session) throw new Error(`Session ${sessionId} not found.`)
     return await this.getOptionsByGuildId(session.guildId)
   }
 
-  async setOptionsBySessionId(sessionId: number, options: SessionOptions): Promise<void> {
+  async setOptionsBySessionId (sessionId: number, options: SessionOptions): Promise<void> {
     const session = await this.sessionRepo.findSessionById(sessionId)
-    if (!session) throw new Error(`Session ${sessionId} not found.`);
+    if (!session) throw new Error(`Session ${sessionId} not found.`)
     return this.setOptionsByGuildId(session.guildId, options)
   }
 }

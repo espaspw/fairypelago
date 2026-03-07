@@ -270,7 +270,8 @@ const mmIcons: IconMatcher[] = [
       'Song of Soaring',
       'Song of Storms',
       'Song of Time',
-    ], emoji: 'oot_ocarinaoftime'
+    ],
+    emoji: 'oot_ocarinaoftime'
   },
   { pattern: [/Dungeon Map.*/], emoji: 'oot_map' },
   { pattern: [/Compass.*/], emoji: 'oot_compass' },
@@ -300,7 +301,8 @@ const mmIcons: IconMatcher[] = [
       "Postman's Hat",
       'Romani Mask',
       'Stone Mask',
-    ], emoji: 'mm_mask'
+    ],
+    emoji: 'mm_mask'
   },
   {
     pattern: [
@@ -310,7 +312,8 @@ const mmIcons: IconMatcher[] = [
       'Snowhead Map',
       'Stone Tower Map',
       'Woodfall Map',
-    ], emoji: 'mm_map'
+    ],
+    emoji: 'mm_map'
   },
   { pattern: ['Blue Rupee'], emoji: '' },
   { pattern: ["Bomber's Notebook"], emoji: 'mm_bombersnotebook' },
@@ -406,7 +409,8 @@ const mlssIcons: IconMatcher[] = [
       'Chuckle Bean',
       'Woo Bean',
       'Hee Bean',
-    ], emoji: 'mlss_bean'
+    ],
+    emoji: 'mlss_bean'
   },
   {
     pattern: [
@@ -414,7 +418,8 @@ const mlssIcons: IconMatcher[] = [
       'Chuckoccino',
       'Teeheespresso',
       /.*Blend/,
-    ], emoji: 'mlss_blend'
+    ],
+    emoji: 'mlss_blend'
   },
   { pattern: ["Peasley's Rose"], emoji: 'mlss_peasleyrose' },
   { pattern: ['Beanbean Brooch'], emoji: 'mlss_beanbeanbrooch' },
@@ -448,7 +453,8 @@ const mlssIcons: IconMatcher[] = [
       /.*Slacks/,
       'Shroom Bells',
       'Casual Coral',
-    ], emoji: 'mlss_pants'
+    ],
+    emoji: 'mlss_pants'
   },
   { pattern: ['Greed Wallet'], emoji: 'mlss_greedwallet' },
   { pattern: ['Bonus Ring'], emoji: 'mlss_bonusring' },
@@ -502,7 +508,8 @@ const ootIcons: IconMatcher[] = [
       'Zora Mask',
       'Gerudo Mask',
       'Mask of Truth'
-    ], emoji: 'oot_goronmask'
+    ],
+    emoji: 'oot_goronmask'
   },
   { pattern: ['Pocket Egg'], emoji: 'oot_weirdegg' },
   { pattern: ['Pocket Cucco'], emoji: 'oot_cucco' },
@@ -516,7 +523,8 @@ const ootIcons: IconMatcher[] = [
       'Prescription',
       'Eyeball Frog',
       'Eyedrops',
-    ], emoji: 'oot_cucco'
+    ],
+    emoji: 'oot_cucco'
   },
   { pattern: ["Broken Goron's Sword"], emoji: 'oot_brokengiantsknife' },
   { pattern: ['Claim Check'], emoji: 'oot_claimcheck' },
@@ -619,7 +627,8 @@ const ootIcons: IconMatcher[] = [
       'Requiem of Spirit',
       'Nocturne of Shadow',
       'Prelude of Light',
-    ], emoji: 'oot_fairyocarina'
+    ],
+    emoji: 'oot_fairyocarina'
   },
   { pattern: [/Small Key Ring.*/], emoji: 'oot_smallkey' },
   { pattern: ['Kokiri Emerald'], emoji: 'oot_kokirisemerald' },
@@ -633,7 +642,7 @@ const ootIcons: IconMatcher[] = [
   { pattern: ['Light Medallion'], emoji: 'oot_lightmedallion' },
 ]
 
-const oot_sohIcons: IconMatcher[] = [
+const ootSohIcons: IconMatcher[] = [
   { pattern: ['Kokiri Sword'], emoji: 'oot_kokirisword' },
   { pattern: ['Master Sword'], emoji: 'oot_mastersword' },
   { pattern: ["Giant's Knife"], emoji: 'oot_giantsknife' },
@@ -670,7 +679,8 @@ const oot_sohIcons: IconMatcher[] = [
       'Prescription',
       'Eyeball Frog',
       "World's Finest Eyedrops",
-    ], emoji: 'oot_cucco'
+    ],
+    emoji: 'oot_cucco'
   },
   { pattern: ["Broken Goron's Sword"], emoji: 'oot_brokengiantsknife' },
   { pattern: ['Claim Check'], emoji: 'oot_claimcheck' },
@@ -727,7 +737,8 @@ const oot_sohIcons: IconMatcher[] = [
       'Requiem of Spirit',
       'Nocturne of Shadow',
       'Prelude of Light',
-    ], emoji: 'oot_fairyocarina'
+    ],
+    emoji: 'oot_fairyocarina'
   },
   { pattern: [/.*Map/], emoji: 'oot_map' },
   { pattern: [/.*Compass/], emoji: 'oot_compass' },
@@ -771,12 +782,14 @@ const oot_sohIcons: IconMatcher[] = [
   {
     pattern: [
       'Deku Stick Bag', 'Deku Nut Capacity 30', 'Deku Nut Capacity 40'
-    ], emoji: 'oot_dekustick'
+    ],
+    emoji: 'oot_dekustick'
   },
   {
     pattern: [
       'Deku Nut Bag', 'Deku Stick Capacity 20', 'Deku Stick Capacity 30'
-    ], emoji: 'oot_dekunut'
+    ],
+    emoji: 'oot_dekunut'
   },
   { pattern: ['Hint'], emoji: '' },
   { pattern: ['Tycoon Wallet'], emoji: '' },
@@ -893,7 +906,8 @@ const ppwiiIcons: IconMatcher[] = [
       'Darkrai Unlock',
       'Groudon Unlock',
       'Jirachi Unlock',
-    ], emoji: 'ppwii_unlock'
+    ],
+    emoji: 'ppwii_unlock'
   },
   { pattern: ['Pikachu Balloon'], emoji: 'ppwii_pikachuballoon' },
   { pattern: ['Pikachu Surfboard'], emoji: 'ppwii_pikachusurfboard' },
@@ -902,7 +916,8 @@ const ppwiiIcons: IconMatcher[] = [
     pattern: [
       'Progressive Dash',
       'Double Dash',
-    ], emoji: 'ppwii_dash'
+    ],
+    emoji: 'ppwii_dash'
   },
   { pattern: ['Progressive Thunderbolt'], emoji: 'ppwii_thunderbolt' },
   { pattern: ['Progressive Health'], emoji: 'ppwii_health' },
@@ -911,7 +926,8 @@ const ppwiiIcons: IconMatcher[] = [
     pattern: [
       'Beach Bridge 1 Unlock',
       'Beach Bridge 2 Unlock',
-    ], emoji: 'ppwii_bidoof'
+    ],
+    emoji: 'ppwii_bidoof'
   },
   { pattern: ['Magma Zone Fire Wall Unlock'], emoji: 'ppwii_blaziken' },
   { pattern: ['Haunted Zone Mansion Doors Unlock'], emoji: 'ppwii_drifloon' },
@@ -1109,7 +1125,8 @@ const pikmin2Icons: IconMatcher[] = [
       'Wiggle Noggin',
       'Worthless Statue',
       'Yellow Taste Tyrant',
-    ], emoji: 'pikmin2_treasure'
+    ],
+    emoji: 'pikmin2_treasure'
   },
 ]
 
@@ -1153,7 +1170,8 @@ const sm64Icons: IconMatcher[] = [
       'Kick',
       'Climb',
       'Ledge Grab',
-    ], emoji: 'sm64_move'
+    ],
+    emoji: 'sm64_move'
   },
   { pattern: [/Cannon Unlock.*/], emoji: 'sm64_cannon' },
 ]
@@ -1298,7 +1316,8 @@ const twwIcons: IconMatcher[] = [
       "Earth God's Lyric",
       "Wind God's Aria",
       'Song of Passing',
-    ], emoji: 'tww_song'
+    ],
+    emoji: 'tww_song'
   },
   { pattern: [/Triforce Shard [0-9]+/], emoji: 'tww_triforceshard' },
   { pattern: ['Note to Mom'], emoji: 'tww_notetomom' },
@@ -1340,7 +1359,8 @@ const ttIcons: IconMatcher[] = [
     pattern: [
       'Fish',
       /.*Fishing License/,
-    ], emoji: 'tt_fishinglicense'
+    ],
+    emoji: 'tt_fishinglicense'
   },
   { pattern: ['Toon-Up Training Frame'], emoji: 'tt_toonuptrainingframe' },
   { pattern: ['Trap Training Frame'], emoji: 'tt_traptrainingframe' },
@@ -1362,19 +1382,22 @@ const ttIcons: IconMatcher[] = [
     pattern: [
       'SBHQ Access Key',
       /.*Factory Key/,
-    ], emoji: 'tt_sellbot'
+    ],
+    emoji: 'tt_sellbot'
   },
   {
     pattern: [
       'CBHQ Access Key',
       /.*Mint Key/,
-    ], emoji: 'tt_cashbot'
+    ],
+    emoji: 'tt_cashbot'
   },
   {
     pattern: [
       'LBHQ Access Key',
       /Office.*/,
-    ], emoji: 'tt_lawbot'
+    ],
+    emoji: 'tt_lawbot'
   },
   {
     pattern: [
@@ -1382,7 +1405,8 @@ const ttIcons: IconMatcher[] = [
       'Front One Key',
       'Middle Two Key',
       'Back Three Key',
-    ], emoji: 'tt_bossbot'
+    ],
+    emoji: 'tt_bossbot'
   },
   { pattern: ['AA Access Key'], emoji: 'tt_aaaccesskey' },
   { pattern: [/.*Joke Book/], emoji: 'tt_jokebook' },
@@ -1400,7 +1424,8 @@ const ttIcons: IconMatcher[] = [
     pattern: [
       /.*Trap/,
       /.*Tax/,
-    ], emoji: 'tt_trap'
+    ],
+    emoji: 'tt_trap'
   },
   { pattern: ['Defeated Sellbot VP'], emoji: 'tt_sellbotvp' },
   { pattern: ['Defeated Cashbot CFO'], emoji: 'tt_cashbotcfo' },
@@ -1501,7 +1526,7 @@ export const gameIcons: GameIcons = {
   'Metroid Fusion': 'mf',
   'Metroid Zero Mission': 'mzm',
   'Ocarina of Time': 'oot_timetravel',
-  'PokePark': 'ppwii',
+  PokePark: 'ppwii',
   'Pikmin 2': 'pikmin2',
   'Risk of Rain 2': 'ror2',
   'Ship of Harkinian': 'oot_timetravel',
@@ -1510,9 +1535,9 @@ export const gameIcons: GameIcons = {
   'Super Mario World': 'smw',
   'Super Metroid': 'sm',
   'Super Metroid Map Rando': 'smmr',
-  'SMZ3': 'smz3',
+  SMZ3: 'smz3',
   'The Wind Waker': 'tww',
-  'Toontown': 'tt',
+  Toontown: 'tt',
   'Wario Land 4': 'wl4',
   'Yacht Dice': 'yd',
 }
@@ -1528,18 +1553,18 @@ export const itemIcons: ItemIcons = {
   'Metroid Fusion': mfIcons,
   'Metroid Zero Mission': mzmIcons,
   'Ocarina of Time': ootIcons,
-  'PokePark': ppwiiIcons,
+  PokePark: ppwiiIcons,
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
-  'Ship of Harkinian': oot_sohIcons,
+  'Ship of Harkinian': ootSohIcons,
   'Super Mario 64': sm64Icons,
   'Super Mario Sunshine': smsIcons,
   'Super Mario World': smwIcons,
   'Super Metroid': smIcons,
   'Super Metroid Map Rando': smMapRandoIcons,
-  'SMZ3': smz3Icons,
+  SMZ3: smz3Icons,
   'The Wind Waker': twwIcons,
-  'Toontown': ttIcons,
+  Toontown: ttIcons,
   'Wario Land 4': wl4Icons,
   'Yacht Dice': yachtDiceIcons,
 }

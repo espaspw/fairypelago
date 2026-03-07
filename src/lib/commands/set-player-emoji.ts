@@ -9,22 +9,22 @@ const setPlayerEmoji: Command = {
   categories: ['Settings', 'Admin'],
   description: 'Settings for changing player alias to emoji settings for this guild. The emoji must be from this guild or else it might not render. The toggle-replace-name subcommand will toggle whether names will be completely replaced by emojis or not.',
   usageHelpText: '- pe\n- pe get `player-alias`\n- pe set `player-alias` `emoji`\n- pe delete `player-alias`\n- pe delete-all\n- pe toggle-replace-name',
-  async execute(message, tokens, _commands, { guildSettingsRepo, optionsProvider }) {
-    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
-      && message.author.id !== process.env.OWNER_ID) {
+  async execute (message, tokens, _commands, { guildSettingsRepo, optionsProvider }) {
+    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator) &&
+      message.author.id !== process.env.OWNER_ID) {
       await message.reply('Only admins can use this command.')
-      return;
+      return
     }
     if (!message.guildId) {
-      await replyWithError(message, `Settings can only be set in a guild.`)
-      return;
+      await replyWithError(message, 'Settings can only be set in a guild.')
+      return
     }
     const { playerEmojis, sessionOptions } = await guildSettingsRepo.getSettings(message.guildId)
     if (tokens[0] === undefined) {
       const responseTokens = ['Current mappings:']
       if (Object.keys(playerEmojis).length <= 0) {
         await message.reply('No emojis are currently set.')
-        return;
+        return
       }
       const groupByEmoji: Record<string, string[]> = {}
       for (const [alias, emoji] of Object.entries(playerEmojis)) {
@@ -42,7 +42,7 @@ const setPlayerEmoji: Command = {
       if (tokens[0] === 'get') {
         if (tokens.length === 1) {
           await message.reply('Requires a player name.')
-          return;
+          return
         }
         const alias = tokens.splice(1).join(' ')
         const emoji = playerEmojis[alias] ?? null
@@ -54,12 +54,12 @@ const setPlayerEmoji: Command = {
       } else if (tokens[0] === 'set') {
         if (tokens.length === 2) {
           await replyWithError(message, 'Requires both a player name and an emoji.')
-          return;
+          return
         }
         const alias = tokens.splice(1, tokens.length - 2).join(' ')
         if (alias.length < 2) {
           await replyWithError(message, 'Alias must be at least 2 characters.')
-          return;
+          return
         }
         const emoji = tokens[tokens.length - 1]
         await guildSettingsRepo.setPlayerEmojis(message.guildId, { ...playerEmojis, [alias]: emoji })
@@ -67,7 +67,7 @@ const setPlayerEmoji: Command = {
       } else if (tokens[0] === 'delete') {
         if (tokens.length === 1) {
           await replyWithError(message, 'Requires a player name.')
-          return;
+          return
         }
         const alias = tokens.splice(1).join(' ')
         const existingEmoji = playerEmojis[alias] ?? null
@@ -91,7 +91,7 @@ const setPlayerEmoji: Command = {
         await guildSettingsRepo.setPlayerEmojis(message.guildId, {})
         await message.reply('All entries have been removed.')
       } else {
-        await message.reply(`Possible subcommands are "get", "set", "delete", "delete-all", and "toggle-replace-name".`)
+        await message.reply('Possible subcommands are "get", "set", "delete", "delete-all", and "toggle-replace-name".')
       }
     }
   },

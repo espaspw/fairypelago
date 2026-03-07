@@ -5,7 +5,6 @@ import { DatabaseSchema } from '../schema.js'
 import { SessionOptions } from '../../types/session-types.js'
 import { ArchipelagoMessageType } from '../../types/archipelago-types.js'
 
-
 const defaultWhitelistedTypes = [
   ArchipelagoMessageType.Connected,
   ArchipelagoMessageType.Disconnected,
@@ -21,9 +20,9 @@ const defaultWhitelistedTypes = [
 ]
 
 export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
-  constructor(private db: Kysely<DatabaseSchema>) { }
+  constructor (private db: Kysely<DatabaseSchema>) { }
 
-  async #setDefaultSettings(guildId: string): Promise<DBGuildSettings> {
+  async #setDefaultSettings (guildId: string): Promise<DBGuildSettings> {
     const defaults: DBGuildSettings = {
       guildId,
       logChannelId: null,
@@ -50,12 +49,12 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
     return defaults
   }
 
-  async getSettings(guildId: string): Promise<DBGuildSettings> {
+  async getSettings (guildId: string): Promise<DBGuildSettings> {
     const row = await this.db
       .selectFrom('guild_settings')
       .selectAll()
       .where('guildId', '=', guildId)
-      .executeTakeFirst();
+      .executeTakeFirst()
 
     if (!row) {
       return this.#setDefaultSettings(guildId)
@@ -64,7 +63,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
     }
   }
 
-  async setPrefix(guildId: string, prefix: string): Promise<void> {
+  async setPrefix (guildId: string, prefix: string): Promise<void> {
     await this.db
       .updateTable('guild_settings')
       .set({ commandPrefix: prefix })
@@ -72,7 +71,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
       .execute()
   }
 
-  async setSessionPrefix(guildId: string, prefix: string): Promise<void> {
+  async setSessionPrefix (guildId: string, prefix: string): Promise<void> {
     await this.db
       .updateTable('guild_settings')
       .set({ sessionCommandPrefix: prefix })
@@ -80,7 +79,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
       .execute()
   }
 
-  async setLogChannel(guildId: string, channelId: string): Promise<void> {
+  async setLogChannel (guildId: string, channelId: string): Promise<void> {
     await this.db
       .updateTable('guild_settings')
       .set({ logChannelId: channelId })
@@ -88,7 +87,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
       .execute()
   }
 
-  async setSessionOptions(guildId: string, sessionOptions: SessionOptions): Promise<void> {
+  async setSessionOptions (guildId: string, sessionOptions: SessionOptions): Promise<void> {
     await this.db
       .updateTable('guild_settings')
       .set({ sessionOptions: JSON.stringify(sessionOptions) })
@@ -96,7 +95,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
       .execute()
   }
 
-  async setPlayerEmojis(guildId: string, playerEmojis: Record<string, string>): Promise<void> {
+  async setPlayerEmojis (guildId: string, playerEmojis: Record<string, string>): Promise<void> {
     await this.db
       .updateTable('guild_settings')
       .set({ playerEmojis: JSON.stringify(playerEmojis) })

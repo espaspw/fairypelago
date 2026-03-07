@@ -8,7 +8,7 @@ import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
 
 let jobs: Jobs = {}
 
-export async function loadJobs() {
+export async function loadJobs () {
   jobs = {}
   const files = await fs.readdir(path.join(import.meta.dirname, 'jobs'))
   for (const file of files) {
@@ -21,11 +21,11 @@ export async function loadJobs() {
   }
 }
 
-export function scheduleJobs(sessionRegistry: ArchipelagoSessionRegistry, discordClient: Client) {
+export function scheduleJobs (sessionRegistry: ArchipelagoSessionRegistry, discordClient: Client) {
   for (const [jobName, jobDetails] of Object.entries(jobs)) {
     setInterval(async () => {
       try {
-        logger.info(`Running job`, { jobName })
+        logger.info('Running job', { jobName })
         await jobDetails.do({ sessionRegistry, discordClient })
       } catch (err) {
         logger.error(err)

@@ -8,7 +8,7 @@ import { replyWithError, sendNewlineSplitDiscordTextMessage } from '../util/mess
 const NUM_COLUMNS = 10
 const MAX_MSG_LENGTH = 1200
 
-async function sendNamelessIconListToDiscord(message: Message, gameName: string, numCols: number) {
+async function sendNamelessIconListToDiscord (message: Message, gameName: string, numCols: number) {
   const gameIcon = IconLookupTable.lookupGame(gameName) ?? ''
   const emojiList = IconLookupTable.getEmojiList(gameName)
   let runningLength = gameIcon.length + 1
@@ -37,13 +37,13 @@ async function sendNamelessIconListToDiscord(message: Message, gameName: string,
   }
 }
 
-async function sendNamedIconListToDiscord(message: Message, gameName: string, emptyOnly = false) {
+async function sendNamedIconListToDiscord (message: Message, gameName: string, emptyOnly = false) {
   const emojiList = IconLookupTable.getFlatNamedEmojiList(gameName)
   const output = Object.entries(emojiList).map(([matcher, emoji]) => {
-    if (emptyOnly && emoji !== '') return null;
+    if (emptyOnly && emoji !== '') return null
     return `\`${matcher}\`: ${emoji}`
   }).filter(x => x !== null)
-  if (output.length === 0) await message.reply('No icons found.');
+  if (output.length === 0) await message.reply('No icons found.')
   await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), output.join('\n'))
 }
 
@@ -83,7 +83,7 @@ const lookupIcon: Command = {
       description: 'If show-name is enabled, only show matchers that do not have a corresponding emoji.',
     }
   },
-  async execute(message, tokens = []) {
+  async execute (message, tokens = []) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
     const args = splicedTokens.join(' ')
     const [gameName, itemName] = args.split(' : ')
@@ -93,11 +93,11 @@ const lookupIcon: Command = {
         message.reply.bind(message),
         (`Supported Games:\n${supportedGames.map(x => `- ${IconLookupTable.lookupGame(x)} ${x}`).join('\n')}`)
       )
-      return;
+      return
     }
     if (!supportedGames.includes(gameName)) {
       await replyWithError(message, `Game (${gameName}) not found.`)
-      return;
+      return
     }
     if (itemName === undefined) {
       if (flags.showName) {
@@ -105,7 +105,7 @@ const lookupIcon: Command = {
       } else {
         await sendNamelessIconListToDiscord(message, gameName, flags.numCols)
       }
-      return;
+      return
     }
     const itemIcon = IconLookupTable.lookupItem(gameName, itemName)
     if (itemIcon === null) {

@@ -14,7 +14,7 @@ const helpMessage = `You need help? Fine. Here's what I'll respond to:
 export const help: SessionCommand = {
   name: 'help',
   description: 'Get information about session commands',
-  async execute(message, _args, session) {
+  async execute (message, _args, session) {
     await message.reply(helpMessage)
   },
 }

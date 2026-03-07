@@ -5,31 +5,30 @@ import { getItemTierIcon, lookupItem } from '../icon-lookup-table.js'
 import { replyWithError } from '../util/message-utils.js'
 import { Item } from 'archipelago.js'
 
-
-function itemFlagToIcon(flags: number): string {
+function itemFlagToIcon (flags: number): string {
   if (flags & 0b001) return getItemTierIcon('progression') ?? 'unknown'
   if (flags & 0b010) return getItemTierIcon('useful') ?? 'unknown'
   if (flags & 0b100) return getItemTierIcon('trap') ?? 'unknown'
   return getItemTierIcon('filler') ?? 'unknown'
 }
 
-function formatItem(item: Item) {
+function formatItem (item: Item) {
   const r = lookupItem(item.game, item.name)
-  if (r === null) return item.name;
+  if (r === null) return item.name
   return `${r} ${item.name}`
 }
 
 export const hint: SessionCommand = {
   name: 'hint',
   description: 'Get the hints for a player',
-  async execute(message, args, session) {
+  async execute (message, args, session) {
     if (args.length <= 0) {
       const loadingReaction = await message.react('⏳')
       const hintingInfo = await session.getHintingInfo()
       await loadingReaction.remove()
       if (!hintingInfo) {
-        await replyWithError(message, `I couldn't seem to get the hinting info...`)
-        return;
+        await replyWithError(message, 'I couldn\'t seem to get the hinting info...')
+        return
       }
       const tokens = [
         `**My current vessel**: ${hintingInfo?.vesselName}`,
@@ -37,7 +36,6 @@ export const hint: SessionCommand = {
         `**Points**: ${hintingInfo.hintPoints}`
       ]
       message.reply(tokens.join('\n'))
-      return;
     } else {
       const maybeSlotName = args.join(' ')
       const slotName = await (async () => {
@@ -53,14 +51,14 @@ export const hint: SessionCommand = {
       })()
       if (!slotName) {
         await message.reply(`Who in the world is ${maybeSlotName}?`)
-        return;
+        return
       }
       const loadingReaction = await message.react('⏳')
       const hints = await session.getPlayerHints(slotName)
       await loadingReaction.remove()
       if (!hints) {
         await replyWithError(message, `I couldn't seem to get the hints for __${slotName}__...`)
-        return;
+        return
       }
       if (hints.length <= 0) {
         await message.reply(`There are currently no unfound hints for __${slotName}__.`)

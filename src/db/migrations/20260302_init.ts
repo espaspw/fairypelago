@@ -1,6 +1,6 @@
 import { Kysely } from 'kysely'
 
-export async function up(db: Kysely<any>): Promise<void> {
+export async function up (db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('sessions')
     .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
@@ -22,7 +22,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
 }
 
-export async function down(db: Kysely<any>): Promise<void> {
+export async function down (db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('sessions').execute()
   await db.schema.dropTable('guild_settings').execute()
 }

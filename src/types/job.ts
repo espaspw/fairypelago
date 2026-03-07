@@ -1,4 +1,5 @@
 import { Client } from 'discord.js'
+
 import { ArchipelagoSessionRegistry } from '../lib/archipelago-session-registry.js'
 
 export interface JobOptionalDeps {

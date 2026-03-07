@@ -1,4 +1,4 @@
-import { SessionOptions } from '../../types/session-types.js';
+import { SessionOptions } from '../../types/session-types.js'
 
 export interface IOptionsProvider {
   getOptionsBySessionId(sessionId: number): Promise<SessionOptions>;
