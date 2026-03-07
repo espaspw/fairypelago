@@ -9,7 +9,7 @@ const setPlayerEmoji: Command = {
   categories: ['Settings', 'Admin'],
   description: 'Settings for changing player alias to emoji settings for this guild. The emoji must be from this guild or else it might not render. The toggle-replace-name subcommand will toggle whether names will be completely replaced by emojis or not.',
   usageHelpText: '- pe\n- pe get `player-alias`\n- pe set `player-alias` `emoji`\n- pe delete `player-alias`\n- pe delete-all\n- pe toggle-replace-name',
-  async execute(message, tokens, _commands, { guildSettingsRepo, sessionRepo }) {
+  async execute(message, tokens, _commands, { guildSettingsRepo, optionsProvider }) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
       && message.author.id !== process.env.OWNER_ID) {
       await message.reply('Only admins can use this command.')
@@ -81,7 +81,7 @@ const setPlayerEmoji: Command = {
         }
       } else if (tokens[0] === 'toggle-replace-name') {
         const newValue = !sessionOptions.enablePlayerIcons
-        await guildSettingsRepo.setSessionOptions(message.guildId, { ...sessionOptions, enablePlayerIcons: newValue })
+        await optionsProvider.setOptionsByGuildId(message.guildId, { ...sessionOptions, enablePlayerIcons: newValue })
         if (newValue) {
           await message.reply('Names will now be replaced with emojis when avaliable.')
         } else {

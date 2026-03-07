@@ -10,6 +10,7 @@ import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
 import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
 import { sessionCommands } from './session-commands.js'
 import { ArchipelagoWebhostClient } from './archipelago-webhost-client.js'
+import { IOptionsProvider } from './interfaces/options-provider.js'
 
 const intents = [
   DC.GatewayIntentBits.MessageContent,
@@ -25,6 +26,7 @@ export class DiscordClient {
     private sessionRegistry: ArchipelagoSessionRegistry,
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
+    private optionsProvider: IOptionsProvider,
   ) {
     this.#client = new DC.Client({ intents })
   }
@@ -80,6 +82,7 @@ export class DiscordClient {
               sessionRegistry: this.sessionRegistry,
               guildSettingsRepo: this.settingsRepo,
               sessionRepo: this.sessionRepo,
+              optionsProvider: this.optionsProvider,
             })
             logger.info(`Executed command`, { commandName, tokens })
           } catch (err) {
