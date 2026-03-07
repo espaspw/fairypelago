@@ -17,7 +17,7 @@ function createLookupTable(itemIcons: ItemIcons) {
     for (const matcher of matchers) {
       const { pattern, emoji: emojiName } = matcher
       for (const strOrRegex of pattern) {
-        const emojiString = nameToEmojiString.get(emojiName) ?? ''
+        const emojiString = nameToEmojiString.get(emojiName) ?? emojiName
         if (typeof strOrRegex === 'string') {
           gameTable.exactMatchers[strOrRegex] = emojiString
         } else {
