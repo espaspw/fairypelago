@@ -5,51 +5,12 @@ import { catchAndLogError } from './util/general.js'
 import { logger } from './util/logger.js'
 import { IEventHandler } from './interfaces/event-handler.js'
 import { IOptionsProvider } from './interfaces/options-provider.js'
-import { ArchipelagoWebhostClient, WebhostInitialSessionData, WebhostPlayerStatus, WebhostSessionStatus } from './archipelago-webhost-client.js'
+import { ArchipelagoWebhostClient, WebhostInitialSessionData, WebhostSessionStatus } from './archipelago-webhost-client.js'
 import { ItemTier } from '../types/icon-types.js'
 import { TTLCache } from './util/ttl-cache.js'
+import { SessionStaticState, SessionHintingInfo, SessionItemReceived, SessionStatus } from '../types/session-types.js'
 
-// Fields which will not change from the initial webhost api fetch
-export interface SessionStaticState {
-  trackerId: string
-  players: {
-    slotId: number,
-    slotName: string,
-    game: {
-      name: string,
-      totalLocations: number,
-    },
-    team: number,
-    download: string | null,
-  }[],
-}
-
-export interface SessionItemReceived {
-  name: string,
-  location: string,
-  sender: string,
-  tiers: ItemTier[],
-}
-
-export interface SessionStatus {
-  port: number,
-  lastRoomActivity: Date,
-  lastPlayerActivity: Record<number, Date | null>,
-  lastPlayerConnection: Record<number, Date | null>,
-  checksDone: Record<number, string[]>
-  itemsReceived: Record<number, SessionItemReceived[]>
-  aliases: Record<number, string | null>,
-  playerStatus: Record<number, WebhostPlayerStatus>,
-}
-
-export interface SessionHintingInfo {
-  vesselName: string,
-  hintCost: number,
-  hintCostPercentage: number,
-  hintPoints: number,
-}
-
-export interface SessionVesselChange {
+interface SessionVesselChange {
   isInTransition: boolean,
   prevVesselName: string | null,
 }

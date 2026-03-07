@@ -1,8 +1,7 @@
 import * as DC from 'discord.js'
+import { SessionStaticState } from '../../types/session-types.js'
 
-import { SessionStaticState } from '../archipelago-session.js'
-
-export function createRoomDataDisplay(staticState: SessionStaticState,): string | DC.MessagePayload | DC.MessageCreateOptions {
+export function createRoomDataDisplay(staticState: SessionStaticState): string | DC.MessagePayload | DC.MessageCreateOptions {
   const tokens = ['### Player Worlds']
   const numberOfTeams = staticState.players.reduce((acc, curr) => acc.add(curr.team), new Set<number>()).size
   staticState.players.forEach(player => {
