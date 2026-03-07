@@ -33,7 +33,7 @@ async function main() {
   const optionsProvider = new SessionOptionsProvider(sessionRepo, settingsRepo)
   const sessionRegistry = new ArchipelagoSessionRegistry(sessionRepo, settingsRepo, optionsProvider)
 
-  const discordClient = new DiscordClient(sessionRegistry, sessionRepo, settingsRepo)
+  const discordClient = new DiscordClient(sessionRegistry, sessionRepo, settingsRepo, optionsProvider)
   discordClient.registerListeners()
   await discordClient.login(DISCORD_BOT_TOKEN)
 

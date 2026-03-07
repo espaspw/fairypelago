@@ -1,5 +1,8 @@
 import { SessionOptions } from '../../types/session-types.js';
 
 export interface IOptionsProvider {
-  getOptions(sessionId: number): Promise<SessionOptions>;
+  getOptionsBySessionId(sessionId: number): Promise<SessionOptions>;
+  getOptionsByGuildId(guildId: string): Promise<SessionOptions>;
+  setOptionsBySessionId(sessionId: number, options: SessionOptions): Promise<void>;
+  setOptionsByGuildId(guildId: string, options: SessionOptions): Promise<void>;
 }

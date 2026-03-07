@@ -312,7 +312,7 @@ export class ArchipelagoSession {
     // Shouldn't happen but in case staticState and websocket state is desynced
     if (!player) return null;
     const hints = await player.fetchHints()
-    const { hideFoundHints } = await this.#optionsProvider.getOptions(this.#sessionId)
+    const { hideFoundHints } = await this.#optionsProvider.getOptionsBySessionId(this.#sessionId)
     if (hideFoundHints) {
       return hints.filter(hint => !hint.found)
     }
@@ -359,7 +359,7 @@ export class ArchipelagoSession {
   }
 
   async #isWhitelisted(msgType: ArchipelagoMessageType) {
-    const options = await this.#optionsProvider.getOptions(this.#sessionId)
+    const options = await this.#optionsProvider.getOptionsBySessionId(this.#sessionId)
     return msgType in options.whitelistedMessageTypes
   }
 
@@ -410,7 +410,7 @@ export class ArchipelagoSession {
 
     this.#client.messages.on('itemHinted', catchAndLogError(async (text, item) => {
       if (!this.#isWhitelisted(ArchipelagoMessageType.ItemHinted)) return;
-      const options = await this.#optionsProvider.getOptions(this.#sessionId)
+      const options = await this.#optionsProvider.getOptionsBySessionId(this.#sessionId)
       if (options.hideFoundHints && text.includes('(found)')) return;
       await this.#eventHandler.itemHinted(this, text, item)
     }))

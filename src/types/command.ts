@@ -2,6 +2,7 @@ import { Message, OmitPartialGroupDMChannel } from 'discord.js'
 
 import { ArchipelagoSessionRegistry } from '../lib/archipelago-session-registry.js'
 import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
+import { IOptionsProvider } from '../lib/interfaces/options-provider.js'
 
 export type CommandLookup = {
   [key: string]: Command
@@ -25,6 +26,7 @@ export interface CommandExtraDeps {
   sessionRegistry: ArchipelagoSessionRegistry,
   sessionRepo: ISessionRepository,
   guildSettingsRepo: IGuildSettingsRepository,
+  optionsProvider: IOptionsProvider,
 }
 
 export interface Command {
