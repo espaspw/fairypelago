@@ -1,0 +1,25 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const smMapRandoIcons: IconMatcher[] = [
+  { pattern: ['Bomb'], emoji: 'sm_bomb' },
+  { pattern: ['Charge'], emoji: 'sm_chargebeam' },
+  { pattern: ['ETank'], emoji: 'sm_energytank' },
+  { pattern: ['Grapple'], emoji: 'sm_grapplingbeam' },
+  { pattern: ['Gravity'], emoji: 'sm_gravitysuit' },
+  { pattern: ['HiJump'], emoji: 'sm_hijumpboots' },
+  { pattern: ['Ice'], emoji: 'sm_icebeam' },
+  { pattern: ['Missile'], emoji: 'sm_missile' },
+  { pattern: ['Morph'], emoji: 'sm_morphball' },
+  { pattern: ['Plasma'], emoji: 'sm_plasmabeam' },
+  { pattern: ['PowerBomb'], emoji: 'sm_powerbomb' },
+  { pattern: ['ReserveTank'], emoji: 'sm_reservetank' },
+  { pattern: ['ScrewAttack'], emoji: 'sm_screwattack' },
+  { pattern: ['SpaceJump'], emoji: 'sm_spacejump' },
+  { pattern: ['Spazer'], emoji: 'sm_spazer' },
+  { pattern: ['SpeedBooster'], emoji: 'sm_speedbooster' },
+  { pattern: ['SpringBall'], emoji: 'sm_springball' },
+  { pattern: ['Super'], emoji: 'sm_supermissile' },
+  { pattern: ['Varia'], emoji: 'sm_variasuit' },
+  { pattern: ['Wave'], emoji: 'sm_wavebeam' },
+  { pattern: ['XRayScope'], emoji: 'sm_xrayscope' },
+]

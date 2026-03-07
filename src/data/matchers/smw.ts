@@ -1,0 +1,27 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const smwIcons: IconMatcher[] = [
+  { pattern: [/[0-9]+ coins?/], emoji: 'smw_coin' },
+  { pattern: ['Yoshi Egg'], emoji: 'smw_yoshiegg' },
+  { pattern: ['Run'], emoji: 'smw_mariorun' },
+  { pattern: ['Carry'], emoji: 'smw_mariocarry' },
+  { pattern: ['Swim'], emoji: 'smw_marioswim' },
+  { pattern: ['Spin Jump'], emoji: 'smw_spinjump' },
+  { pattern: ['Climb'], emoji: 'smw_marioclimb' },
+  { pattern: ['Yoshi'], emoji: 'smw_yoshi' },
+  { pattern: ['P-Switch'], emoji: 'smw_pswitch' },
+  { pattern: ['P-Balloon'], emoji: 'smw_pballoon' },
+  { pattern: ['Progressive Powerup'], emoji: 'smw_powerup' },
+  { pattern: ['Super Star Activate'], emoji: 'smw_superstar' },
+  { pattern: ['Yellow Switch Palace'], emoji: 'smw_yellowswitch' },
+  { pattern: ['Green Switch Palace'], emoji: 'smw_greenswitch' },
+  { pattern: ['Red Switch Palace'], emoji: 'smw_redswitch' },
+  { pattern: ['Blue Switch Palace'], emoji: 'smw_blueswitch' },
+  { pattern: ['Ice Trap'], emoji: '' },
+  { pattern: ['Stun Trap'], emoji: '' },
+  { pattern: ['Literature Trap'], emoji: '' },
+  { pattern: ['Timer Trap'], emoji: '' },
+  { pattern: ['Reverse Trap'], emoji: '' },
+  { pattern: ['Thwimp Trap'], emoji: '' },
+  { pattern: ['Special Zone Clear'], emoji: 'smw_specialworldclear' },
+]
