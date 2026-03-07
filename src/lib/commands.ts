@@ -5,7 +5,7 @@ import { logger } from './util/logger.js'
 
 let avaliableCommands: CommandLookup = {}
 
-async function loadAvaliableCommands(): Promise<CommandLookup> {
+async function loadAvaliableCommands (): Promise<CommandLookup> {
   avaliableCommands = {}
   const files = await fs.readdir(path.join(import.meta.dirname, 'commands'))
   for (const file of files) {
@@ -21,13 +21,13 @@ async function loadAvaliableCommands(): Promise<CommandLookup> {
   return avaliableCommands
 }
 
-export async function reloadAvaliableCommands() {
+export async function reloadAvaliableCommands () {
   avaliableCommands = await loadAvaliableCommands()
   logger.info('Reloaded global commands', {
     commands: Object.keys(avaliableCommands),
   })
 }
 
-export function getAvaliableCommands(): CommandLookup {
+export function getAvaliableCommands (): CommandLookup {
   return avaliableCommands
 }

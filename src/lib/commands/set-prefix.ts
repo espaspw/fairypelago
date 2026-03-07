@@ -1,7 +1,7 @@
 import { PermissionFlagsBits } from 'discord.js'
 
 import { Command } from '../../types/command.js'
-import { replyWithError } from '../util/message-utils.js';
+import { replyWithError } from '../util/message-utils.js'
 
 const setPrefix: Command = {
   name: 'Set Prefix',
@@ -9,15 +9,15 @@ const setPrefix: Command = {
   categories: ['Settings', 'Admin'],
   description: 'Sets the command prefix for the current guild.',
   usageHelpText: 'prefix `new-prefix`',
-  async execute(message, tokens, _commands, { guildSettingsRepo }) {
-    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
-      && message.author.id !== process.env.OWNER_ID) {
+  async execute (message, tokens, _commands, { guildSettingsRepo }) {
+    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator) &&
+      message.author.id !== process.env.OWNER_ID) {
       await message.reply('Only admins can use this command.')
-      return;
+      return
     }
     if (!message.guildId) {
-      await replyWithError(message, `Settings can only be set in a guild.`)
-      return;
+      await replyWithError(message, 'Settings can only be set in a guild.')
+      return
     }
     if (tokens[0] === undefined) {
       const currentSettings = await guildSettingsRepo.getSettings(message.guildId)

@@ -28,14 +28,14 @@ const echo: Command = {
       description: 'Trim all backslashes before echoing the message',
     }
   },
-  async execute(message, tokens) {
-    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator)
-      && message.author.id !== process.env.OWNER_ID) {
+  async execute (message, tokens) {
+    if (!message.member?.permissions.has(PermissionFlagsBits.Administrator) &&
+      message.author.id !== process.env.OWNER_ID) {
       await replyWithError(message, 'Only admins can use this command.')
-      return;
+      return
     }
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
-    if (splicedTokens.length <= 0) return;
+    if (splicedTokens.length <= 0) return
     const outputMessage = (() => {
       const escaped = splicedTokens.join(' ')
       if (flags.unescape) {

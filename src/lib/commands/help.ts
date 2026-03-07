@@ -3,19 +3,18 @@ import { EmbedBuilder } from 'discord.js'
 import { Command, FlagSchema } from '../../types/command.js'
 import { extractFlags, findAlias } from '../util/command-utils.js'
 
-function formatFlagDefinitions(flags: FlagSchema) {
+function formatFlagDefinitions (flags: FlagSchema) {
   return Object.values(flags).map(flag => {
     if (flag.type === Boolean) {
       const parts = [`\`--${flag.name}\``]
-      if (flag.alias) parts.push(`(\`-${flag.alias}\`)`);
-      if (!flag.isHiddenDefault) parts.push(`| Default: _${flag.default}_`);
+      if (flag.alias) parts.push(`(\`-${flag.alias}\`)`)
+      if (!flag.isHiddenDefault) parts.push(`| Default: _${flag.default}_`)
       if (flag.description) parts.push(`\n-# ${flag.description}`)
       return parts.join(' ')
-    }
-    else {
+    } else {
       const parts = [`\`--${flag.name}=<${flag.argName ?? '...'}>\``]
-      if (flag.alias) parts.push(`(\`-${flag.alias}\`)`);
-      if (!flag.isHiddenDefault) parts.push(`| Default: _${flag.default}_`);
+      if (flag.alias) parts.push(`(\`-${flag.alias}\`)`)
+      if (!flag.isHiddenDefault) parts.push(`| Default: _${flag.default}_`)
       if (flag.description) parts.push(`\n-# ${flag.description}`)
       return parts.join(' ')
     }
@@ -39,16 +38,16 @@ const help: Command = {
       isHiddenDefault: true,
     }
   },
-  async execute(message, tokens, commands = {}) {
+  async execute (message, tokens, commands = {}) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
     if (splicedTokens[0] === undefined) {
       const seen = new Set<string>()
       const commandList = []
       for (const command of Object.values(commands)) {
-        if (flags.category === '__default' && command.categories.includes('Admin')) continue;
-        if (flags.category !== 'all' && flags.category !== '__default'
-          && !command.categories.find(c => (c.toLocaleLowerCase() === flags.category))) continue;
-        if (seen.has(command.name)) continue;
+        if (flags.category === '__default' && command.categories.includes('Admin')) continue
+        if (flags.category !== 'all' && flags.category !== '__default' &&
+          !command.categories.find(c => (c.toLocaleLowerCase() === flags.category))) continue
+        if (seen.has(command.name)) continue
         seen.add(command.name)
         commandList.push(`> ${command.name}: ${command.aliases.join(', ')}\n-# ${command.description ?? 'No description'}`)
       }

@@ -5,7 +5,7 @@ const ping: Command = {
   aliases: ['ping'],
   categories: ['Utility'],
   description: 'Print round-trip latency between Discord and the bot.',
-  async execute(message) {
+  async execute (message) {
     const pong = await message.channel.send('pong')
     const latency = pong.createdTimestamp - message.createdTimestamp
     await message.channel.send(`Latency: ${latency}ms`)

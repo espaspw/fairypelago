@@ -15,7 +15,7 @@ import { ArchipelagoSessionRegistry } from './lib/archipelago-session-registry.j
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 
-async function main() {
+async function main () {
   if (!DISCORD_BOT_TOKEN) {
     throw new Error('DISCORD_BOT_TOKEN missing from dotenv file')
   }
@@ -54,7 +54,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  logger.error(`Fatal error during setup`, { error: err })
+  logger.error('Fatal error during setup', { error: err })
   process.exit(1)
 })
-

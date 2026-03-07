@@ -8,19 +8,19 @@ const fileRotateTransport = new winston.transports.DailyRotateFile({
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
   format: combine(errors({ stack: true }), timestamp(), json()),
-});
+})
 
 const exceptionRotateTransport = new winston.transports.DailyRotateFile({
   filename: 'logs/exceptions-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
-});
+})
 
 const rejectionRotateTransport = new winston.transports.DailyRotateFile({
   filename: 'logs/rejections-%DATE%.log',
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
-});
+})
 
 const consoleTransport = new winston.transports.Console({
   format: combine(
@@ -29,7 +29,7 @@ const consoleTransport = new winston.transports.Console({
     timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
     printf((info) => `[${info.timestamp}] ${info.level} | ${info.message}`) // Console is readable
   ),
-});
+})
 
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL ?? 'info',

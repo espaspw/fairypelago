@@ -17,6 +17,7 @@
     "@types/better-sqlite3": "^7.6.13",
     "eslint": "^9.32.0",
     "kysely-ctl": "^0.20.0",
+    "neostandard": "^0.13.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0"
   },

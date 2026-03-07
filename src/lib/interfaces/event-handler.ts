@@ -1,6 +1,6 @@
 import { Item, Player } from 'archipelago.js'
 
-import { ArchipelagoSession } from '../archipelago-session.js';
+import { ArchipelagoSession } from '../archipelago-session.js'
 
 export interface IEventHandler {
   socketDisconnected: (session: ArchipelagoSession) => Promise<void>;

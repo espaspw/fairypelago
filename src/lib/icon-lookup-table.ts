@@ -1,4 +1,5 @@
 import { Client } from 'discord.js'
+
 import type { ItemTierIcons, ItemTier, GameIcons, ItemIcons, DiscordEmojiString, LookupTable, LookupTableMatchers } from '../types/icon-types.js'
 
 let gameIconsText: GameIcons = {}
@@ -7,7 +8,7 @@ let lookupTable: LookupTable = {}
 
 let nameToEmojiString: Map<string, DiscordEmojiString> = new Map()
 
-function createLookupTable(itemIcons: ItemIcons) {
+function createLookupTable (itemIcons: ItemIcons) {
   const lookupTable: LookupTable = {}
   for (const [game, matchers] of Object.entries(itemIcons)) {
     const gameTable: LookupTableMatchers = {
@@ -30,18 +31,18 @@ function createLookupTable(itemIcons: ItemIcons) {
   return lookupTable
 }
 
-export async function fetchApplicationEmojis(discordClient: Client) {
-  if (!discordClient.application) throw new Error('Discord client application is missing.');
+export async function fetchApplicationEmojis (discordClient: Client) {
+  if (!discordClient.application) throw new Error('Discord client application is missing.')
   const allEmojis = await discordClient.application?.emojis.fetch()
   const reverseMap = new Map<string, string>()
   for (const emoji of allEmojis.values()) {
-    if (!emoji.name) continue;
+    if (!emoji.name) continue
     reverseMap.set(emoji.name, emoji.toString())
   }
   nameToEmojiString = reverseMap
 }
 
-export function populateGameIcons(gameIcons: GameIcons) {
+export function populateGameIcons (gameIcons: GameIcons) {
   const output: GameIcons = {}
   for (const [itemName, emojiName] of Object.entries(gameIcons)) {
     const emojiString = nameToEmojiString.get(emojiName) ?? ''
@@ -50,11 +51,11 @@ export function populateGameIcons(gameIcons: GameIcons) {
   gameIconsText = output
 }
 
-export function populateItemIcons(itemIcons: ItemIcons) {
+export function populateItemIcons (itemIcons: ItemIcons) {
   lookupTable = createLookupTable(itemIcons)
 }
 
-export function populateItemTierIcons(itemTierIcons: ItemTierIcons) {
+export function populateItemTierIcons (itemTierIcons: ItemTierIcons) {
   const output: ItemTierIcons = {}
   for (const [itemName, emojiName] of Object.entries(itemTierIcons)) {
     const emojiString = nameToEmojiString.get(emojiName) ?? ''
@@ -63,11 +64,11 @@ export function populateItemTierIcons(itemTierIcons: ItemTierIcons) {
   itemTierIconsText = output
 }
 
-export function lookupItem(gameName: string, itemName: string) {
+export function lookupItem (gameName: string, itemName: string) {
   const gameTable = lookupTable[gameName]
-  if (gameTable === undefined) return null;
+  if (gameTable === undefined) return null
   const maybeEmoji = gameTable.exactMatchers[itemName]
-  if (maybeEmoji !== undefined) return maybeEmoji;
+  if (maybeEmoji !== undefined) return maybeEmoji
   for (const regexp of gameTable.regexMatchers) {
     if (regexp.r.test(itemName)) {
       return regexp.e
@@ -76,19 +77,19 @@ export function lookupItem(gameName: string, itemName: string) {
   return null
 }
 
-export function lookupGame(gameName: string): DiscordEmojiString | null {
+export function lookupGame (gameName: string): DiscordEmojiString | null {
   const maybeEmoji = gameIconsText[gameName]
-  if (maybeEmoji === undefined) return null;
+  if (maybeEmoji === undefined) return null
   return maybeEmoji
 }
 
-export function getSupportedGames() {
+export function getSupportedGames () {
   return Object.keys(lookupTable)
 }
 
-export function getEmojiList(gameName: string) {
+export function getEmojiList (gameName: string) {
   const matchers = lookupTable[gameName]
-  if (matchers === undefined) return [];
+  if (matchers === undefined) return []
   const output = new Set<string>()
   const { exactMatchers, regexMatchers } = matchers
   for (const emoji of Object.values(exactMatchers)) {
@@ -100,9 +101,9 @@ export function getEmojiList(gameName: string) {
   return [...output]
 }
 
-export function getFlatNamedEmojiList(gameName: string) {
+export function getFlatNamedEmojiList (gameName: string) {
   const matchers = lookupTable[gameName]
-  if (matchers === undefined) return {};
+  if (matchers === undefined) return {}
   const output: { [key: string]: string } = {}
   const { exactMatchers, regexMatchers } = matchers
   for (const [name, emoji] of Object.entries(exactMatchers)) {
@@ -114,6 +115,6 @@ export function getFlatNamedEmojiList(gameName: string) {
   return output
 }
 
-export function getItemTierIcon(tier: ItemTier) {
+export function getItemTierIcon (tier: ItemTier) {
   return itemTierIconsText[tier] ?? null
 }

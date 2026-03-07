@@ -6,20 +6,20 @@ import { replyWithError, sendNewlineSplitDiscordTextMessage } from '../util/mess
 export const status: SessionCommand = {
   name: 'status',
   description: 'Get the current status of the session',
-  async execute(message, _args, session) {
+  async execute (message, _args, session) {
     const loadingReaction = await message.react('⏳')
     const status = await session.getCurrentStatus()
     await loadingReaction.remove()
     if (!status) {
-      await replyWithError(message, `Unable to get current status. Perhaps the server is down?`)
-      return;
+      await replyWithError(message, 'Unable to get current status. Perhaps the server is down?')
+      return
     }
     const replyTokens = []
     if (session.isSocketConnected) {
       const currentVessel = session.getCurrentVessel()
       if (!currentVessel) {
-        await replyWithError(message, `Unable to get status, perhaps try again in a bit?`)
-        return;
+        await replyWithError(message, 'Unable to get status, perhaps try again in a bit?')
+        return
       }
       replyTokens.push(`${getItemTierIcon('progression')} Connected as ${currentVessel}!`)
     } else {
@@ -47,7 +47,7 @@ export const status: SessionCommand = {
           if (lastActivity) {
             return `🏁 ${convertToTimestamp(lastActivity, 'relative')}`
           }
-          return `🏁`
+          return '🏁'
         } else {
           if (lastConnection) {
             return `${getItemTierIcon('filler')} Last connected ${convertToTimestamp(lastConnection, 'relative')}`

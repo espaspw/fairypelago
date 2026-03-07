@@ -1,7 +1,7 @@
 import * as DC from 'discord.js'
 import { SessionStaticState } from '../../types/session-types.js'
 
-export function createRoomDataDisplay(staticState: SessionStaticState): string | DC.MessagePayload | DC.MessageCreateOptions {
+export function createRoomDataDisplay (staticState: SessionStaticState): string | DC.MessagePayload | DC.MessageCreateOptions {
   const tokens = ['### Player Worlds']
   const numberOfTeams = staticState.players.reduce((acc, curr) => acc.add(curr.team), new Set<number>()).size
   staticState.players.forEach(player => {
@@ -27,7 +27,7 @@ const timestampMapping: Record<TimestampType, string> = {
   'short time': 't',
 }
 
-export function convertToTimestamp(date: Date, type: TimestampType = 'long date with dow') {
+export function convertToTimestamp (date: Date, type: TimestampType = 'long date with dow') {
   const tail = timestampMapping[type]
   return `<t:${Math.floor(date.getTime() / 1000)}:${tail}>`
 }

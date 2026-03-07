@@ -2,8 +2,8 @@ import { EmbedBuilder, Message, MessagePayload, MessageReplyOptions, OmitPartial
 
 type DiscordMessageReplyFunc = (options: string | MessagePayload | MessageReplyOptions) => Promise<OmitPartialGroupDMChannel<Message<boolean>>>
 
-export function splitMessage(text: string, len = 2000) {
-  if (text.length <= len) return [text];
+export function splitMessage (text: string, len = 2000) {
+  if (text.length <= len) return [text]
   const output = []
   for (let i = 0; i < text.length; i += len) {
     output.push(text.substring(i, i + len))
@@ -11,16 +11,16 @@ export function splitMessage(text: string, len = 2000) {
   return output
 }
 
-export async function sendSplitDiscordTextMessage(method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
+export async function sendSplitDiscordTextMessage (method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
   for (const part of splitMessage(textMessage, len)) {
     await method(part)
   }
 }
 
-export async function sendNewlineSplitDiscordTextMessage(method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
+export async function sendNewlineSplitDiscordTextMessage (method: DiscordMessageReplyFunc, textMessage: string, len = 2000) {
   if (textMessage.length <= len) {
-    await method(textMessage);
-    return;
+    await method(textMessage)
+    return
   }
   const tokens = textMessage.split('\n')
   const output = []
@@ -47,7 +47,7 @@ export async function sendNewlineSplitDiscordTextMessage(method: DiscordMessageR
   }
 }
 
-export async function replyWithError(message: Message, text: string) {
+export async function replyWithError (message: Message, text: string) {
   const embed = new EmbedBuilder()
     .setDescription(text)
     .setColor(0xb71c1c)
@@ -56,6 +56,6 @@ export async function replyWithError(message: Message, text: string) {
 
 // Converts all discord emojis with shortened version: i.e. <:my_emoji:1219077623821504623> -> :my_emoji:
 const discordEmojiCapture = /<a?:([a-zA-Z0-9_]+):[0-9]+>/g
-export function stripDiscordEmojis(text: string) {
+export function stripDiscordEmojis (text: string) {
   return text.replace(discordEmojiCapture, ':$1:')
 }

@@ -22,26 +22,26 @@ const intents = [
 export class DiscordClient {
   #client: DC.Client
 
-  constructor(
+  constructor (
     private sessionRegistry: ArchipelagoSessionRegistry,
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
-    private optionsProvider: IOptionsProvider,
+    private optionsProvider: IOptionsProvider
   ) {
     this.#client = new DC.Client({ intents })
   }
 
-  async login(token: string) {
+  async login (token: string) {
     await this.#client.login(token)
   }
 
-  get client() {
+  get client () {
     return this.#client
   }
 
-  registerListeners() {
+  registerListeners () {
     this.#client.once(DC.Events.ClientReady, async (client) => {
-      logger.info(`Client ready`, { tag: client.user.tag })
+      logger.info('Client ready', { tag: client.user.tag })
       await reloadAvaliableCommands()
       await this.sessionRegistry.initFromDb(this.#client)
       await Promise.all(this.sessionRegistry.getAllSessions().map(async session => {
@@ -53,25 +53,25 @@ export class DiscordClient {
     this.#client.on(
       DC.Events.MessageCreate,
       catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-        if (!this.#client.user) return;
-        if (message.author.id === this.#client.user.id) return;
-        if (message.author.bot) return;
-        if (!message.guildId) return;
+        if (!this.#client.user) return
+        if (message.author.id === this.#client.user.id) return
+        if (message.author.bot) return
+        if (!message.guildId) return
 
         const guildSettings = await this.settingsRepo.getSettings(message.guildId)
-        if (!message.content.startsWith(guildSettings.commandPrefix)) return;
+        if (!message.content.startsWith(guildSettings.commandPrefix)) return
 
         const truncatedMsg = message.content.substring(guildSettings.commandPrefix.length)
         const tokens = truncatedMsg.split(' ')
         const commandName = tokens.shift()?.toLocaleLowerCase()
-        if (!commandName) return;
+        if (!commandName) return
 
         const avaliableCommands = getAvaliableCommands()
 
         if (commandName === 'reload' && message.author.id === process.env.OWNER_ID) {
           await reloadAvaliableCommands()
           await message.react('✅')
-          await new Promise<void>(r => setTimeout(() => r(), 2000))
+          await new Promise<void>(resolve => setTimeout(() => resolve(), 2000))
           await message.delete()
         } else if (!(commandName in avaliableCommands)) {
           message.react('❓')
@@ -84,9 +84,9 @@ export class DiscordClient {
               sessionRepo: this.sessionRepo,
               optionsProvider: this.optionsProvider,
             })
-            logger.info(`Executed command`, { commandName, tokens })
+            logger.info('Executed command', { commandName, tokens })
           } catch (err) {
-            logger.error(`Failed to execute command`, { err })
+            logger.error('Failed to execute command', { err })
             message.react('❗')
           }
         }
@@ -97,12 +97,12 @@ export class DiscordClient {
     this.#client.on(
       DC.Events.MessageCreate,
       catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-        if (!this.#client.user) return;
-        if (message.author.id === this.#client.user.id) return;
-        if (message.author.bot) return;
+        if (!this.#client.user) return
+        if (message.author.id === this.#client.user.id) return
+        if (message.author.bot) return
 
         const existingSession = this.sessionRegistry.getSessionByChannelId(message.channelId)
-        if (!existingSession) return;
+        if (!existingSession) return
 
         const guildSettings = await this.settingsRepo.getSettings(message.guildId!)
         const prefix = guildSettings.sessionCommandPrefix
@@ -113,9 +113,9 @@ export class DiscordClient {
           const commandName = tokens.shift()?.toLowerCase()
 
           if (commandName && sessionCommands[commandName]) {
-            await sessionCommands[commandName].execute(message, tokens, existingSession);
-            logger.info(`Executed session command`, { commandName, tokens, sessionId: existingSession.sessionId });
-            return;
+            await sessionCommands[commandName].execute(message, tokens, existingSession)
+            logger.info('Executed session command', { commandName, tokens, sessionId: existingSession.sessionId })
+            return
           }
         }
         // } else if (message.content.toLowerCase().startsWith('find')) {
@@ -144,9 +144,9 @@ export class DiscordClient {
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
         try {
           await existingSession.sendMessage(`[${message.author.username}] :: ${messageWithShortEmojis}`)
-          logger.info(`Forwarded message to archipelago`, { message: messageWithShortEmojis })
+          logger.info('Forwarded message to archipelago', { message: messageWithShortEmojis })
         } catch (err) {
-          logger.info(`Failed to forward message`, { message: messageWithShortEmojis, err: err })
+          logger.info('Failed to forward message', { message: messageWithShortEmojis, err })
         }
       })
     )
@@ -155,17 +155,17 @@ export class DiscordClient {
     this.#client.on(
       DC.Events.MessageCreate,
       catchAndLogError(async (message: DC.OmitPartialGroupDMChannel<DC.Message<boolean>>) => {
-        if (!this.#client.user) return;
-        if (message.author.id === this.#client.user.id) return;
-        if (message.author.bot) return;
-        if (message.channel.isThread()) return;
-        if (!message.guildId) return;
+        if (!this.#client.user) return
+        if (message.author.id === this.#client.user.id) return
+        if (message.author.bot) return
+        if (message.channel.isThread()) return
+        if (!message.guildId) return
 
         // Checks if message contains archipelago room link
         const archRoomData = parseArchipelagoRoomUrl(message.content)
-        if (archRoomData === null) return;
+        if (archRoomData === null) return
 
-        logger.info(`AP Room Url detected, attempt to create session`, {
+        logger.info('AP Room Url detected, attempt to create session', {
           channelId: message.channelId,
           guildId: message.guildId,
           roomData: archRoomData,
@@ -176,12 +176,12 @@ export class DiscordClient {
         const sessionStatus = await webhostClient.fetchSessionStatus(archRoomData.roomId)
         if (!sessionStatus) {
           await replyWithError(message, 'Failed to fetch info from this AP room, perhaps the url is incorrect or the site is down...')
-          logger.info(`AP room link detected but failed to connect to webhost, `, {
+          logger.info('AP room link detected but failed to connect to webhost, ', {
             channelId: message.channelId,
             guildId: message.guildId,
             roomData: archRoomData,
           })
-          return;
+          return
         }
 
         const guildSettings = await this.settingsRepo.getSettings(message.guildId)
@@ -189,43 +189,43 @@ export class DiscordClient {
         const logChannelId = guildSettings.logChannelId
         if (logChannelId === null) {
           message.channel.send('Log channel has not been setup yet.')
-          logger.info(`Did not create session due to missing log channel setting`, {
+          logger.info('Did not create session due to missing log channel setting', {
             channelId: message.channelId,
             guildId: message.guildId,
             roomData: archRoomData,
           })
-          return;
+          return
         }
-        if (!message.guild) return;
+        if (!message.guild) return
         const logChannel = await message.guild.channels.fetch(logChannelId)
-        if (logChannel === null) return;
+        if (logChannel === null) return
 
         // If room already exists, instead reply with link to existing thread
         const existingSessionChannelId = await this.sessionRegistry.getChannelIdByRoomUrl(archRoomData.url)
         if (existingSessionChannelId) {
           const existingChannelUrl = (await message.guild?.channels.fetch(existingSessionChannelId))?.url
-          if (!existingChannelUrl) return;
+          if (!existingChannelUrl) return
           await message.reply(existingChannelUrl)
-          return;
+          return
         }
 
         const threadBaseMessage = await (async () => {
           if (message.channelId !== logChannelId) {
             return await message.forward(logChannelId)
           }
-          return message;
-        })();
+          return message
+        })()
         const currentDay = new Date().toLocaleDateString()
         const newThreadName = `${sessionStatus.port} with ${Object.keys(sessionStatus.playerStatus).length} worlds on ${currentDay}`
         const newThread = await threadBaseMessage.startThread({
           name: newThreadName,
           autoArchiveDuration: DC.ThreadAutoArchiveDuration.OneWeek,
-        });
+        })
         if (newThread.joinable) {
           await newThread.join()
         }
 
-        logger.info(`New thread created for session`, {
+        logger.info('New thread created for session', {
           channelId: message.channelId,
           guildId: message.guildId,
           threadId: newThread.id,
@@ -235,13 +235,13 @@ export class DiscordClient {
         const newSession = await this.sessionRegistry.createSession(newThread, archRoomData)
         if (!newSession) {
           await replyWithError(message, 'Failed to fetch info from this AP room, perhaps the room is expired or the site is down...')
-          logger.info(`AP roomm link detected but failed to create session, `, {
+          logger.info('AP roomm link detected but failed to create session, ', {
             channelId: message.channelId,
             guildId: message.guildId,
             threadId: newThread.id,
             url: archRoomData.url
           })
-          return;
+          return
         }
 
         const initialMessage = await newThread.send(createRoomDataDisplay(newSession.staticState))
@@ -249,7 +249,7 @@ export class DiscordClient {
 
         if (message.channelId !== logChannelId) {
           await message.reply(newThread.url)
-          logger.info(`URL posted outside log channel, forwarded link`, {
+          logger.info('URL posted outside log channel, forwarded link', {
             channelId: message.channelId,
             guildId: message.guildId,
             threadId: newThread.id,
