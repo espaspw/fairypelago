@@ -62,8 +62,7 @@ export class EventToDiscordHandler implements IEventHandler {
         await this.#discordChannel.send(`I couldn't seem to get the hints...`)
         return;
       }
-      const unreachedHints = hints.filter(hint => !hint.found)
-      const reply = unreachedHints.map(hint => (
+      const reply = hints.map(hint => (
         `- ${itemFlagToIcon(hint.item.flags)} **${this.#formatter.formatItem(hint.item)}** at **${hint.item.locationName}** in __${hint.item.sender.alias}__'s world`
       )).join('\n')
       await this.#discordChannel.send(reply)

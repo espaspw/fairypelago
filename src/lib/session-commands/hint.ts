@@ -62,11 +62,10 @@ export const hint: SessionCommand = {
         await replyWithError(message, `I couldn't seem to get the hints for __${slotName}__...`)
         return;
       }
-      const unfoundHints = hints.filter(hint => !hint.found)
-      if (unfoundHints.length <= 0) {
-        await message.reply(`There are currently no unfound progression hints for __${slotName}__.`)
+      if (hints.length <= 0) {
+        await message.reply(`There are currently no unfound hints for __${slotName}__.`)
       } else {
-        const hintsText = unfoundHints.map(hint => (
+        const hintsText = hints.map(hint => (
           `- ${itemFlagToIcon(hint.item.flags)} **${formatItem(hint.item)}** at **${hint.item.locationName}** in __${hint.item.sender.alias}__'s world `
         )).join('\n')
         await message.reply([`**Hints for **__${slotName}__`, hintsText].join('\n'))
