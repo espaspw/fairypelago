@@ -308,7 +308,15 @@ export class ArchipelagoSession {
   async getPlayerHints(slotName: string) {
     const slotId = this.#staticState.players.find(p => p.slotName === slotName)?.slotId
     if (!slotId) return null;
-    return await this.#client.players.findPlayer(slotId)?.fetchHints() ?? null
+    const player = this.#client.players.findPlayer(slotId)
+    // Shouldn't happen but in case staticState and websocket state is desynced
+    if (!player) return null;
+    const hints = await player.fetchHints()
+    const { hideFoundHints } = await this.#optionsProvider.getOptions(this.#sessionId)
+    if (hideFoundHints) {
+      return hints.filter(hint => !hint.found)
+    }
+    return hints
   }
 
   // Returns hinting info ONLY for the current vessel
