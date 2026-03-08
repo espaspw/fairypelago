@@ -321,7 +321,7 @@ export class ArchipelagoSession {
 
   async #isWhitelisted (msgType: ArchipelagoMessageType) {
     const options = await this.#optionsProvider.getOptionsBySessionId(this.#sessionId)
-    return msgType in options.whitelistedMessageTypes
+    return options.whitelistedMessageTypes.includes(msgType)
   }
 
   #isEveryoneGoaled (sessionStatus: SessionStatus) {
