@@ -104,6 +104,9 @@ export class ArchipelagoSession {
     prevVesselName: null,
   }
 
+  // Tracks recent goals by slotId to prevent item release spam
+  #goalCache = new Set<number>()
+
   private constructor (
     sessionId: number,
     client: ArchipelagoClient,
@@ -362,6 +365,7 @@ export class ArchipelagoSession {
     }))
 
     this.#client.messages.on('itemSent', catchAndLogError(async (text, item) => {
+      if (this.#goalCache.has(item.sender.slot) && !item.progression) return
       if (item.progression && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentProgression)) return
       if (item.useful && !item.progression && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return
       if (item.filler && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return
@@ -402,6 +406,8 @@ export class ArchipelagoSession {
     }))
 
     this.#client.messages.on('goaled', catchAndLogError(async (text, player) => {
+      this.#goalCache.add(player.slot)
+
       if (!await this.#isWhitelisted(ArchipelagoMessageType.Goal)) return
       await this.#eventHandler.goaled(this, text, player)
 
