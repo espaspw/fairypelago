@@ -77,7 +77,7 @@ export class EventToDiscordFormatter {
     return { embeds: [embed] }
   }
 
-  async itemSent (content: string, item: Item): Promise<MessageCreateOptions> {
+  async itemSent (content: string, item: Item): Promise<string> {
     const header = `> -# ${makeTimestamp()} | ${this.formatGame(item)} - **${item.locationName}**`
     const body = await (async () => {
       if (item.sender.slot === item.receiver.slot) {
@@ -86,7 +86,7 @@ export class EventToDiscordFormatter {
         return `> ${formatItemTagList(item)} ${await this.#formatPlayer(item.sender.alias)} sent **${this.formatItem(item)}** to ${await this.#formatPlayer(item.receiver.alias)}`
       }
     })()
-    return { content: [header, body].join('\n') }
+    return [header, body].join('\n')
   }
 
   async itemHinted (content: string, item: Item): Promise<MessageCreateOptions> {
@@ -110,7 +110,7 @@ export class EventToDiscordFormatter {
     return { embeds: [embed] }
   }
 
-  async itemCheated (content: string, item: Item): Promise<MessageCreateOptions> {
+  async itemCheated (content: string, item: Item): Promise<string> {
     const header = `> -# ${makeTimestamp()} | Cheat`
     const body = await (async () => {
       if (item.sender.slot === item.receiver.slot) {
@@ -119,7 +119,7 @@ export class EventToDiscordFormatter {
         return `> **${this.formatItem(item)}** was forcefully transfered from ${await this.#formatPlayer(item.sender.alias)} to ${await this.#formatPlayer(item.receiver.alias)}, which was located at **${item.locationName}`
       }
     })()
-    return { content: [header, body].join('\n') }
+    return [header, body].join('\n')
   }
 
   async chat (content: string, player: Player): Promise<MessageCreateOptions | null> {

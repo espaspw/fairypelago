@@ -6,6 +6,7 @@ import { EventToDiscordFormatter } from './event-to-discord-formatter.js'
 import { ISessionRepository } from '../db/interfaces.js'
 import { ArchipelagoSession } from './archipelago-session.js'
 import { getItemTierIcon } from './icon-lookup-table.js'
+import { CoalescingChannelWrapper } from './util/coalescing-channel-wrapper.js'
 
 export interface ArchipelagoEventHandlerDeps {
   formatter: EventToDiscordFormatter;
@@ -23,13 +24,13 @@ function itemFlagToIcon (flags: number): string {
 export class EventToDiscordHandler implements IEventHandler {
   #sessionId: number
   #formatter: EventToDiscordFormatter
-  #discordChannel: DC.TextChannel | DC.ThreadChannel
+  #discordChannel: CoalescingChannelWrapper<string>
   #sessionRepo: ISessionRepository
 
   constructor (sessionId: number, deps: ArchipelagoEventHandlerDeps) {
     this.#sessionId = sessionId
     this.#formatter = deps.formatter
-    this.#discordChannel = deps.discordChannel
+    this.#discordChannel = new CoalescingChannelWrapper(deps.discordChannel, 1500)
     this.#sessionRepo = deps.sessionRepo
   }
 
@@ -109,7 +110,8 @@ export class EventToDiscordHandler implements IEventHandler {
   }
 
   async itemSent (session: ArchipelagoSession, text: string, item: Item) {
-    await this.#discordChannel.send(await this.#formatter.itemSent(text, item))
+    const formattedMsg = await this.#formatter.itemSent(text, item)
+    await this.#discordChannel.send(formattedMsg, `item:${item.sender.name}`)
   }
 
   async released (session: ArchipelagoSession, text: string, player: Player) {
