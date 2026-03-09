@@ -33,8 +33,12 @@ export class EventToDiscordHandler implements IEventHandler {
     this.#sessionRepo = deps.sessionRepo
   }
 
-  async socketDisconnected (session: ArchipelagoSession) {
-    await this.#discordChannel.send('I\'ve disconnected. Give me the \'restart\' command to try reconnecting.')
+  async socketDisconnected (session: ArchipelagoSession, isFinished: boolean) {
+    if (isFinished) {
+      await this.#discordChannel.send('I\'ve disconnected as the session appears to be finished.')
+    } else {
+      await this.#discordChannel.send('I\'ve disconnected. Give me the \'restart\' command to try reconnecting.')
+    }
   }
 
   async socketConnected (session: ArchipelagoSession) {
