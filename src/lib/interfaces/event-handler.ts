@@ -3,7 +3,7 @@ import { Item, Player } from 'archipelago.js'
 import { ArchipelagoSession } from '../archipelago-session.js'
 
 export interface IEventHandler {
-  socketDisconnected: (session: ArchipelagoSession) => Promise<void>;
+  socketDisconnected: (session: ArchipelagoSession, isFinished: boolean) => Promise<void>;
   socketConnected: (session: ArchipelagoSession) => Promise<void>;
   botShutdown: (session: ArchipelagoSession) => Promise<void>;
   adminCommand: (session: ArchipelagoSession, text: string) => Promise<void>;

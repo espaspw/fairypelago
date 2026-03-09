@@ -93,6 +93,7 @@ export class ArchipelagoSession {
   #eventHandler: IEventHandler
   #optionsProvider: IOptionsProvider
   #staticState: SessionStaticState
+  #isFinished = false
 
   // Calls to current status endpoint are cached due to long overhead
   // Inflight prevents duplicate calls while waiting on the network for the first call
@@ -327,8 +328,19 @@ export class ArchipelagoSession {
     return options.whitelistedMessageTypes.includes(msgType)
   }
 
-  #isEveryoneGoaled (sessionStatus: SessionStatus) {
-    return Object.values(sessionStatus?.playerStatus).every(s => s === 'Goaled')
+  async #emitEventIfEveryoneGoaled () {
+    if (this.#isFinished) return
+    // Cache is cheaper to check but may not be accurate if the bot restarts during a session
+    if (this.#goalCache.size === this.#staticState.players.length) {
+      this.#isFinished = true
+      await this.#eventHandler.allGoaled(this)
+      return
+    }
+    const status = await this.getCurrentStatus()
+    if (status && Object.values(status?.playerStatus).every(s => s === 'Goaled')) {
+      this.#isFinished = true
+      await this.#eventHandler.allGoaled(this)
+    }
   }
 
   attachListeners () {
@@ -336,7 +348,8 @@ export class ArchipelagoSession {
       if (this.#prevVesselChange.isInTransition) {
         this.#prevVesselChange.isInTransition = false
       } else {
-        await this.#eventHandler.socketDisconnected(this)
+        await this.#emitEventIfEveryoneGoaled()
+        await this.#eventHandler.socketDisconnected(this, this.#isFinished)
       }
     })
 
@@ -348,10 +361,8 @@ export class ArchipelagoSession {
 
     this.#client.messages.on('connected', catchAndLogError(async (text, player, tags) => {
       if (!await this.#isWhitelisted(ArchipelagoMessageType.Connected)) return
-      const status = await this.getCurrentStatus()
-      if (status && this.#isEveryoneGoaled(status)) {
-        await this.#eventHandler.allGoaled(this)
-      }
+      logger.info('Player has connected to a session', { sessionId: this.#sessionId, slotName: player.name })
+      await this.#emitEventIfEveryoneGoaled()
       await this.#eventHandler.connected(this, text, player, tags)
     }))
 
@@ -361,6 +372,8 @@ export class ArchipelagoSession {
         this.#prevVesselChange.prevVesselName = null
         return
       }
+      logger.info('Player has disconnected from a session', { sessionId: this.#sessionId, slotName: player.name })
+      await this.#emitEventIfEveryoneGoaled()
       await this.#eventHandler.disconnected(this, text, player)
     }))
 
@@ -411,12 +424,16 @@ export class ArchipelagoSession {
       if (!await this.#isWhitelisted(ArchipelagoMessageType.Goal)) return
       await this.#eventHandler.goaled(this, text, player)
 
-      // Invalidate cache so that goal information is up to date
-      this.#dynamicStateCache.invalidate()
-      const status = await this.getCurrentStatus()
-      if (status && this.#isEveryoneGoaled(status)) {
-        await this.#eventHandler.allGoaled(this)
-      }
+      // Wait for webhost to clear its own cache before checking for goal info
+      // Current cache timer for player tracker is 60 seconds
+      await new Promise<void>((resolve) => {
+        setTimeout(async () => {
+          // Invalidate internal cache so that goal information is up to date
+          this.#dynamicStateCache.invalidate()
+          await this.#emitEventIfEveryoneGoaled()
+          resolve()
+        }, 60000)
+      })
     }))
   }
 }
