@@ -27,7 +27,7 @@ const consoleTransport = new winston.transports.Console({
     align(),
     colorize({ all: true }),
     timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
-    printf((info) => `[${info.timestamp}] ${info.level} | ${info.message}`) // Console is readable
+    printf((info) => `[${info.timestamp}] ${info.level} | ${info.message}`),
   ),
 })
 
