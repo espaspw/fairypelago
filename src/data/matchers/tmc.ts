@@ -23,7 +23,7 @@ export const tmcIcons: IconMatcher[] = [
   },
   { pattern: ['Bomb'], emoji: 'tmc_bomb' },
   { pattern: ['Remote Bomb'], emoji: 'tmc_remotebomb' },
-  { pattern: ['Bow'], emoji: 'tmc_bo' },
+  { pattern: ['Bow'], emoji: 'tmc_bow' },
   {
     pattern: [
       /.*Bow/,
@@ -31,8 +31,8 @@ export const tmcIcons: IconMatcher[] = [
     ],
     emoji: 'tmc_bow',
   },
-  { pattern: [/.*Boomerang/], emoji: 'tmc_boomerang' },
-  { pattern: [/.*Shield/], emoji: 'tmc_boomerang' },
+  { pattern: [/.*Boomerang/], emoji: 'tmc_magicboomerang' },
+  { pattern: [/.*Shield/], emoji: 'tmc_magicboomerang' },
   { pattern: ['Lantern'], emoji: 'tmc_lantern' },
   { pattern: ['Gust Jar'], emoji: 'tmc_gustjar' },
   { pattern: ['Cane of Pacci'], emoji: 'tmc_caneofpacci' },
@@ -78,7 +78,7 @@ export const tmcIcons: IconMatcher[] = [
   { pattern: [/Big Key.*/], emoji: 'tmc_bigkey' },
   { pattern: [/Small Key.*/], emoji: 'tmc_smallkey' },
   { pattern: ['Jabber Nut'], emoji: 'tmc_jabbernut' },
-  { pattern: ['Kinstone Cloud Tops'], emoji: 'tmc_kinstonecloudtops' },
+  { pattern: ['Kinstone Cloud Tops'], emoji: 'tmc_cloudtops' },
   { pattern: ['Kinstone Swamp'], emoji: 'tmc_kinstoneswamp' },
   { pattern: ['Kinstone Falls'], emoji: 'tmc_kinstonefalls' },
   {
@@ -94,7 +94,7 @@ export const tmcIcons: IconMatcher[] = [
   { pattern: ['Big Wallet'], emoji: 'tmc_wallet' },
   { pattern: ['Bomb Bag'], emoji: 'tmc_bombbag' },
   { pattern: ['Quiver'], emoji: 'tmc_quiver' },
-  { pattern: [/.*Butterfly/], emoji: 'tmc_butterfly' },
+  { pattern: [/.*Butterfly/], emoji: 'tmc_joybutterfly' },
   {
     pattern: [
       '1 Rupee',
