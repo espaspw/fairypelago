@@ -9,9 +9,9 @@ export const unfairflipsIcons: IconMatcher[] = [
       'Coin+',
       'AutoFlip+',
     ],
-    emoji: 'coin'
+    emoji: ':coin:',
   },
-  { pattern: ['Progressive Fairness'], emoji: 'thumbsup' },
+  { pattern: ['Progressive Fairness'], emoji: ':thumbsup:' },
   { pattern: ['Tails Trap'], emoji: '' },
   { pattern: ['Penny Trap'], emoji: '' },
   { pattern: ['Tax Trap'], emoji: '' },
@@ -22,6 +22,6 @@ export const unfairflipsIcons: IconMatcher[] = [
       '$$',
       '$$$',
     ],
-    emoji: 'dollar'
+    emoji: ':dollar:',
   },
 ]

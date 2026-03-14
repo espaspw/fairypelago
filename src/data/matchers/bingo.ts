@@ -14,7 +14,7 @@ export const bingoIcons: IconMatcher[] = [
       'A9',
       'A10',
     ],
-    emoji: 'regional_indicator_a'
+    emoji: ':regional_indicator_a:',
   },
   {
     pattern: [
@@ -29,7 +29,7 @@ export const bingoIcons: IconMatcher[] = [
       'B9',
       'B10',
     ],
-    emoji: 'regional_indicator_b'
+    emoji: ':regional_indicator_b:',
   },
   {
     pattern: [
@@ -44,7 +44,7 @@ export const bingoIcons: IconMatcher[] = [
       'C9',
       'C10',
     ],
-    emoji: 'regional_indicator_c'
+    emoji: ':regional_indicator_c:',
   },
   {
     pattern: [
@@ -59,7 +59,7 @@ export const bingoIcons: IconMatcher[] = [
       'D9',
       'D10',
     ],
-    emoji: 'regional_indicator_d'
+    emoji: ':regional_indicator_d:',
   },
   {
     pattern: [
@@ -74,7 +74,7 @@ export const bingoIcons: IconMatcher[] = [
       'E9',
       'E10',
     ],
-    emoji: 'regional_indicator_e'
+    emoji: ':regional_indicator_e:',
   },
   {
     pattern: [
@@ -89,7 +89,7 @@ export const bingoIcons: IconMatcher[] = [
       'F9',
       'F10',
     ],
-    emoji: 'regional_indicator_f'
+    emoji: ':regional_indicator_f:',
   },
   {
     pattern: [
@@ -104,7 +104,7 @@ export const bingoIcons: IconMatcher[] = [
       'G9',
       'G10',
     ],
-    emoji: 'regional_indicator_g'
+    emoji: ':regional_indicator_g:',
   },
   {
     pattern: [
@@ -119,7 +119,7 @@ export const bingoIcons: IconMatcher[] = [
       'H9',
       'H10',
     ],
-    emoji: 'regional_indicator_h'
+    emoji: ':regional_indicator_h:',
   },
   {
     pattern: [
@@ -134,7 +134,7 @@ export const bingoIcons: IconMatcher[] = [
       'I9',
       'I10',
     ],
-    emoji: 'regional_indicator_i'
+    emoji: ':regional_indicator_i:',
   },
   {
     pattern: [
@@ -149,6 +149,6 @@ export const bingoIcons: IconMatcher[] = [
       'J9',
       'J10',
     ],
-    emoji: 'regional_indicator_j'
+    emoji: ':regional_indicator_j:',
   },
 ]
