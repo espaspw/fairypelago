@@ -17,6 +17,7 @@ const intents = [
   DC.GatewayIntentBits.Guilds,
   DC.GatewayIntentBits.GuildMessages,
   DC.GatewayIntentBits.GuildMembers,
+  DC.GatewayIntentBits.DirectMessages,
 ]
 
 export class DiscordClient {
@@ -256,6 +257,8 @@ export class DiscordClient {
             url: archRoomData.url
           })
         }
+
+        await newSession.start()
       }))
   }
 }

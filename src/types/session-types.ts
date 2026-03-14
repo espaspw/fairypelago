@@ -9,6 +9,7 @@ export interface SessionOptions {
   enablePlayerIcons: boolean;
   enableGameIcons: boolean;
   enableItemIcons: boolean;
+  enableAutojoin: boolean;
   hideFoundHints: boolean;
 }
 
@@ -50,4 +51,12 @@ export interface SessionHintingInfo {
   hintCost: number,
   hintCostPercentage: number,
   hintPoints: number,
+}
+
+export enum SessionLoginAttemptResult {
+  Success,
+  ServerDown,
+  PlayerNotFound,
+  PasswordIncorrect,
+  Unknown,
 }

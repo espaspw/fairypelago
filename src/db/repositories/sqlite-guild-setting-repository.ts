@@ -32,6 +32,7 @@ export class SqliteGuildSettingRepository implements IGuildSettingsRepository {
         enablePlayerIcons: true,
         enableGameIcons: true,
         enableItemIcons: true,
+        enableAutojoin: true,
         hideFoundHints: true,
         whitelistedMessageTypes: defaultWhitelistedTypes,
       },

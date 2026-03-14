@@ -1,8 +1,11 @@
 import { Item, Player } from 'archipelago.js'
 
 import { ArchipelagoSession } from '../archipelago-session.js'
+import { SessionLoginAttemptResult } from '../../types/session-types.js'
 
 export interface IEventHandler {
+  sessionIdle: (session: ArchipelagoSession) => Promise<void>;
+  sessionFailedAutojoin: (session: ArchipelagoSession, attemptResult: SessionLoginAttemptResult) => Promise<void>;
   socketDisconnected: (session: ArchipelagoSession, isFinished: boolean) => Promise<void>;
   socketConnected: (session: ArchipelagoSession) => Promise<void>;
   botShutdown: (session: ArchipelagoSession) => Promise<void>;

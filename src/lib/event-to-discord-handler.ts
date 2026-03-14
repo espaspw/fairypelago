@@ -7,6 +7,7 @@ import { ISessionRepository } from '../db/interfaces.js'
 import { ArchipelagoSession } from './archipelago-session.js'
 import { getItemTierIcon } from './icon-lookup-table.js'
 import { CoalescingChannelWrapper } from './util/coalescing-channel-wrapper.js'
+import { SessionLoginAttemptResult } from '../types/session-types.js'
 
 export interface ArchipelagoEventHandlerDeps {
   formatter: EventToDiscordFormatter;
@@ -34,11 +35,25 @@ export class EventToDiscordHandler implements IEventHandler {
     this.#sessionRepo = deps.sessionRepo
   }
 
+  async sessionIdle (session: ArchipelagoSession) {
+    await this.#discordChannel.send('I\'m ready to go. Give me the \'connect\' command to connect to the session to begin logging.')
+  }
+
+  async sessionFailedAutojoin (session: ArchipelagoSession, attemptResult: SessionLoginAttemptResult) {
+    if (attemptResult === SessionLoginAttemptResult.PasswordIncorrect) {
+      await this.#discordChannel.send('It looks like every player has a password. You\'ll have to give me an explicit `connect` command with a slot name.')
+    } else if (attemptResult === SessionLoginAttemptResult.ServerDown) {
+      await this.#discordChannel.send('It looks like the server might be down. Give me the `connect` command when you want me to try rejoining.')
+    } else if (attemptResult === SessionLoginAttemptResult.Unknown) {
+      await this.#discordChannel.send('I failed to join the session. You\'ll have to give me the `connect` command to try joining.')
+    }
+  }
+
   async socketDisconnected (session: ArchipelagoSession, isFinished: boolean) {
     if (isFinished) {
       await this.#discordChannel.send('I\'ve disconnected as the session appears to be finished.')
     } else {
-      await this.#discordChannel.send('I\'ve disconnected. Give me the \'restart\' command to try reconnecting.')
+      await this.#discordChannel.send('I\'ve disconnected. Give me the \'connect\' command to try reconnecting.')
     }
   }
 

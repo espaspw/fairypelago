@@ -1,4 +1,4 @@
-import { Client as ArchipelagoClient } from 'archipelago.js'
+import { Client as ArchipelagoClient, LoginError } from 'archipelago.js'
 
 import { ArchipelagoMessageType, type ArchipelagoRoomData } from '../types/archipelago-types.js'
 import { catchAndLogError } from './util/general.js'
@@ -8,7 +8,7 @@ import { IOptionsProvider } from './interfaces/options-provider.js'
 import { ArchipelagoWebhostClient, WebhostInitialSessionData, WebhostSessionStatus } from './archipelago-webhost-client.js'
 import { ItemTier } from '../types/icon-types.js'
 import { TTLCache } from './util/ttl-cache.js'
-import { SessionStaticState, SessionHintingInfo, SessionItemReceived, SessionStatus } from '../types/session-types.js'
+import { SessionStaticState, SessionHintingInfo, SessionItemReceived, SessionStatus, SessionLoginAttemptResult } from '../types/session-types.js'
 
 interface SessionVesselChange {
   isInTransition: boolean,
@@ -141,29 +141,62 @@ export class ArchipelagoSession {
     return session
   }
 
-  async start () {
-    // TODO: Return more robust failure types instead of boolean
-    // TODO: Add logic for handing player logins with passwords
-    const sessionStatus = await this.#webhostClient.fetchSessionStatus(this.#roomData.roomId)
+  // Attempt to login to the session if a slotName/password is given
+  // If not, attempt to start under any account if autojoin is enabled,
+  // otherwise fire session idle event
+  async start (slotName?: string, password?: string) {
+    if (slotName) {
+      return this.#attemptLoginAsPlayer(slotName, password)
+    }
+    const sessionOptions = await this.#optionsProvider.getOptionsBySessionId(this.#sessionId)
+    if (sessionOptions.enableAutojoin) {
+      const attemptResult = await this.#attemptAutojoin()
+      if (attemptResult !== SessionLoginAttemptResult.Success) {
+        await this.#eventHandler.sessionFailedAutojoin(this, attemptResult)
+      }
+    } else {
+      await this.#eventHandler.sessionIdle(this)
+    }
+  }
+
+  async #attemptAutojoin (): Promise<SessionLoginAttemptResult> {
+    for (const player of this.#staticState.players) {
+      const attemptResult = await this.#attemptLoginAsPlayer(player.slotName)
+      if (attemptResult === SessionLoginAttemptResult.PasswordIncorrect) {
+        continue
+      } else if (attemptResult === SessionLoginAttemptResult.Success) {
+        return SessionLoginAttemptResult.Success
+      } else {
+        return attemptResult
+      }
+    }
+    return SessionLoginAttemptResult.PasswordIncorrect
+  }
+
+  async #attemptLoginAsPlayer (slotName: string, password?: string): Promise<SessionLoginAttemptResult> {
+    const sessionStatus = await this.getCurrentStatus()
     if (!sessionStatus) {
       logger.warn(
         'Failed to get session status when starting archipelago session',
-        { roomId: this.#roomData.roomId, sessionId: this.#sessionId }
+        { roomId: this.#roomData.roomId, sessionId: this.#sessionId, vessel: slotName, password },
       )
-      return false
+      return SessionLoginAttemptResult.ServerDown
+    }
+    if (!this.#staticState.players.map(player => player.slotName).includes(slotName)) {
+      return SessionLoginAttemptResult.PlayerNotFound
     }
     try {
       const url = `${this.#roomData.domain}:${sessionStatus.port}`
-      const vessel = this.#staticState.players[0].slotName
       await this.#client.login(
         url,
-        vessel,
-        undefined,
-        { tags: ['Discord', 'Tracker', 'TextOnly'] }
+        slotName,
+        password,
+        { tags: ['Discord', 'Tracker', 'TextOnly'] },
       )
       logger.info('Started websocket connection to AP server', {
         sessionId: this.#sessionId,
-        vessel,
+        vessel: slotName,
+        password,
         url,
       })
 
@@ -171,17 +204,13 @@ export class ArchipelagoSession {
       await this.#client.package.fetchPackage()
 
       await this.#eventHandler.socketConnected(this)
-      return true
+      return SessionLoginAttemptResult.Success
     } catch (err) {
-      logger.warn('Failed to start archipelago session', { error: err, sessionId: this.#sessionId })
-      // if (err instanceof LoginError) {
-
-      // } else if (err instanceof SocketError) {
-
-      // } else {
-
-      // }
-      return false
+      if (err instanceof LoginError) {
+        return SessionLoginAttemptResult.PasswordIncorrect
+      }
+      logger.warn('Failed to login to archipelago session', { error: err, sessionId: this.#sessionId, vessel: slotName, password })
+      return SessionLoginAttemptResult.ServerDown
     }
   }
 
@@ -194,7 +223,7 @@ export class ArchipelagoSession {
     if (!isExistingPlayer) {
       return false
     }
-    const sessionStatus = await this.#webhostClient.fetchSessionStatus(this.#roomData.roomId)
+    const sessionStatus = await this.getCurrentStatus()
     if (!sessionStatus) {
       logger.warn(
         'Failed to get session status when changing vessels',

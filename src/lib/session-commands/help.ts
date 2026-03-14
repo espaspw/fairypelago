@@ -1,7 +1,7 @@
 import { SessionCommand } from '../../types/session-command.js'
 
 const helpMessage = `You need help? Fine. Here's what I'll respond to:
-- \`restart\` : I'll attempt to reconnect to the AP server for you.
+- \`connect (player name)\` : I'll attempt to connect to the AP server for you.
 - \`status\` : I'll look up the current status of the AP world.
 - \`change channel <id>\` : Tired of this channel? I'll move which channel I log to.
 - \`change vessel <player name>\` : I'll change which vessel I inhabit.
