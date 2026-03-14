@@ -130,7 +130,7 @@ export const ootSohIcons: IconMatcher[] = [
   { pattern: ['Treasure Game Green Rupee'], emoji: '' },
   { pattern: ['Triforce'], emoji: '' },
   { pattern: ['Triforce Piece'], emoji: '' },
-  { pattern: [/.*Soul/], emoji: '' },
+  { pattern: [/.*Soul/], emoji: 'oot_soul3d' },
   { pattern: ['Ocarina A Button'], emoji: 'oot_ocarinabuttona' },
   { pattern: ['Ocarina C Up Button'], emoji: 'oot_ocarinabuttonup' },
   { pattern: ['Ocarina C Down Button'], emoji: 'oot_ocarinabuttondown' },
