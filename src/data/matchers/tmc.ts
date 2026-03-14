@@ -32,7 +32,7 @@ export const tmcIcons: IconMatcher[] = [
     emoji: 'tmc_bow',
   },
   { pattern: [/.*Boomerang/], emoji: 'tmc_magicboomerang' },
-  { pattern: [/.*Shield/], emoji: 'tmc_magicboomerang' },
+  { pattern: [/.*Shield/], emoji: 'tmc_shield' },
   { pattern: ['Lantern'], emoji: 'tmc_lantern' },
   { pattern: ['Gust Jar'], emoji: 'tmc_gustjar' },
   { pattern: ['Cane of Pacci'], emoji: 'tmc_caneofpacci' },
