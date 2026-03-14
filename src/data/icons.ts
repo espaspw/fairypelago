@@ -43,8 +43,8 @@ import { yachtDiceIcons } from './matchers/yachtDice.js'
 export const gameIcons: GameIcons = {
   'A Hat in Time': 'ahit',
   "Another Crab's Treasure": 'act',
-  'APBingo': '8ball',
-  'Archipeladoku': '1234',
+  'APBingo': ':8ball:',
+  'Archipeladoku': ':1234:',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
   'Hollow Knight': 'hk',
@@ -58,7 +58,7 @@ export const gameIcons: GameIcons = {
   'Minecraft': 'mc',
   'Minecraft Dig': 'mc',
   'Ocarina of Time': 'oot_timetravel',
-  'Paint': 'paintbrush',
+  'Paint': ':paintbrush:',
   'PokePark': 'ppwii',
   'Pikmin 2': 'pikmin2',
   'Risk of Rain 2': 'ror2',
@@ -74,11 +74,11 @@ export const gameIcons: GameIcons = {
   'The Minish Cap': 'tmc',
   'The Wind Waker': 'tww',
   'Undertale': 'undertale',
-  'Unfair Flips': 'coin',
+  'Unfair Flips': ':coin:',
   'Toontown': 'tt',
   'Paper Mario: The Thousand-Year Door': 'ttyd',
   'Wario Land 4': 'wl4',
-  'Wordipelago': 'memo',
+  'Wordipelago': ':memo:',
   'Yacht Dice': 'yd',
 }
 
