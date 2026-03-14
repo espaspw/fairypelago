@@ -1,0 +1,99 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const ladxIcons: IconMatcher[] = [
+  { pattern: ['Progressive Power Bracelet'], emoji: 'ladx_powerbracelet' },
+  { pattern: ['Progressive Shield'], emoji: 'ladx_shield' },
+  { pattern: ['Bow'], emoji: 'ladx_bow' },
+  { pattern: ['Hookshot'], emoji: 'ladx_hookshot' },
+  { pattern: ['Magic Rod'], emoji: 'ladx_magicrod' },
+  { pattern: ['Pegasus Boots'], emoji: 'ladx_pegasusboots' },
+  { pattern: ['Ocarina'], emoji: 'ladx_ocarina' },
+  { pattern: ['Feather'], emoji: 'ladx_feather' },
+  { pattern: ['Shovel'], emoji: 'ladx_shovel' },
+  {
+    pattern: [
+      'Magic Powder',
+      'Max Powder Upgrade',
+    ],
+    emoji: 'ladx_powder'
+  },
+  {
+    pattern: [
+      'Bomb',
+      'Max Bombs Upgrade',
+    ],
+    emoji: 'ladx_bomb'
+  },
+  { pattern: ['Progressive Sword'], emoji: 'ladx_sword' },
+  { pattern: ['Flippers'], emoji: 'ladx_flippers' },
+  { pattern: ['Medicine'], emoji: 'ladx_medicine' },
+  { pattern: ['Tail Key'], emoji: 'ladx_tailkey' },
+  { pattern: ['Angler Key'], emoji: 'ladx_anglerkey' },
+  { pattern: ['Face Key'], emoji: 'ladx_facekey' },
+  { pattern: ['Bird Key'], emoji: 'ladx_birdkey' },
+  { pattern: ['Slime Key'], emoji: 'ladx_slimekey' },
+  { pattern: ['Gold Leaf'], emoji: 'ladx_goldleaf' },
+  { pattern: [/.*Rupees/], emoji: 'ladx_rupee' },
+  { pattern: ['Seashell'], emoji: 'ladx_seashell' },
+  { pattern: ['Nothing'], emoji: '' },
+  { pattern: ['Zol Attack'], emoji: '' },
+  { pattern: ['Boomerang'], emoji: 'ladx_boomerang' },
+  { pattern: ['Heart Piece'], emoji: 'ladx_heartpiece' },
+  { pattern: ['BowWow'], emoji: 'ladx_bowwow' },
+  {
+    pattern: [
+      '10 Arrows',
+      'Single Arrow',
+      'Max Arrows Upgrade',
+    ],
+    emoji: 'ladx_arrow'
+  },
+  { pattern: ['Rooster'], emoji: 'ladx_rooster' },
+  { pattern: ['Red Tunic'], emoji: 'ladx_redtunic' },
+  { pattern: ['Blue Tunic'], emoji: 'ladx_bluetunic' },
+  { pattern: ['Heart Container'], emoji: 'ladx_heartcontainer' },
+  { pattern: ['Toadstool'], emoji: 'ladx_toadstool' },
+  { pattern: ['Guardian Acorn'], emoji: 'ladx_guardianacorn' },
+  {
+    pattern: [
+      'Key',
+      /Small Key.*/,
+    ],
+    emoji: 'ladx_smallkey'
+  },
+  { pattern: [/Nightmare Key.*/], emoji: 'ladx_nightmarekey' },
+  {
+    pattern: [
+      'Map',
+      /Dungeon Map.*/,
+    ],
+    emoji: 'ladx_map'
+  },
+  { pattern: [/Stone Beak.*/], emoji: 'ladx_nightmarekey' },
+  { pattern: ['Ballad of the Wind Fish'], emoji: 'ladx_balladofthewindfish' },
+  { pattern: ["Manbo's Mambo"], emoji: 'ladx_manbosmambo' },
+  { pattern: ["Frog's Song of Soul"], emoji: 'ladx_frogssongofsoul' },
+  { pattern: ['Full Moon Cello'], emoji: 'ladx_fullmooncello' },
+  { pattern: ['Conch Horn'], emoji: 'ladx_conchhorn' },
+  { pattern: ["Sea Lily's Bell"], emoji: 'ladx_sealilysbell' },
+  { pattern: ['Surf Harp'], emoji: 'ladx_surfharp' },
+  { pattern: ['Wind Marimba'], emoji: 'ladx_windmarimba' },
+  { pattern: ['Coral Triangle'], emoji: 'ladx_coraltriangle' },
+  { pattern: ['Organ of Evening Calm'], emoji: 'ladx_organofeveningcalm' },
+  { pattern: ['Thunder Drum'], emoji: 'ladx_thunderdrum' },
+  { pattern: ['Yoshi Doll'], emoji: 'ladx_yoshidoll' },
+  { pattern: ['Ribbon'], emoji: 'ladx_ribbon' },
+  { pattern: ['Dog Food'], emoji: 'ladx_dogfood' },
+  { pattern: ['Bananas'], emoji: 'ladx_bananas' },
+  { pattern: ['Stick'], emoji: 'ladx_stick' },
+  { pattern: ['Honeycomb'], emoji: 'ladx_honeycomb' },
+  { pattern: ['Pineapple'], emoji: 'ladx_pineapple' },
+  { pattern: ['Hibiscus'], emoji: 'ladx_hibiscus' },
+  { pattern: ['Letter'], emoji: 'ladx_letter' },
+  { pattern: ['Broom'], emoji: 'ladx_broom' },
+  { pattern: ['Fishing Hook'], emoji: 'ladx_fishinghook' },
+  { pattern: ['Necklace'], emoji: 'ladx_necklace' },
+  { pattern: ['Scale'], emoji: 'ladx_scale' },
+  { pattern: ['Magnifying Glass'], emoji: 'ladx_magnifyingglass' },
+  { pattern: ['Piece Of Power'], emoji: 'ladx_pieceofpower' },
+]

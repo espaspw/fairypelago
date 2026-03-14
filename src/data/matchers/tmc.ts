@@ -1,0 +1,121 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const tmcIcons: IconMatcher[] = [
+  {
+    pattern: [
+      /.*Scroll/,
+      /.*Attack/,
+      /.*Beam/,
+      'Rock Breaker',
+      'Greatspin',
+      'DownThrust',
+      'Long Spin',
+    ],
+    emoji: 'tmc_scroll'
+  },
+  {
+    pattern: [
+      /.*Sword/,
+      'White Sword (Two Elements)',
+      'White Sword (Three Elements)',
+    ],
+    emoji: 'tmc_sword'
+  },
+  { pattern: ['Bomb'], emoji: 'tmc_bomb' },
+  { pattern: ['Remote Bomb'], emoji: 'tmc_remotebomb' },
+  { pattern: ['Bow'], emoji: 'tmc_bo' },
+    pattern: [
+      /.*Bow/,,
+      'Light Arrow',
+    ],
+    emoji: 'tmc_bow'
+  },
+  { pattern: [/.*Boomerang/], emoji: 'tmc_boomerang' },
+  { pattern: [/.*Shield/], emoji: 'tmc_boomerang' },
+  { pattern: ['Lantern'], emoji: 'tmc_lantern' },
+  { pattern: ['Gust Jar'], emoji: 'tmc_gustjar' },
+  { pattern: ['Cane of Pacci'], emoji: 'tmc_caneofpacci' },
+  { pattern: ['Mole Mitts'], emoji: 'tmc_molemitts' },
+  { pattern: ["Roc's Cape"], emoji: 'tmc_rocscape' },
+  { pattern: ['Pegasus Boots'], emoji: 'tmc_pegasusboots' },
+  { pattern: ['Fire Rod'], emoji: 'tmc_firerod' },
+  { pattern: ['Ocarina'], emoji: 'tmc_ocarina' },
+  { pattern: [/Bottle.*/], emoji: 'tmc_bottle' },
+  { pattern: ['Smith Sword (Quest)'], emoji: 'tmc_smithsword' },
+  { pattern: ['Broken Picori Blade'], emoji: 'tmc_brokenpicoriblade' },
+  { pattern: ['Dog Food'], emoji: 'tmc_dogfood' },
+  { pattern: ['LonLon Key'], emoji: 'tmc_lonlonkey' },
+  { pattern: ['Wakeup Mushroom'], emoji: 'tmc_wakeupmushroom' },
+  { pattern: ['Red Book (Hyrulian Bestiary)'], emoji: 'tmc_redbook' },
+  { pattern: ['Green Book (Picori Legend)'], emoji: 'tmc_greenbook' },
+  { pattern: ['Blue Book (History of Masks)'], emoji: 'tmc_bluebook' },
+  { pattern: ['Graveyard Key'], emoji: 'tmc_graveyardkey' },
+  { pattern: ['Tingle Trophy'], emoji: 'tmc_tingletrophy' },
+  { pattern: ['Carlov Medal'], emoji: 'tmc_carlovmedal' },
+  {
+    pattern: [
+      'Shells',
+      '30 Shells',
+    ],
+    emoji: 'tmc_shell'
+  },
+  { pattern: ['Earth Element'], emoji: 'tmc_earthelement' },
+  { pattern: ['Fire Element'], emoji: 'tmc_fireelement' },
+  { pattern: ['Water Element'], emoji: 'tmc_waterelement' },
+  { pattern: ['Wind Element'], emoji: 'tmc_windelement' },
+  { pattern: ['Grip Ring'], emoji: 'tmc_gripring' },
+  { pattern: ['Power Bracelets'], emoji: 'tmc_powerbracelets' },
+  { pattern: ['Flippers'], emoji: 'tmc_flippers' },
+  {
+    pattern: [
+      'Hyrule Map',
+      /Dungeon Map.*/,
+    ],
+    emoji: 'tmc_map'
+  },
+  { pattern: [/Dungeon Compass.*/], emoji: 'tmc_compass' },
+  { pattern: [/Big Key.*/], emoji: 'tmc_bigkey' },
+  { pattern: [/Small Key.*/], emoji: 'tmc_smallkey' },
+  { pattern: ['Jabber Nut'], emoji: 'tmc_jabbernut' },
+  { pattern: ['Kinstone Cloud Tops'], emoji: 'tmc_kinstonecloudtops' },
+  { pattern: ['Kinstone Swamp'], emoji: 'tmc_kinstoneswamp' },
+  { pattern: ['Kinstone Falls'], emoji: 'tmc_kinstonefalls' },
+  {
+    pattern: [
+      /Kinstone Red.*/,
+      /Kinstone Blue.*/,
+      /Kinstone Green.*/,
+    ],
+    emoji: 'tmc_kinstones'
+  },
+  { pattern: ['Heart Container'], emoji: 'tmc_heartcontainer' },
+  { pattern: ['Piece of Heart'], emoji: 'tmc_pieceofheart' },
+  { pattern: ['Big Wallet'], emoji: 'tmc_wallet' },
+  { pattern: ['Bomb Bag'], emoji: 'tmc_bombbag' },
+  { pattern: ['Quiver'], emoji: 'tmc_quiver' },
+  { pattern: [/.*Butterfly/], emoji: 'tmc_butterfly' },
+  {
+    pattern: [
+      '1 Rupee',
+      /.*Rupees/,
+      /.*Refill/,,
+      'Recovery Heart',
+      'Figurine',
+      'Brioche',
+      'Croissant',
+      'Pie',
+      'Cake',
+    ],
+    emoji: 'tmc_chest'
+  },
+  { pattern: ['Freeze Trap'], emoji: '' },
+  { pattern: ['Burn Trap'], emoji: '' },
+  { pattern: ['Zap Trap'], emoji: '' },
+  { pattern: ['Bomb Trap'], emoji: '' },
+  { pattern: ['Rupee Trap'], emoji: '' },
+  { pattern: ['Stink Trap'], emoji: '' },
+  { pattern: ['Rope Trap'], emoji: '' },
+  { pattern: ['Bat Trap'], emoji: '' },
+  { pattern: ['LikeLike Trap'], emoji: '' },
+  { pattern: ['Curse Trap'], emoji: '' },
+]
