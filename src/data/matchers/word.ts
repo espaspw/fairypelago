@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const regionalIndicatorIcons: IconMatcher[] = [
+export const wordIcons: IconMatcher[] = [
   { pattern: ['Letter A'], emoji: 'regional_indicator_a' },
   { pattern: ['Letter B'], emoji: 'regional_indicator_b' },
   { pattern: ['Letter C'], emoji: 'regional_indicator_c' },
