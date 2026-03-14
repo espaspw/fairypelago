@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const mcIcons: IconMatcher[] = [
+export const mcdigIcons: IconMatcher[] = [
   { pattern: ['Progressive Tools'], emoji: 'mc_diamondpickaxe' },
   {
     pattern: [
