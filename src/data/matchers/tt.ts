@@ -23,7 +23,7 @@ export const ttIcons: IconMatcher[] = [
   { pattern: [/.*Gag Capacity/], emoji: 'tt_gagcapacity' },
   { pattern: [/.*Gag XP Multiplier/], emoji: 'tt_gagxpmultiplier' },
   { pattern: ['TTC Access Key'], emoji: 'tt_ttcaccesskey' },
-  { pattern: ['DD Access Key'], emoji: 'tt_ttcaccesskey' },
+  { pattern: ['DD Access Key'], emoji: 'tt_ddaccesskey' },
   { pattern: ['DG Access Key'], emoji: 'tt_dgaccesskey' },
   { pattern: ['MML Access Key'], emoji: 'tt_mmlaccesskey' },
   { pattern: ['TB Access Key'], emoji: 'tt_tbaccesskey' },
@@ -69,6 +69,7 @@ export const ttIcons: IconMatcher[] = [
   { pattern: [/.*SOS Card/], emoji: 'tt_soscard' },
   { pattern: [/.*Unite/], emoji: 'tt_unite' },
   { pattern: ['Pink Slip'], emoji: 'tt_pinkslip' },
+  { pattern: ['Random Cog Summon'], emoji: 'tt_cogsummon' },
   { pattern: [/.*Toon-Up/], emoji: 'tt_toonup' },
   {
     pattern: [
