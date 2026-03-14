@@ -45,7 +45,7 @@ export async function fetchApplicationEmojis (discordClient: Client) {
 export function populateGameIcons (gameIcons: GameIcons) {
   const output: GameIcons = {}
   for (const [itemName, emojiName] of Object.entries(gameIcons)) {
-    const emojiString = nameToEmojiString.get(emojiName) ?? ''
+    const emojiString = nameToEmojiString.get(emojiName) ?? emojiName
     output[itemName] = emojiString
   }
   gameIconsText = output
