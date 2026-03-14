@@ -26,7 +26,7 @@ const echo: Command = {
       default: true,
       alias: 'u',
       description: 'Trim all backslashes before echoing the message',
-    }
+    },
   },
   async execute (message, tokens) {
     if (!message.member?.permissions.has(PermissionFlagsBits.Administrator) &&

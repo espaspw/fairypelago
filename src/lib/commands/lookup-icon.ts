@@ -81,7 +81,7 @@ const lookupIcon: Command = {
       default: false,
       alias: 'e',
       description: 'If show-name is enabled, only show matchers that do not have a corresponding emoji.',
-    }
+    },
   },
   async execute (message, tokens = []) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
@@ -91,7 +91,7 @@ const lookupIcon: Command = {
     if (gameName === '') {
       await sendNewlineSplitDiscordTextMessage(
         message.reply.bind(message),
-        (`Supported Games:\n${supportedGames.map(x => `- ${IconLookupTable.lookupGame(x)} ${x}`).join('\n')}`)
+        (`Supported Games:\n${supportedGames.map(x => `- ${IconLookupTable.lookupGame(x)} ${x}`).join('\n')}`),
       )
       return
     }

@@ -22,7 +22,7 @@ async function main () {
 
   const db = new Kysely<DatabaseSchema>({
     dialect: new SqliteDialect({
-      database: new SQLite('./storage/main.db')
+      database: new SQLite('./storage/main.db'),
     }),
     plugins: [new ParseJSONResultsPlugin()],
   })

@@ -36,7 +36,7 @@ const help: Command = {
       argName: 'name | "all"',
       description: 'Which category to filter by. Will default to "all" minus "admin" commands.',
       isHiddenDefault: true,
-    }
+    },
   },
   async execute (message, tokens, commands = {}) {
     const { flags, splicedTokens } = extractFlags(this.flags, tokens)
@@ -86,7 +86,7 @@ const help: Command = {
         if (matchingCommand.flags && Object.keys(matchingCommand.flags).length > 0) {
           embed.addFields([{
             name: 'Flags',
-            value: formatFlagDefinitions(matchingCommand.flags)
+            value: formatFlagDefinitions(matchingCommand.flags),
           }])
         }
         await message.reply({ embeds: [embed] })

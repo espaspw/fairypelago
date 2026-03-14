@@ -27,7 +27,7 @@ export const mcIcons: IconMatcher[] = [
       /.*Gold Ore/,
       'Rotten Flesh',
     ],
-    emoji: 'mc_chest'
+    emoji: 'mc_chest',
   },
   { pattern: [/.*Book/], emoji: 'mc_book' },
   { pattern: [/.*Ender Pearls/], emoji: 'mc_enderpearl' },

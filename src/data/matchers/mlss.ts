@@ -2,9 +2,9 @@ import { IconMatcher } from '../../types/icon-types.js'
 
 export const mlssIcons: IconMatcher[] = [
   { pattern: ['5 Coins'], emoji: 'mlss_coins' },
-  { pattern: [/.*Mushroom/,], emoji: 'mlss_mushroom' },
-  { pattern: [/.*Nuts/,], emoji: 'mlss_nuts' },
-  { pattern: [/.*Syrup/,], emoji: 'mlss_syrup' },
+  { pattern: [/.*Mushroom/], emoji: 'mlss_mushroom' },
+  { pattern: [/.*Nuts/], emoji: 'mlss_nuts' },
+  { pattern: [/.*Syrup/], emoji: 'mlss_syrup' },
   { pattern: ['1-UP Mushroom'], emoji: 'mlss_1up' },
   { pattern: ['1-UP Super'], emoji: 'mlss_1up' },
   { pattern: ['Golden Mushroom'], emoji: 'mlss_goldenmushroom' },
@@ -18,7 +18,7 @@ export const mlssIcons: IconMatcher[] = [
       'Woo Bean',
       'Hee Bean',
     ],
-    emoji: 'mlss_bean'
+    emoji: 'mlss_bean',
   },
   {
     pattern: [
@@ -27,7 +27,7 @@ export const mlssIcons: IconMatcher[] = [
       'Teeheespresso',
       /.*Blend/,
     ],
-    emoji: 'mlss_blend'
+    emoji: 'mlss_blend',
   },
   { pattern: ["Peasley's Rose"], emoji: 'mlss_peasleyrose' },
   { pattern: ['Beanbean Brooch'], emoji: 'mlss_beanbeanbrooch' },
@@ -62,7 +62,7 @@ export const mlssIcons: IconMatcher[] = [
       'Shroom Bells',
       'Casual Coral',
     ],
-    emoji: 'mlss_pants'
+    emoji: 'mlss_pants',
   },
   { pattern: ['Greed Wallet'], emoji: 'mlss_greedwallet' },
   { pattern: ['Bonus Ring'], emoji: 'mlss_bonusring' },

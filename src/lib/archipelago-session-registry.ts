@@ -16,7 +16,7 @@ export class ArchipelagoSessionRegistry {
   constructor (
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
-    private optionsProvider: IOptionsProvider
+    private optionsProvider: IOptionsProvider,
   ) { }
 
   async initFromDb (discordClient: DC.Client) {
@@ -28,14 +28,14 @@ export class ArchipelagoSessionRegistry {
         if (!channel) {
           logger.warn(
             'Could not find channel for session, skipping',
-            { channelId: session.channelId, sessionId: session.id }
+            { channelId: session.channelId, sessionId: session.id },
           )
           continue
         }
         if (!(channel.type === DC.ChannelType.PublicThread || channel.type === DC.ChannelType.GuildText)) {
           logger.warn(
             'Found channel for session but wasn\'t guild text or public thread channel',
-            { channelId: session.channelId, sessionId: session.id }
+            { channelId: session.channelId, sessionId: session.id },
           )
           continue
         }
@@ -48,7 +48,7 @@ export class ArchipelagoSessionRegistry {
         this.#idToChannel.set(session.id, channel.id)
         logger.info(
           'Initialized existing session from db in registry',
-          { sessionId: session.id, roomData: session.roomData, channelId: channel.id }
+          { sessionId: session.id, roomData: session.roomData, channelId: channel.id },
         )
       } catch (err) {
         logger.error('Failed to initialize session into registry from db', { error: err })

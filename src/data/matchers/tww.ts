@@ -28,7 +28,7 @@ export const twwIcons: IconMatcher[] = [
       "Wind God's Aria",
       'Song of Passing',
     ],
-    emoji: 'tww_song'
+    emoji: 'tww_song',
   },
   { pattern: [/Triforce Shard [0-9]+/], emoji: 'tww_triforceshard' },
   { pattern: ['Note to Mom'], emoji: 'tww_notetomom' },

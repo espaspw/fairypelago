@@ -24,7 +24,7 @@ export const ttydIcons: IconMatcher[] = [
       'HP Drain',
       'Ice Storm',
       'Inn Coupon',
-      'Jammin' Jelly',
+      'Jammin\' Jelly',
       'Keel Mango',
       /.*Meal/,
       'Mini Mr. Mini',
@@ -54,7 +54,7 @@ export const ttydIcons: IconMatcher[] = [
       'ITEM',
       'ITEM',
     ],
-    emoji: 'ttyd_item'
+    emoji: 'ttyd_item',
   },
   {
     pattern: [
@@ -122,7 +122,7 @@ export const ttydIcons: IconMatcher[] = [
       'Unsimplifier',
       'Zap Tap',
     ],
-    emoji: 'ttyd_badge'
+    emoji: 'ttyd_badge',
   },
   { pattern: ['Attack FX R'], emoji: 'ttyd_attackfxr' },
   { pattern: ['Autograph'], emoji: 'ttyd_autograph' },
@@ -181,7 +181,7 @@ export const ttydIcons: IconMatcher[] = [
       'Shop Key',
       /Storage Key.*/,
     ],
-    emoji: 'ttyd_shopkey'
+    emoji: 'ttyd_shopkey',
   },
   { pattern: ['Skull Gem'], emoji: 'ttyd_skullgem' },
   { pattern: ['Star Key'], emoji: 'ttyd_starkey' },
@@ -202,5 +202,5 @@ export const ttydIcons: IconMatcher[] = [
   { pattern: ['Vivian'], emoji: 'ttyd_vivian' },
   { pattern: ['Wedding Ring'], emoji: 'ttyd_weddingring' },
   { pattern: ['Yoshi'], emoji: 'ttyd_yoshi' },
-  { pattern: ['Zap Tap'], emoji: 'ttyd_' },
+  { pattern: ['Zap Tap'], emoji: '' },
 ]

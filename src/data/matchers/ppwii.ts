@@ -1,10 +1,10 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
 export const ppwiiIcons: IconMatcher[] = [
-  { pattern: [/.*Friendship/,], emoji: 'ppwii_friendship' },
-  { pattern: [/.*Berries/,], emoji: 'ppwii_berries' },
-  { pattern: [/.*Prisma/,], emoji: 'ppwii_prisma' },
-  { pattern: [/.*Fast Travel/,], emoji: 'ppwii_drifblim' },
+  { pattern: [/.*Friendship/], emoji: 'ppwii_friendship' },
+  { pattern: [/.*Berries/], emoji: 'ppwii_berries' },
+  { pattern: [/.*Prisma/], emoji: 'ppwii_prisma' },
+  { pattern: [/.*Fast Travel/], emoji: 'ppwii_drifblim' },
   {
     pattern: [
       'Tropius Unlock',
@@ -91,7 +91,7 @@ export const ppwiiIcons: IconMatcher[] = [
       'Groudon Unlock',
       'Jirachi Unlock',
     ],
-    emoji: 'ppwii_unlock'
+    emoji: 'ppwii_unlock',
   },
   { pattern: ['Pikachu Balloon'], emoji: 'ppwii_pikachuballoon' },
   { pattern: ['Pikachu Surfboard'], emoji: 'ppwii_pikachusurfboard' },
@@ -101,7 +101,7 @@ export const ppwiiIcons: IconMatcher[] = [
       'Progressive Dash',
       'Double Dash',
     ],
-    emoji: 'ppwii_dash'
+    emoji: 'ppwii_dash',
   },
   { pattern: ['Progressive Thunderbolt'], emoji: 'ppwii_thunderbolt' },
   { pattern: ['Progressive Health'], emoji: 'ppwii_health' },
@@ -111,7 +111,7 @@ export const ppwiiIcons: IconMatcher[] = [
       'Beach Bridge 1 Unlock',
       'Beach Bridge 2 Unlock',
     ],
-    emoji: 'ppwii_bidoof'
+    emoji: 'ppwii_bidoof',
   },
   { pattern: ['Magma Zone Fire Wall Unlock'], emoji: 'ppwii_blaziken' },
   { pattern: ['Haunted Zone Mansion Doors Unlock'], emoji: 'ppwii_drifloon' },

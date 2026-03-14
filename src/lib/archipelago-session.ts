@@ -32,7 +32,7 @@ function extractToStaticState (initialData: WebhostInitialSessionData): SessionS
         name: player.game,
         totalLocations: initialData.games.find(game => game.slotId === player.slotId)?.totalLocations ?? 0,
       },
-    }))
+    })),
   }
 }
 
@@ -114,7 +114,7 @@ export class ArchipelagoSession {
     webhostClient: ArchipelagoWebhostClient,
     roomData: ArchipelagoRoomData,
     staticState: SessionStaticState,
-    deps: SessionDeps
+    deps: SessionDeps,
   ) {
     this.#sessionId = sessionId
     this.#client = client
@@ -128,7 +128,7 @@ export class ArchipelagoSession {
   static async makeSession (
     sessionId: number,
     roomData: ArchipelagoRoomData,
-    deps: SessionDeps
+    deps: SessionDeps,
   ) {
     const client = new ArchipelagoClient()
     const webhostClient = new ArchipelagoWebhostClient(roomData.domain)
@@ -227,7 +227,7 @@ export class ArchipelagoSession {
     if (!sessionStatus) {
       logger.warn(
         'Failed to get session status when changing vessels',
-        { roomId: this.#roomData.roomId, sessionId: this.#sessionId }
+        { roomId: this.#roomData.roomId, sessionId: this.#sessionId },
       )
       return false
     }
@@ -237,12 +237,12 @@ export class ArchipelagoSession {
         `${this.#roomData.domain}:${sessionStatus.port}`,
         slotName,
         undefined,
-        { tags: ['Discord', 'Tracker', 'TextOnly'] }
+        { tags: ['Discord', 'Tracker', 'TextOnly'] },
       )
       const oldClient = this.#client
       this.#prevVesselChange = {
         isInTransition: true,
-        prevVesselName: currentVessel
+        prevVesselName: currentVessel,
       }
       oldClient.socket.disconnect()
       this.#client = newClient

@@ -16,7 +16,7 @@ export const undertaleIcons: IconMatcher[] = [
       'Hotland Key',
       'Core Key',
     ],
-    emoji: 'undertale_save'
+    emoji: 'undertale_save',
   },
   {
     pattern: [
@@ -30,7 +30,7 @@ export const undertaleIcons: IconMatcher[] = [
       'Empty Gun',
       'Worn Dagger',
     ],
-    emoji: 'undertale_knife'
+    emoji: 'undertale_knife',
   },
   {
     pattern: [
@@ -45,7 +45,7 @@ export const undertaleIcons: IconMatcher[] = [
       /.*Locket/,
       'temy armor',
     ],
-    emoji: 'undertale_apron'
+    emoji: 'undertale_apron',
   },
   {
     pattern: [
@@ -81,7 +81,7 @@ export const undertaleIcons: IconMatcher[] = [
       'Face Steak',
       'Hush Puppy',
     ],
-    emoji: 'undertale_spaghetti'
+    emoji: 'undertale_spaghetti',
   },
   {
     pattern: [
@@ -92,7 +92,7 @@ export const undertaleIcons: IconMatcher[] = [
       '500G',
       '1000G',
     ],
-    emoji: 'undertale_box'
+    emoji: 'undertale_box',
   },
   { pattern: ['Annoying Dog'], emoji: 'undertale_hotdog' },
   {
@@ -102,10 +102,10 @@ export const undertaleIcons: IconMatcher[] = [
       'DEF Up',
       'HP Up',
     ],
-    emoji: 'undertale_yellow'
+    emoji: 'undertale_yellow',
   },
   { pattern: ['FIGHT'], emoji: 'undertale_fight' },
-  { pattern: ['ACT'], emoji: 'undertale_'act },
+  { pattern: ['ACT'], emoji: 'undertale_act' },
   { pattern: ['ITEM'], emoji: 'undertale_item' },
   { pattern: ['MERCY'], emoji: 'undertale_mercy' },
 ]

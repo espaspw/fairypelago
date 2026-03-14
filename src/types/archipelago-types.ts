@@ -35,5 +35,5 @@ export enum ArchipelagoMessageType {
   ServerChat,
   UserCommand,
   ServerCommand,
-  Goal
+  Goal,
 }

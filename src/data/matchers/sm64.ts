@@ -21,7 +21,7 @@ export const sm64Icons: IconMatcher[] = [
       'Climb',
       'Ledge Grab',
     ],
-    emoji: 'sm64_move'
+    emoji: 'sm64_move',
   },
   { pattern: [/Cannon Unlock.*/], emoji: 'sm64_cannon' },
 ]

@@ -190,6 +190,6 @@ export const pikmin2Icons: IconMatcher[] = [
       'Worthless Statue',
       'Yellow Taste Tyrant',
     ],
-    emoji: 'pikmin2_treasure'
+    emoji: 'pikmin2_treasure',
   },
 ]

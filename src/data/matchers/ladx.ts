@@ -15,14 +15,14 @@ export const ladxIcons: IconMatcher[] = [
       'Magic Powder',
       'Max Powder Upgrade',
     ],
-    emoji: 'ladx_powder'
+    emoji: 'ladx_powder',
   },
   {
     pattern: [
       'Bomb',
       'Max Bombs Upgrade',
     ],
-    emoji: 'ladx_bomb'
+    emoji: 'ladx_bomb',
   },
   { pattern: ['Progressive Sword'], emoji: 'ladx_sword' },
   { pattern: ['Flippers'], emoji: 'ladx_flippers' },
@@ -46,7 +46,7 @@ export const ladxIcons: IconMatcher[] = [
       'Single Arrow',
       'Max Arrows Upgrade',
     ],
-    emoji: 'ladx_arrow'
+    emoji: 'ladx_arrow',
   },
   { pattern: ['Rooster'], emoji: 'ladx_rooster' },
   { pattern: ['Red Tunic'], emoji: 'ladx_redtunic' },
@@ -59,7 +59,7 @@ export const ladxIcons: IconMatcher[] = [
       'Key',
       /Small Key.*/,
     ],
-    emoji: 'ladx_smallkey'
+    emoji: 'ladx_smallkey',
   },
   { pattern: [/Nightmare Key.*/], emoji: 'ladx_nightmarekey' },
   {
@@ -67,7 +67,7 @@ export const ladxIcons: IconMatcher[] = [
       'Map',
       /Dungeon Map.*/,
     ],
-    emoji: 'ladx_map'
+    emoji: 'ladx_map',
   },
   { pattern: [/Stone Beak.*/], emoji: 'ladx_nightmarekey' },
   { pattern: ['Ballad of the Wind Fish'], emoji: 'ladx_balladofthewindfish' },

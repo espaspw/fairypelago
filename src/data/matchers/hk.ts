@@ -73,7 +73,7 @@ export const hkIcons: IconMatcher[] = [
       'Grimmchild1',
       'Grimmchild2',
     ],
-    emoji: 'hk_charm'
+    emoji: 'hk_charm',
   },
   { pattern: ['City_Crest'], emoji: 'hk_citycrest' },
   { pattern: ['Lumafly_Lantern'], emoji: 'hk_lumaflylantern' },

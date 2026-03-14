@@ -27,7 +27,7 @@ export class DiscordClient {
     private sessionRegistry: ArchipelagoSessionRegistry,
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
-    private optionsProvider: IOptionsProvider
+    private optionsProvider: IOptionsProvider,
   ) {
     this.#client = new DC.Client({ intents })
   }
@@ -91,7 +91,7 @@ export class DiscordClient {
             message.react('❗')
           }
         }
-      })
+      }),
     )
 
     // Handles session commands within a session room, or forward the messages to AP server
@@ -149,7 +149,7 @@ export class DiscordClient {
         } catch (err) {
           logger.info('Failed to forward message', { message: messageWithShortEmojis, err })
         }
-      })
+      }),
     )
 
     // Handle the initialization of AP session
@@ -240,7 +240,7 @@ export class DiscordClient {
             channelId: message.channelId,
             guildId: message.guildId,
             threadId: newThread.id,
-            url: archRoomData.url
+            url: archRoomData.url,
           })
           return
         }
@@ -254,7 +254,7 @@ export class DiscordClient {
             channelId: message.channelId,
             guildId: message.guildId,
             threadId: newThread.id,
-            url: archRoomData.url
+            url: archRoomData.url,
           })
         }
 

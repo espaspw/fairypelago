@@ -10,7 +10,7 @@ export const ttIcons: IconMatcher[] = [
       'Fish',
       /.*Fishing License/,
     ],
-    emoji: 'tt_fishinglicense'
+    emoji: 'tt_fishinglicense',
   },
   { pattern: ['Toon-Up Training Frame'], emoji: 'tt_toonuptrainingframe' },
   { pattern: ['Trap Training Frame'], emoji: 'tt_traptrainingframe' },
@@ -33,21 +33,21 @@ export const ttIcons: IconMatcher[] = [
       'SBHQ Access Key',
       /.*Factory Key/,
     ],
-    emoji: 'tt_sellbot'
+    emoji: 'tt_sellbot',
   },
   {
     pattern: [
       'CBHQ Access Key',
       /.*Mint Key/,
     ],
-    emoji: 'tt_cashbot'
+    emoji: 'tt_cashbot',
   },
   {
     pattern: [
       'LBHQ Access Key',
       /Office.*/,
     ],
-    emoji: 'tt_lawbot'
+    emoji: 'tt_lawbot',
   },
   {
     pattern: [
@@ -56,11 +56,11 @@ export const ttIcons: IconMatcher[] = [
       'Middle Two Key',
       'Back Three Key',
     ],
-    emoji: 'tt_bossbot'
+    emoji: 'tt_bossbot',
   },
   { pattern: ['AA Access Key'], emoji: 'tt_aaaccesskey' },
   { pattern: [/.*Joke Book/], emoji: 'tt_jokebook' },
-  { pattern: [/.*Disguise/,], emoji: 'tt_disguise' },
+  { pattern: [/.*Disguise/], emoji: 'tt_disguise' },
   { pattern: [/.*Jellybeans/], emoji: 'tt_jellybeans' },
   { pattern: [/.*Gag XP Bundle/], emoji: 'tt_gagxp' },
   { pattern: ['Golf Putter'], emoji: 'tt_golfputter' },
@@ -76,7 +76,7 @@ export const ttIcons: IconMatcher[] = [
       /.*Trap/,
       /.*Tax/,
     ],
-    emoji: 'tt_trap'
+    emoji: 'tt_trap',
   },
   { pattern: ['Defeated Sellbot VP'], emoji: 'tt_sellbotvp' },
   { pattern: ['Defeated Cashbot CFO'], emoji: 'tt_cashbotcfo' },

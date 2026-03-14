@@ -53,7 +53,7 @@ export const actIcons: IconMatcher[] = [
       /Whelk.*/,
       /Zooplankton.*/,
     ],
-    emoji: 'act_stowaway'
+    emoji: 'act_stowaway',
   },
   {
     pattern: [
@@ -65,7 +65,7 @@ export const actIcons: IconMatcher[] = [
       'Stapleclaw',
       'Carclaw',
     ],
-    emoji: 'act_microplastic'
+    emoji: 'act_microplastic',
   },
   { pattern: ['Barbed Hook'], emoji: '' },
   { pattern: ['Shark Egg'], emoji: 'act_sharkegg' },
@@ -100,7 +100,7 @@ export const actIcons: IconMatcher[] = [
       'Ebb and Flow',
       /Umami.*/,
     ],
-    emoji: 'act_skill'
+    emoji: 'act_skill',
   },
   { pattern: ['Gunk Trap'], emoji: '' },
   { pattern: ['Scour Trap'], emoji: '' },

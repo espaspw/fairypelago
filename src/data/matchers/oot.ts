@@ -19,9 +19,9 @@ export const ootIcons: IconMatcher[] = [
       'Goron Mask',
       'Zora Mask',
       'Gerudo Mask',
-      'Mask of Truth'
+      'Mask of Truth',
     ],
-    emoji: 'oot_goronmask'
+    emoji: 'oot_goronmask',
   },
   { pattern: ['Pocket Egg'], emoji: 'oot_weirdegg' },
   { pattern: ['Pocket Cucco'], emoji: 'oot_cucco' },
@@ -36,7 +36,7 @@ export const ootIcons: IconMatcher[] = [
       'Eyeball Frog',
       'Eyedrops',
     ],
-    emoji: 'oot_cucco'
+    emoji: 'oot_cucco',
   },
   { pattern: ["Broken Goron's Sword"], emoji: 'oot_brokengiantsknife' },
   { pattern: ['Claim Check'], emoji: 'oot_claimcheck' },
@@ -140,7 +140,7 @@ export const ootIcons: IconMatcher[] = [
       'Nocturne of Shadow',
       'Prelude of Light',
     ],
-    emoji: 'oot_fairyocarina'
+    emoji: 'oot_fairyocarina',
   },
   { pattern: [/Small Key Ring.*/], emoji: 'oot_smallkey' },
   { pattern: ['Kokiri Emerald'], emoji: 'oot_kokirisemerald' },

@@ -33,7 +33,7 @@ export const hint: SessionCommand = {
       const tokens = [
         `**My current vessel**: ${hintingInfo?.vesselName}`,
         `**Cost**: ${hintingInfo.hintCost} (${hintingInfo.hintCostPercentage}% of checks)`,
-        `**Points**: ${hintingInfo.hintPoints}`
+        `**Points**: ${hintingInfo.hintPoints}`,
       ]
       message.reply(tokens.join('\n'))
     } else {

@@ -44,7 +44,7 @@ export const kssIcons: IconMatcher[] = [
       'Echigo Candy',
       'Zebra Mask',
       'Star Stone',
-      'Beast's Fang',
+      'Beast\'s Fang',
       'Bandanna',
       'Springtime',
       'Dime',
@@ -95,7 +95,7 @@ export const kssIcons: IconMatcher[] = [
       'Platinum Ring',
       'Triforce',
     ],
-    emoji: 'kss_chest'
+    emoji: 'kss_chest',
   },
   { pattern: ['Floria'], emoji: 'kss_floria' },
   { pattern: ['Hotbeat'], emoji: 'kss_hotbeat' },

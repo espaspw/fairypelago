@@ -14,7 +14,7 @@ export class SessionOptionsProvider implements IOptionsProvider {
 
   constructor (
     private sessionRepo: ISessionRepository,
-    private settingsRepo: IGuildSettingsRepository
+    private settingsRepo: IGuildSettingsRepository,
   ) { }
 
   // Create a deep copy of the cached object to prevent later modifications

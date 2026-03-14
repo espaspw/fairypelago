@@ -26,14 +26,15 @@ export const terrariaIcons: IconMatcher[] = [
       'Post-Mourning Wood',
       'Post-Pumpking',
     ],
-    emoji: 'terraria_pumpkinmoon'
+    emoji: 'terraria_pumpkinmoon',
   },
+  {
     pattern: [
       'Post-Everscream',
       'Post-Santa-NK1',
       'Post-Ice Queen',
     ],
-    emoji: 'terraria_frostmoon'
+    emoji: 'terraria_frostmoon',
   },
   { pattern: ['Post-Frost Legion'], emoji: 'terraria_frostlegion' },
   { pattern: ['Post-Empress of Light'], emoji: 'terraria_empressoflight' },
@@ -44,7 +45,7 @@ export const terrariaIcons: IconMatcher[] = [
   {
     pattern: [
       'Post-Desert Scourge',
-      /.*Giant Clam/
+      /.*Giant Clam/,
       /Post-Acid Rain.*/,
       'Post-The Hive Mind',
       'Post-The Perforators',
@@ -77,6 +78,6 @@ export const terrariaIcons: IconMatcher[] = [
       'Post-Primordial Wyrm',
       'Post-Boss Rush',
     ],
-    emoji: 'terraria_calamity'
+    emoji: 'terraria_calamity',
   },
 ]

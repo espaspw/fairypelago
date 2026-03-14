@@ -61,7 +61,7 @@ export const wl4Icons: IconMatcher[] = [
   { pattern: ['Golden Rocking Horse'], emoji: 'wl4_goldenrockinghorse' },
   { pattern: ['Full Health Item'], emoji: 'wl4_fullhealthitem' },
   { pattern: ['Heart'], emoji: 'wl4_fullhealthitem' },
-  { pattern: [/.*Trap/,], emoji: 'wl4_trap' },
+  { pattern: [/.*Trap/], emoji: 'wl4_trap' },
   { pattern: ['Minigame Medal'], emoji: 'wl4_minigamemedal' },
   { pattern: ['Diamond'], emoji: 'wl4_diamond' },
 ]

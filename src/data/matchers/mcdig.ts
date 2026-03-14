@@ -9,14 +9,14 @@ export const mcdigIcons: IconMatcher[] = [
       'Progressive Reach',
       'Progressive Efficiency',
     ],
-    emoji: 'mc_haste'
+    emoji: 'mc_haste',
   },
   {
     pattern: [
       'Golden Pick',
       'True Golden Pick',
     ],
-    emoji: 'mc_goldpick'
+    emoji: 'mc_goldpick',
   },
   { pattern: ['TNT'], emoji: 'mc_tnt' },
   {
@@ -41,7 +41,7 @@ export const mcdigIcons: IconMatcher[] = [
       'Earthquake',
       'Increased Gravity',
     ],
-    emoji: 'mc_badomen'
+    emoji: 'mc_badomen',
   },
   { pattern: [/.*Boost/], emoji: 'mc_boost' },
   { pattern: ['Fossil Xray'], emoji: 'mc_glowing' },

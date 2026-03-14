@@ -17,7 +17,7 @@ export const paintIcons: IconMatcher[] = [
       'Brush',
       'Airbrush',
     ],
-    emoji: 'paintbrush'
+    emoji: 'paintbrush',
   },
   { pattern: ['Text'], emoji: 'pencil' },
   { pattern: ['Line'], emoji: 'straight_ruler' },

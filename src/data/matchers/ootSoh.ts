@@ -38,7 +38,7 @@ export const ootSohIcons: IconMatcher[] = [
       'Eyeball Frog',
       "World's Finest Eyedrops",
     ],
-    emoji: 'oot_cucco'
+    emoji: 'oot_cucco',
   },
   { pattern: ["Broken Goron's Sword"], emoji: 'oot_brokengiantsknife' },
   { pattern: ['Claim Check'], emoji: 'oot_claimcheck' },
@@ -96,7 +96,7 @@ export const ootSohIcons: IconMatcher[] = [
       'Nocturne of Shadow',
       'Prelude of Light',
     ],
-    emoji: 'oot_fairyocarina'
+    emoji: 'oot_fairyocarina',
   },
   { pattern: [/.*Map/], emoji: 'oot_map' },
   { pattern: [/.*Compass/], emoji: 'oot_compass' },
@@ -139,15 +139,15 @@ export const ootSohIcons: IconMatcher[] = [
   { pattern: ['Fishing Pole'], emoji: 'oot_fishingrod' },
   {
     pattern: [
-      'Deku Stick Bag', 'Deku Nut Capacity 30', 'Deku Nut Capacity 40'
+      'Deku Stick Bag', 'Deku Nut Capacity 30', 'Deku Nut Capacity 40',
     ],
-    emoji: 'oot_dekustick'
+    emoji: 'oot_dekustick',
   },
   {
     pattern: [
-      'Deku Nut Bag', 'Deku Stick Capacity 20', 'Deku Stick Capacity 30'
+      'Deku Nut Bag', 'Deku Stick Capacity 20', 'Deku Stick Capacity 30',
     ],
-    emoji: 'oot_dekunut'
+    emoji: 'oot_dekunut',
   },
   { pattern: ['Hint'], emoji: '' },
   { pattern: ['Tycoon Wallet'], emoji: '' },

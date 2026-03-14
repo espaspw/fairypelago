@@ -20,7 +20,7 @@ export const lmIcons: IconMatcher[] = [
       'Poltergust 4000',
       'Vacuum Upgrade',
     ],
-    emoji: 'lm_poltergust4000'
+    emoji: 'lm_poltergust4000',
   },
   { pattern: ['Gold Diamond'], emoji: 'lm_golddiamond' },
   { pattern: ['Progressive Flower'], emoji: 'lm_flower' },
@@ -30,7 +30,7 @@ export const lmIcons: IconMatcher[] = [
   { pattern: [/[0-9]+ Coins/], emoji: 'lm_coins' },
   { pattern: [/[0-9]+ Bills/], emoji: 'lm_bills' },
   { pattern: [/[0-9]+ Gold Bars/], emoji: 'lm_goldbar' },
-  { pattern: ['Sapphire',], emoji: 'lm_sapphire' },
+  { pattern: ['Sapphire'], emoji: 'lm_sapphire' },
   { pattern: ['Emerald'], emoji: 'lm_emerald' },
   { pattern: ['Ruby'], emoji: 'lm_ruby' },
   { pattern: ['Diamond'], emoji: 'lm_diamond' },

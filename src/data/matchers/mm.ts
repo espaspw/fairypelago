@@ -15,7 +15,7 @@ export const mmIcons: IconMatcher[] = [
       'Song of Storms',
       'Song of Time',
     ],
-    emoji: 'oot_ocarinaoftime'
+    emoji: 'oot_ocarinaoftime',
   },
   { pattern: [/Dungeon Map.*/], emoji: 'oot_map' },
   { pattern: [/Compass.*/], emoji: 'oot_compass' },
@@ -46,7 +46,7 @@ export const mmIcons: IconMatcher[] = [
       'Romani Mask',
       'Stone Mask',
     ],
-    emoji: 'mm_mask'
+    emoji: 'mm_mask',
   },
   {
     pattern: [
@@ -57,7 +57,7 @@ export const mmIcons: IconMatcher[] = [
       'Stone Tower Map',
       'Woodfall Map',
     ],
-    emoji: 'mm_map'
+    emoji: 'mm_map',
   },
   { pattern: ['Blue Rupee'], emoji: '' },
   { pattern: ["Bomber's Notebook"], emoji: 'mm_bombersnotebook' },

@@ -11,7 +11,7 @@ export const tmcIcons: IconMatcher[] = [
       'DownThrust',
       'Long Spin',
     ],
-    emoji: 'tmc_scroll'
+    emoji: 'tmc_scroll',
   },
   {
     pattern: [
@@ -19,16 +19,17 @@ export const tmcIcons: IconMatcher[] = [
       'White Sword (Two Elements)',
       'White Sword (Three Elements)',
     ],
-    emoji: 'tmc_sword'
+    emoji: 'tmc_sword',
   },
   { pattern: ['Bomb'], emoji: 'tmc_bomb' },
   { pattern: ['Remote Bomb'], emoji: 'tmc_remotebomb' },
   { pattern: ['Bow'], emoji: 'tmc_bo' },
+  {
     pattern: [
-      /.*Bow/,,
+      /.*Bow/,
       'Light Arrow',
     ],
-    emoji: 'tmc_bow'
+    emoji: 'tmc_bow',
   },
   { pattern: [/.*Boomerang/], emoji: 'tmc_boomerang' },
   { pattern: [/.*Shield/], emoji: 'tmc_boomerang' },
@@ -57,7 +58,7 @@ export const tmcIcons: IconMatcher[] = [
       'Shells',
       '30 Shells',
     ],
-    emoji: 'tmc_shell'
+    emoji: 'tmc_shell',
   },
   { pattern: ['Earth Element'], emoji: 'tmc_earthelement' },
   { pattern: ['Fire Element'], emoji: 'tmc_fireelement' },
@@ -71,7 +72,7 @@ export const tmcIcons: IconMatcher[] = [
       'Hyrule Map',
       /Dungeon Map.*/,
     ],
-    emoji: 'tmc_map'
+    emoji: 'tmc_map',
   },
   { pattern: [/Dungeon Compass.*/], emoji: 'tmc_compass' },
   { pattern: [/Big Key.*/], emoji: 'tmc_bigkey' },
@@ -86,7 +87,7 @@ export const tmcIcons: IconMatcher[] = [
       /Kinstone Blue.*/,
       /Kinstone Green.*/,
     ],
-    emoji: 'tmc_kinstones'
+    emoji: 'tmc_kinstones',
   },
   { pattern: ['Heart Container'], emoji: 'tmc_heartcontainer' },
   { pattern: ['Piece of Heart'], emoji: 'tmc_pieceofheart' },
@@ -98,7 +99,7 @@ export const tmcIcons: IconMatcher[] = [
     pattern: [
       '1 Rupee',
       /.*Rupees/,
-      /.*Refill/,,
+      /.*Refill/,
       'Recovery Heart',
       'Figurine',
       'Brioche',
@@ -106,7 +107,7 @@ export const tmcIcons: IconMatcher[] = [
       'Pie',
       'Cake',
     ],
-    emoji: 'tmc_chest'
+    emoji: 'tmc_chest',
   },
   { pattern: ['Freeze Trap'], emoji: '' },
   { pattern: ['Burn Trap'], emoji: '' },
