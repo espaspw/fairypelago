@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const regionalIndicatorIcons: IconMatcher[] = [
+export const bingoIcons: IconMatcher[] = [
   {
     pattern: [
       'A1',
