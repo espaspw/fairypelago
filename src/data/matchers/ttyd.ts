@@ -202,5 +202,4 @@ export const ttydIcons: IconMatcher[] = [
   { pattern: ['Vivian'], emoji: 'ttyd_vivian' },
   { pattern: ['Wedding Ring'], emoji: 'ttyd_weddingring' },
   { pattern: ['Yoshi'], emoji: 'ttyd_yoshi' },
-  { pattern: ['Zap Tap'], emoji: '' },
 ]
