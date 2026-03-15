@@ -7,9 +7,7 @@ export const status: SessionCommand = {
   name: 'status',
   description: 'Get the current status of the session',
   async execute (message, _args, session) {
-    const loadingReaction = await message.react('⏳')
     const status = await session.getCurrentStatus()
-    await loadingReaction.remove()
     if (!status) {
       await replyWithError(message, 'Unable to get current status. Perhaps the server is down?')
       return

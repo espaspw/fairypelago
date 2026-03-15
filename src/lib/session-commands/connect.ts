@@ -8,9 +8,7 @@ export const connect: SessionCommand = {
   description: 'Attempt to connect to the session',
   async execute (message, args, session) {
     if (args.length <= 0) {
-      const loadingReaction = await message.react('⏳')
       await session.start()
-      await loadingReaction.remove()
       if (session.isSocketConnected) {
         await message.react('✔️')
       } else {
@@ -34,9 +32,7 @@ export const connect: SessionCommand = {
         return
       }
 
-      const loadingReaction = await message.react('⏳')
       const result = await session.start(slotName)
-      await loadingReaction.remove()
 
       if (result === SessionLoginAttemptResult.PasswordIncorrect) {
         if (result === SessionLoginAttemptResult.PasswordIncorrect) {

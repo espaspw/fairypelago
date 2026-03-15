@@ -23,9 +23,7 @@ export const hint: SessionCommand = {
   description: 'Get the hints for a player',
   async execute (message, args, session) {
     if (args.length <= 0) {
-      const loadingReaction = await message.react('⏳')
       const hintingInfo = await session.getHintingInfo()
-      await loadingReaction.remove()
       if (!hintingInfo) {
         await replyWithError(message, 'I couldn\'t seem to get the hinting info...')
         return
@@ -53,9 +51,7 @@ export const hint: SessionCommand = {
         await message.reply(`Who in the world is ${maybeSlotName}?`)
         return
       }
-      const loadingReaction = await message.react('⏳')
       const hints = await session.getPlayerHints(slotName)
-      await loadingReaction.remove()
       if (!hints) {
         await replyWithError(message, `I couldn't seem to get the hints for __${slotName}__...`)
         return

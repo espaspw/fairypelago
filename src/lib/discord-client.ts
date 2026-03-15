@@ -8,7 +8,7 @@ import { logger } from './util/logger.js'
 import { replyWithError, stripDiscordEmojis } from './util/message-utils.js'
 import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
 import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
-import { sessionCommands } from './session-commands.js'
+import { tryToExecuteSessionCommand } from './session-commands.js'
 import { ArchipelagoWebhostClient } from './archipelago-webhost-client.js'
 import { IOptionsProvider } from './interfaces/options-provider.js'
 
@@ -109,39 +109,10 @@ export class DiscordClient {
         const prefix = guildSettings.sessionCommandPrefix
 
         if (message.content.startsWith(prefix)) {
-          const fullContent = message.content.slice(prefix.length).trim()
-          const tokens = fullContent.split(/\s+/)
-          const commandName = tokens.shift()?.toLowerCase()
-
-          if (commandName && sessionCommands[commandName]) {
-            await sessionCommands[commandName].execute(message, tokens, existingSession)
-            logger.info('Executed session command', { commandName, tokens, sessionId: existingSession.sessionId })
-            return
-          }
+          const strippedContent = message.content.slice(prefix.length).trim()
+          await tryToExecuteSessionCommand(message, strippedContent, existingSession)
+          return
         }
-        // } else if (message.content.toLowerCase().startsWith('find')) {
-        //   // const itemNameQuery = message.content.split(' ').splice(1).join(' ')
-        //   // const dataPackage = await archClients.fetchPackage(message.channelId)
-        //   // if (!dataPackage) {
-        //   //   await message.reply(`Could not get the data, perhaps the room needs to be refreshed?`)
-        //   //   return;
-        //   // }
-        //   // const matches: { [key: string]: string[] } = {}
-        //   // for (const [game, gamePackage] of Object.entries(dataPackage.games)) {
-        //   //   const searcher = new FuzzySearch(Object.keys(gamePackage.item_name_to_id)).search(itemNameQuery) as string[]
-        //   //   matches[game] = searcher
-        //   // }
-        //   // const outputTokens = ['I found these possible matches:']
-        //   // for (const [game, results] of Object.entries(matches)) {
-        //   //   if (results.length === 0) continue;
-        //   //   outputTokens.push(`**${game}**\n-# ${results.map(r => `${r}`).join(', ')}`)
-        //   // }
-        //   // if (outputTokens.length === 1) {
-        //   //   await message.reply('I couldn\'t find any matches...')
-        //   // } else {
-        //   //   await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
-        //   // }
-        // }
 
         // Prevent forwarding empty messages, which can happen is only an attachment (e.g. image) is sent
         if (message.content.length <= 0) return

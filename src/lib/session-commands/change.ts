@@ -27,9 +27,7 @@ export const change: SessionCommand = {
         }
         return
       }
-      const loadingReaction = await message.react('⏳')
       const wasSuccessful = await session.changeVessel(maybeSlotName)
-      await loadingReaction.remove()
       if (wasSuccessful) {
         await message.reply(`Vessel successfully changed to __${maybeSlotName}__`)
       } else {
