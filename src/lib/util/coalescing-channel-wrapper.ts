@@ -1,5 +1,6 @@
 import * as DC from 'discord.js'
 import { logger } from './logger.js'
+import { sendNewlineSplitDiscordTextMessage } from './message-utils.js'
 
 // Wraps a discord channel, ensuring messages with the same tag sent within a time window are combined
 // Null tags will always flush the buffer before sending the new message
@@ -9,16 +10,26 @@ export class CoalescingChannelWrapper<AllowedTags> {
   #buffer: string[] = []
   #currentTag: AllowedTags | null = null
   #timer: NodeJS.Timeout | null = null
+  #queue: Promise<void> = Promise.resolve()
 
   // Soft limit for 2k Discord cap
-  readonly #MAX_LENGTH = 1900
+  readonly #MAX_LENGTH = 1850
 
-  constructor (channel: DC.TextChannel | DC.ThreadChannel, delayMs = 1500) {
+  constructor (channel: DC.TextChannel | DC.ThreadChannel, delayMs = 1000) {
     this.#channel = channel
     this.#delayMs = delayMs
   }
 
   async send (content: string | DC.MessageCreateOptions, tag: AllowedTags | null = null) {
+    // A promise chain is used to prevent race conditions during large bursts
+    this.#queue = this.#queue.then(async () => {
+      await this.#processSend(content, tag)
+    }).catch(err => {
+      logger.error('Failed to send message', { error: err })
+    })
+  }
+
+  async #processSend (content: string | DC.MessageCreateOptions, tag: AllowedTags | null = null) {
     const isEmbed = typeof content !== 'string'
 
     // If tag changes or it's an embed, flush existing buffer first to preserve sending order
@@ -28,6 +39,17 @@ export class CoalescingChannelWrapper<AllowedTags> {
 
     if (isEmbed) {
       await this.#channel.send(content)
+      return
+    }
+
+    // Send message as newline split message if content by itself exceeds the max length
+    if (content.length > this.#MAX_LENGTH) {
+      await this.flush()
+      await sendNewlineSplitDiscordTextMessage(
+        this.#channel.send.bind(this.#channel),
+        content,
+        this.#MAX_LENGTH,
+      )
       return
     }
 
@@ -69,7 +91,7 @@ export class CoalescingChannelWrapper<AllowedTags> {
     try {
       await this.#channel.send(finalMessage)
     } catch (err) {
-      logger.error('Failed to send coalesced message', { error: err })
+      logger.error('Failed to send coalesced message when flushing buffer', { error: err })
     }
   }
 }
