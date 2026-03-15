@@ -142,6 +142,9 @@ export class DiscordClient {
         //   //   await sendNewlineSplitDiscordTextMessage(message.reply.bind(message), outputTokens.join('\n'))
         //   // }
         // }
+
+        // Prevent forwarding empty messages, which can happen is only an attachment (e.g. image) is sent
+        if (message.content.length <= 0) return
         const messageWithShortEmojis = stripDiscordEmojis(message.content)
         try {
           await existingSession.sendMessage(`[${message.author.username}] :: ${messageWithShortEmojis}`)
