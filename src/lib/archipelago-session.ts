@@ -408,6 +408,7 @@ export class ArchipelagoSession {
 
     this.#client.messages.on('itemSent', catchAndLogError(async (text, item) => {
       if (this.#goalCache.has(item.sender.slot) && !item.progression) return
+      if (this.#goalCache.has(item.receiver.slot)) return
       if (item.progression && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentProgression)) return
       if (item.useful && !item.progression && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentUseful)) return
       if (item.filler && !this.#isWhitelisted(ArchipelagoMessageType.ItemSentFiller)) return
