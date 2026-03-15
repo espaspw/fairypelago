@@ -4,6 +4,7 @@ import { help } from './session-commands/help.js'
 import { hint } from './session-commands/hint.js'
 import { connect } from './session-commands/connect.js'
 import { status } from './session-commands/status.js'
+import { find } from './session-commands/find.js'
 import { ArchipelagoSession } from './archipelago-session.js'
 import { Message, OmitPartialGroupDMChannel } from 'discord.js'
 import { logger } from './util/logger.js'
@@ -14,6 +15,7 @@ export const sessionCommands: Record<string, SessionCommand> = {
   help,
   hint,
   change,
+  find,
 }
 
 export async function tryToExecuteSessionCommand (
