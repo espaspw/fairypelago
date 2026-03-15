@@ -126,7 +126,9 @@ export class EventToDiscordHandler implements IEventHandler {
 
   async itemSent (session: ArchipelagoSession, text: string, item: Item) {
     const formattedMsg = await this.#formatter.itemSent(text, item)
-    await this.#discordChannel.send(formattedMsg, `item:${item.sender.name}`)
+    const numPlayers = session.staticState.players.length
+    const messageTag = numPlayers > 8 ? 'item' : `item:${item.sender.name}`
+    await this.#discordChannel.send(formattedMsg, messageTag)
   }
 
   async released (session: ArchipelagoSession, text: string, player: Player) {
