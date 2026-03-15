@@ -201,7 +201,8 @@ export class ArchipelagoSession {
       })
 
       // Populate data package cache with current game packages
-      await this.#client.package.fetchPackage()
+      // for item name lookup in the status to work
+      await this.getDataPackage()
 
       await this.#eventHandler.socketConnected(this)
       return SessionLoginAttemptResult.Success
@@ -284,8 +285,11 @@ export class ArchipelagoSession {
         const status = await this.#webhostClient.fetchSessionStatus(this.#roomData.roomId)
         if (!status) return null
 
-        // Populate the data packages in cache there is no cached version and this is called before start()
-        this.#client.package.fetchPackage()
+        // Populate the data packages in cache if there is no cached version and this is called before start()
+        const packages = this.#client.package.exportPackage()
+        if (Object.keys(packages.games).length <= 0) {
+          await this.#client.package.fetchPackage()
+        }
 
         const finalStatus = extractToSessionStatus(this.#client, this.#staticState, status)
         this.#dynamicStateCache.set(finalStatus)
@@ -322,6 +326,17 @@ export class ArchipelagoSession {
       hintCost: this.#client.room.hintCost,
       hintCostPercentage: this.#client.room.hintCostPercentage,
       hintPoints: this.#client.room.hintPoints,
+    }
+  }
+
+  // Fetches the data package from memory.
+  // If data package is not yet fetched, will perform expensive fetch calls.
+  async getDataPackage (games?: string[]) {
+    const packages = this.#client.package.exportPackage()
+    if (Object.keys(packages.games).length <= 0) {
+      return await this.#client.package.fetchPackage(games)
+    } else {
+      return packages
     }
   }
 
