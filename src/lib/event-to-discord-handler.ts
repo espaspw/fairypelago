@@ -40,6 +40,8 @@ export class EventToDiscordHandler implements IEventHandler {
   }
 
   async sessionFailedAutojoin (session: ArchipelagoSession, attemptResult: SessionLoginAttemptResult) {
+    const lastMessage = await (await this.#discordChannel.channel.messages.fetch({ limit: 1 })).first()
+    if (lastMessage?.author.id === this.#discordChannel.channel.client.user.id) return
     if (attemptResult === SessionLoginAttemptResult.PasswordIncorrect) {
       await this.#discordChannel.send('It looks like every player has a password. You\'ll have to give me an explicit `connect` command with a slot name.')
     } else if (attemptResult === SessionLoginAttemptResult.ServerDown) {
@@ -53,7 +55,7 @@ export class EventToDiscordHandler implements IEventHandler {
     if (isFinished) {
       await this.#discordChannel.send('I\'ve disconnected as the session appears to be finished.')
     } else {
-      await this.#discordChannel.send('I\'ve disconnected. Give me the \'connect\' command to try reconnecting.')
+      await this.#discordChannel.send('I\'ve disconnected. Give me the `connect` command to try reconnecting.')
     }
   }
 

@@ -20,6 +20,10 @@ export class CoalescingChannelWrapper<AllowedTags> {
     this.#delayMs = delayMs
   }
 
+  get channel () {
+    return this.#channel
+  }
+
   async send (content: string | DC.MessageCreateOptions, tag: AllowedTags | null = null) {
     // A promise chain is used to prevent race conditions during large bursts
     this.#queue = this.#queue.then(async () => {
