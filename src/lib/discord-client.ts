@@ -7,7 +7,7 @@ import { catchAndLogError } from './util/general.js'
 import { logger } from './util/logger.js'
 import { replyWithError, stripDiscordEmojis } from './util/message-utils.js'
 import { ArchipelagoSessionRegistry } from './archipelago-session-registry.js'
-import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
+import { IGuildSettingsRepository, INotificationRequestsRepository, ISessionRepository } from '../db/interfaces.js'
 import { tryToExecuteSessionCommand } from './session-commands.js'
 import { ArchipelagoWebhostClient } from './archipelago-webhost-client.js'
 import { IOptionsProvider } from './interfaces/options-provider.js'
@@ -16,6 +16,7 @@ const intents = [
   DC.GatewayIntentBits.MessageContent,
   DC.GatewayIntentBits.Guilds,
   DC.GatewayIntentBits.GuildMessages,
+  DC.GatewayIntentBits.GuildMessageReactions,
   DC.GatewayIntentBits.GuildMembers,
   DC.GatewayIntentBits.DirectMessages,
 ]
@@ -27,6 +28,7 @@ export class DiscordClient {
     private sessionRegistry: ArchipelagoSessionRegistry,
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
+    private notificationRequestsRepo: INotificationRequestsRepository,
     private optionsProvider: IOptionsProvider,
   ) {
     this.#client = new DC.Client({ intents })
@@ -110,7 +112,9 @@ export class DiscordClient {
 
         if (message.content.startsWith(prefix)) {
           const strippedContent = message.content.slice(prefix.length).trim()
-          await tryToExecuteSessionCommand(message, strippedContent, existingSession)
+          await tryToExecuteSessionCommand(message, strippedContent, existingSession, {
+            notificationRequestsRepo: this.notificationRequestsRepo,
+          })
           return
         }
 

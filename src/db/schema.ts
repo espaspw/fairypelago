@@ -21,7 +21,17 @@ export interface SessionsTable {
   expiredAt: ColumnType<Date | null, string | null, string | null>;
 }
 
+export interface NotificationRequestsTable {
+  id: Generated<number>;
+  sessionId: number;
+  discordId: string;
+  targetPlayerSlotId: number;
+  targetItemName: string;
+  createdAt: ColumnType<Date, string | undefined, never>;
+}
+
 export interface DatabaseSchema {
   guild_settings: GuildSettingsTable;
   sessions: SessionsTable;
+  notification_requests: NotificationRequestsTable;
 }

@@ -1,6 +1,11 @@
 import { Message, OmitPartialGroupDMChannel } from 'discord.js'
 
 import { ArchipelagoSession } from '../lib/archipelago-session.js'
+import { INotificationRequestsRepository } from '../db/interfaces.js'
+
+export interface SessionCommandDeps {
+  notificationRequestsRepo: INotificationRequestsRepository,
+}
 
 export interface SessionCommand {
   name: string;
@@ -8,6 +13,7 @@ export interface SessionCommand {
   execute: (
     message: OmitPartialGroupDMChannel<Message<boolean>>,
     args: string[],
-    session: ArchipelagoSession
+    session: ArchipelagoSession,
+    deps: SessionCommandDeps,
   ) => Promise<void>;
 }

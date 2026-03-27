@@ -1,6 +1,6 @@
 import * as DC from 'discord.js'
 
-import { IGuildSettingsRepository, ISessionRepository } from '../db/interfaces.js'
+import { IGuildSettingsRepository, INotificationRequestsRepository, ISessionRepository } from '../db/interfaces.js'
 import { ArchipelagoRoomData } from '../types/archipelago-types.js'
 import { ArchipelagoSession } from './archipelago-session.js'
 import { logger } from './util/logger.js'
@@ -16,6 +16,7 @@ export class ArchipelagoSessionRegistry {
   constructor (
     private sessionRepo: ISessionRepository,
     private settingsRepo: IGuildSettingsRepository,
+    private notificationRequestsRepo: INotificationRequestsRepository,
     private optionsProvider: IOptionsProvider,
   ) { }
 
@@ -96,7 +97,10 @@ export class ArchipelagoSessionRegistry {
   async #createSessionInstance (sessionId: number, channel: DC.TextChannel | DC.ThreadChannel, roomData: ArchipelagoRoomData) {
     const eventFormatter = new EventToDiscordFormatter(channel.guildId, this.settingsRepo)
     const eventHandler = new EventToDiscordHandler(sessionId, {
-      discordChannel: channel, formatter: eventFormatter, sessionRepo: this.sessionRepo,
+      discordChannel: channel,
+      formatter: eventFormatter,
+      sessionRepo: this.sessionRepo,
+      notificationRequestsRepo: this.notificationRequestsRepo,
     })
     return await ArchipelagoSession.makeSession(sessionId, roomData, {
       eventHandler,

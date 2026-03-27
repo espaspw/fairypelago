@@ -41,3 +41,18 @@ export interface IGuildSettingsRepository {
   setSessionOptions(guildId: string, sessionOptions: SessionOptions): Promise<void>;
   setPlayerEmojis(guildId: string, playerEmojis: Record<string, string>): Promise<void>;
 }
+
+export interface DBNotificationRequest {
+  id: number;
+  sessionId: number;
+  discordId: string;
+  targetPlayerSlotId: number;
+  targetItemName: string;
+}
+
+export interface INotificationRequestsRepository {
+  addNotification(notification: Omit<DBNotificationRequest, 'id'>): Promise<number>;
+  removeNotification(id: number): Promise<void>;
+  getNotificationsForUser(sessionId: number, discordId: string): Promise<DBNotificationRequest[]>;
+  findMatches(sessionId: number, slot: number, itemName: string): Promise<DBNotificationRequest[]>
+}

@@ -12,6 +12,7 @@ import { SqliteGuildSettingRepository } from './db/repositories/sqlite-guild-set
 import { SqliteSessionRepository } from './db/repositories/sqlite-session-repository.js'
 import { SessionOptionsProvider } from './lib/session-options-provider.js'
 import { ArchipelagoSessionRegistry } from './lib/archipelago-session-registry.js'
+import { SqliteNotificationRequestsRepository } from './db/repositories/sqlite-notification-requests-repository.js'
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 
@@ -29,11 +30,16 @@ async function main () {
 
   const sessionRepo = new SqliteSessionRepository(db)
   const settingsRepo = new SqliteGuildSettingRepository(db)
+  const notificationRequestsRepo = new SqliteNotificationRequestsRepository(db)
 
   const optionsProvider = new SessionOptionsProvider(sessionRepo, settingsRepo)
-  const sessionRegistry = new ArchipelagoSessionRegistry(sessionRepo, settingsRepo, optionsProvider)
+  const sessionRegistry = new ArchipelagoSessionRegistry(
+    sessionRepo, settingsRepo, notificationRequestsRepo, optionsProvider,
+  )
 
-  const discordClient = new DiscordClient(sessionRegistry, sessionRepo, settingsRepo, optionsProvider)
+  const discordClient = new DiscordClient(
+    sessionRegistry, sessionRepo, settingsRepo, notificationRequestsRepo, optionsProvider,
+  )
   discordClient.registerListeners()
   await discordClient.login(DISCORD_BOT_TOKEN)
 

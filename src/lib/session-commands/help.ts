@@ -8,7 +8,7 @@ const helpMessage = `You need help? Fine. Here's what I'll respond to:
 - \`find location <name>\` : I can look up locations in your world.
 - \`find item <name>\` : I can look up items in your world.
 - \`hint <player name>\` : I'll look up which hints this player asked for.
-- \`tell me when <player> gets <item name>\` : BK? I'll ping you when this player receives an item.
+- \`notify me when <player> gets <item name>\` : BK? I'll ping you when this player receives an item.
 `
 
 export const help: SessionCommand = {

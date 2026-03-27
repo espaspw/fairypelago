@@ -3,7 +3,7 @@ import * as DC from 'discord.js'
 
 import { IEventHandler } from './interfaces/event-handler.js'
 import { EventToDiscordFormatter } from './event-to-discord-formatter.js'
-import { ISessionRepository } from '../db/interfaces.js'
+import { INotificationRequestsRepository, ISessionRepository } from '../db/interfaces.js'
 import { ArchipelagoSession } from './archipelago-session.js'
 import { getItemTierIcon } from './icon-lookup-table.js'
 import { CoalescingChannelWrapper } from './util/coalescing-channel-wrapper.js'
@@ -13,6 +13,7 @@ export interface ArchipelagoEventHandlerDeps {
   formatter: EventToDiscordFormatter;
   discordChannel: DC.TextChannel | DC.ThreadChannel;
   sessionRepo: ISessionRepository;
+  notificationRequestsRepo: INotificationRequestsRepository;
 }
 
 function itemFlagToIcon (flags: number): string {
@@ -27,12 +28,14 @@ export class EventToDiscordHandler implements IEventHandler {
   #formatter: EventToDiscordFormatter
   #discordChannel: CoalescingChannelWrapper<string>
   #sessionRepo: ISessionRepository
+  #notificationRequestsRepo: INotificationRequestsRepository
 
   constructor (sessionId: number, deps: ArchipelagoEventHandlerDeps) {
     this.#sessionId = sessionId
     this.#formatter = deps.formatter
     this.#discordChannel = new CoalescingChannelWrapper(deps.discordChannel, 1500)
     this.#sessionRepo = deps.sessionRepo
+    this.#notificationRequestsRepo = deps.notificationRequestsRepo
   }
 
   async sessionIdle (session: ArchipelagoSession) {
@@ -131,6 +134,10 @@ export class EventToDiscordHandler implements IEventHandler {
     const numPlayers = session.staticState.players.length
     const messageTag = numPlayers > 8 ? 'item' : `item:${item.sender.name}`
     await this.#discordChannel.send(formattedMsg, messageTag)
+    const notificationRequests = await this.#notificationRequestsRepo.findMatches(session.sessionId, item.receiver.slot, item.name)
+    if (notificationRequests.length > 0) {
+      await this.#discordChannel.send(notificationRequests.map(r => `<@${r.discordId}> `).join(' '))
+    }
   }
 
   async released (session: ArchipelagoSession, text: string, player: Player) {
