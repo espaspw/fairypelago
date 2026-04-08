@@ -366,6 +366,13 @@ export class ArchipelagoSession {
     return this.#client.socket.connected
   }
 
+  // Current cache of goaled players
+  // This cache is updated on bot connect and during a goal event emit
+  // and thus might be inaccurate when the bot is not connected
+  get goalCache () {
+    return this.#goalCache
+  }
+
   async sendMessage (message: string) {
     if (this.isSocketConnected) {
       await this.#client.messages.say(message)

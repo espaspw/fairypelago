@@ -134,9 +134,11 @@ export class EventToDiscordHandler implements IEventHandler {
     const numPlayers = session.staticState.players.length
     const messageTag = numPlayers > 8 ? 'item' : `item:${item.sender.name}`
     await this.#discordChannel.send(formattedMsg, messageTag)
-    const notificationRequests = await this.#notificationRequestsRepo.findMatches(session.sessionId, item.receiver.slot, item.name)
-    if (notificationRequests.length > 0) {
-      await this.#discordChannel.send(notificationRequests.map(r => `<@${r.discordId}> `).join(' '))
+    if (!session.goalCache.has(item.receiver.slot)) {
+      const notificationRequests = await this.#notificationRequestsRepo.findMatches(session.sessionId, item.receiver.slot, item.name)
+      if (notificationRequests.length > 0) {
+        await this.#discordChannel.send([...new Set(notificationRequests.map(r => `<@${r.discordId}> `))].join(' '))
+      }
     }
   }
 
