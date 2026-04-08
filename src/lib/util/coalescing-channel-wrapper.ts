@@ -92,6 +92,9 @@ export class CoalescingChannelWrapper<AllowedTags> {
     this.#buffer = []
     this.#currentTag = null
 
+    // Last emergency check to prevent Discord API error
+    if (finalMessage.length <= 0) return
+
     try {
       await this.#channel.send(finalMessage)
     } catch (err) {
