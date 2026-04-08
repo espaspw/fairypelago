@@ -293,6 +293,11 @@ export class ArchipelagoSession {
 
         const finalStatus = extractToSessionStatus(this.#client, this.#staticState, status)
         this.#dynamicStateCache.set(finalStatus)
+        Object.entries(finalStatus.playerStatus).forEach(([slotId, sessionStatus]) => {
+          if (sessionStatus === 'Goaled') {
+            this.#goalCache.add(Number.parseInt(slotId))
+          }
+        })
         return finalStatus
       } finally {
         this.#inflightStatusFetch = null
