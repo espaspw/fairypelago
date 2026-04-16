@@ -23,10 +23,10 @@ export const tmcIcons: IconMatcher[] = [
   },
   { pattern: ['Bomb'], emoji: 'tmc_bomb' },
   { pattern: ['Remote Bomb'], emoji: 'tmc_remotebomb' },
-  { pattern: ['Bow'], emoji: 'tmc_bow' },
   {
     pattern: [
-      /.*Bow/,
+      'Bow',
+      'Progressive Bow',
       'Light Arrow',
     ],
     emoji: 'tmc_bow',
