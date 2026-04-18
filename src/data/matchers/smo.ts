@@ -96,7 +96,7 @@ export const smoIcons: IconMatcher[] = [
       'Bowser statue',
       'Parabones',
       'Banzai Bill',
-      'Chargin' Chuck',
+      "Chargin' Chuck",
       'Bowser',
       'Letter',
       'Yoshi',
