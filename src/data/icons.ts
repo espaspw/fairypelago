@@ -3,6 +3,7 @@ import { GameIcons, ItemTierIcons, ItemIcons } from '../types/icon-types.js'
 import { actIcons } from './matchers/act.js'
 import { adokuIcons } from './matchers/adoku.js'
 import { ahitItemIcons } from './matchers/ahit.js'
+import { alttpItemIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
@@ -16,13 +17,16 @@ import { mmIcons } from './matchers/mm.js'
 import { mfIcons } from './matchers/mf.js'
 import { mlssIcons } from './matchers/mlss.js'
 import { mzmIcons } from './matchers/mzm.js'
+import { noitaIcons } from './matchers/noita.js'
 import { ootIcons } from './matchers/oot.js'
 import { ootSohIcons } from './matchers/ootSoh.js'
 import { paintIcons } from './matchers/paint.js'
 import { ppwiiIcons } from './matchers/ppwii.js'
 import { pikmin2Icons } from './matchers/pikmin2.js'
+import { rasIcons } from './matchers/ras.js'
 import { ror2Icons } from './matchers/ror2.js'
 import { sm64Icons } from './matchers/sm64.js'
+import { smoIcons } from './matchers/smo.js'
 import { smsIcons } from './matchers/sms.js'
 import { smwIcons } from './matchers/smw.js'
 import { smIcons } from './matchers/sm.js'
@@ -42,6 +46,7 @@ import { yachtDiceIcons } from './matchers/yachtDice.js'
 
 export const gameIcons: GameIcons = {
   'A Hat in Time': 'ahit',
+  'A Link to the Past': 'alttp',
   "Another Crab's Treasure": 'act',
   'APBingo': ':8ball:',
   'Archipeladoku': ':1234:',
@@ -57,13 +62,16 @@ export const gameIcons: GameIcons = {
   'Metroid Zero Mission': 'mzm',
   'Minecraft': 'mc',
   'Minecraft Dig': 'mc',
+  'Noita': 'noita',
   'Ocarina of Time': 'oot_timetravel',
   'Paint': ':paintbrush:',
   'PokePark': 'ppwii',
   'Pikmin 2': 'pikmin2',
+  'Rabbit and Steel': 'ras',
   'Risk of Rain 2': 'ror2',
   'Ship of Harkinian': 'oot_timetravel',
   'Super Mario 64': 'sm64alt',
+  'Super Mario Odyssey': 'smo',
   'Super Mario Sunshine': 'sms',
   'Super Mario World': 'smw',
   'Super Metroid': 'sm',
@@ -84,6 +92,7 @@ export const gameIcons: GameIcons = {
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
+  'A Link to the Past': alttpItemIcons,
   "Another Crab's Treasure": actIcons,
   'APBingo': bingoIcons,
   'Archipeladoku': adokuIcons,
@@ -99,13 +108,16 @@ export const itemIcons: ItemIcons = {
   'Metroid Zero Mission': mzmIcons,
   'Minecraft': mcIcons,
   'Minecraft Dig': mcdigIcons,
+  'Noita': noitaIcons,
   'Ocarina of Time': ootIcons,
   'Paint': paintIcons,
   'PokePark': ppwiiIcons,
+  'Rabbit and Steel': rasIcons,
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
   'Ship of Harkinian': ootSohIcons,
   'Super Mario 64': sm64Icons,
+  'Super Mario Odyssey': smoIcons,
   'Super Mario Sunshine': smsIcons,
   'Super Mario World': smwIcons,
   'Super Metroid': smIcons,
