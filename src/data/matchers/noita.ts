@@ -1,0 +1,28 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const noitaIcons: IconMatcher[] = [
+  { pattern: ['Trap'], emoji: '' },
+  { pattern: ['Extra Max HP'], emoji: 'noita_maxhp' },
+  { pattern: ['Spell Refresher'], emoji: 'noita_spellrefresher' },
+  { pattern: [/.*Potion/], emoji: 'noita_potion' },
+  { pattern: [/Gold.*/], emoji: 'noita_gold' },
+  { pattern: [/Wand.*/], emoji: 'noita_wand' },
+  { pattern: ['Kantele'], emoji: 'noita_kantele' },
+  { pattern: ['Fire Immunity Perk'], emoji: 'noita_fireimmunity' },
+  { pattern: ['Toxic Immunity Perk'], emoji: 'noita_toxicimmunity' },
+  { pattern: ['Explosion Immunity Perk'], emoji: 'noita_explosionimmunity' },
+  { pattern: ['Melee Immunity Perk'], emoji: 'noita_meleeimmunity' },
+  { pattern: ['Electricity Immunity Perk'], emoji: 'noita_electricityimmunity' },
+  { pattern: ['Tinker with Wands Everywhere Perk'], emoji: 'noita_tinkerwands' },
+  { pattern: ['All-Seeing Eye Perk'], emoji: 'noita_allseeing' },
+  { pattern: ['Spatial Awareness Perk'], emoji: 'noita_spatialawareness' },
+  { pattern: ['Extra Life Perk'], emoji: 'noita_extralife' },
+  { pattern: ['Orb'], emoji: 'noita_orb' },
+  { pattern: ['Powder Pouch'], emoji: 'noita_powderpouch' },
+  { pattern: ['Chaos Die'], emoji: 'noita_chaosdie' },
+  { pattern: ['Greed Die'], emoji: 'noita_greeddie' },
+  { pattern: ['Kammi'], emoji: 'noita_kammi' },
+  { pattern: ['Refreshing Gourd'], emoji: 'noita_gourd' },
+  { pattern: ['Sädekivi'], emoji: 'noita_sadekivi' },
+  { pattern: ['Broken Wand'], emoji: 'noita_brokenwand' },
+]
