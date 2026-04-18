@@ -47,7 +47,7 @@ import { yachtDiceIcons } from './matchers/yachtDice.js'
 export const gameIcons: GameIcons = {
   'A Hat in Time': 'ahit',
   'A Link to the Past': 'alttp',
-  "Another Crab's Treasure": 'act',
+  'Another Crabs Treasure': 'act',
   'APBingo': ':8ball:',
   'Archipeladoku': ':1234:',
   'Celeste 64': 'celeste64',
@@ -93,7 +93,7 @@ export const gameIcons: GameIcons = {
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
   'A Link to the Past': alttpItemIcons,
-  "Another Crab's Treasure": actIcons,
+  'Another Crabs Treasure': actIcons,
   'APBingo': bingoIcons,
   'Archipeladoku': adokuIcons,
   'Celeste 64': celeste64Icons,
