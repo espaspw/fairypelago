@@ -3,7 +3,7 @@ import { GameIcons, ItemTierIcons, ItemIcons } from '../types/icon-types.js'
 import { actIcons } from './matchers/act.js'
 import { adokuIcons } from './matchers/adoku.js'
 import { ahitItemIcons } from './matchers/ahit.js'
-import { alttpItemIcons } from './matchers/alttp.js'
+import { alttpIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
@@ -92,7 +92,7 @@ export const gameIcons: GameIcons = {
 
 export const itemIcons: ItemIcons = {
   'A Hat in Time': ahitItemIcons,
-  'A Link to the Past': alttpItemIcons,
+  'A Link to the Past': alttpIcons,
   'Another Crabs Treasure': actIcons,
   'APBingo': bingoIcons,
   'Archipeladoku': adokuIcons,
