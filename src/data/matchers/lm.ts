@@ -17,7 +17,7 @@ export const lmIcons: IconMatcher[] = [
   { pattern: ['Boo Radar'], emoji: 'lm_booradar' },
   {
     pattern: [
-      'Poltergust 4000',
+      'Poltergust 3000',
       'Vacuum Upgrade',
     ],
     emoji: 'lm_poltergust4000',
@@ -29,7 +29,13 @@ export const lmIcons: IconMatcher[] = [
   { pattern: ['20 Coins & Bills'], emoji: 'lm_billsandcoins' },
   { pattern: [/[0-9]+ Coins/], emoji: 'lm_coins' },
   { pattern: [/[0-9]+ Bills/], emoji: 'lm_bills' },
-  { pattern: [/[0-9]+ Gold Bars/], emoji: 'lm_goldbar' },
+  {
+    pattern: [
+      /[0-9]+ Gold Bars/,
+      /[0-9]+ Gold Bar/,
+    ],
+    emoji: 'lm_goldbar',
+  },
   { pattern: ['Sapphire'], emoji: 'lm_sapphire' },
   { pattern: ['Emerald'], emoji: 'lm_emerald' },
   { pattern: ['Ruby'], emoji: 'lm_ruby' },
