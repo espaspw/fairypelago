@@ -8,9 +8,11 @@ import { ArchipelagoSession } from './archipelago-session.js'
 import { getItemTierIcon } from './icon-lookup-table.js'
 import { CoalescingChannelWrapper } from './util/coalescing-channel-wrapper.js'
 import { SessionLoginAttemptResult } from '../types/session-types.js'
+import { DiscordClient } from './discord-client.js'
 
 export interface ArchipelagoEventHandlerDeps {
   formatter: EventToDiscordFormatter;
+  discordClient: DiscordClient;
   discordChannel: DC.TextChannel | DC.ThreadChannel;
   sessionRepo: ISessionRepository;
   notificationRequestsRepo: INotificationRequestsRepository;
@@ -26,6 +28,7 @@ function itemFlagToIcon (flags: number): string {
 export class EventToDiscordHandler implements IEventHandler {
   #sessionId: number
   #formatter: EventToDiscordFormatter
+  #discordClient: DiscordClient
   #discordChannel: CoalescingChannelWrapper<string>
   #sessionRepo: ISessionRepository
   #notificationRequestsRepo: INotificationRequestsRepository
@@ -33,6 +36,7 @@ export class EventToDiscordHandler implements IEventHandler {
   constructor (sessionId: number, deps: ArchipelagoEventHandlerDeps) {
     this.#sessionId = sessionId
     this.#formatter = deps.formatter
+    this.#discordClient = deps.discordClient
     this.#discordChannel = new CoalescingChannelWrapper(deps.discordChannel, 1500)
     this.#sessionRepo = deps.sessionRepo
     this.#notificationRequestsRepo = deps.notificationRequestsRepo
@@ -58,7 +62,11 @@ export class EventToDiscordHandler implements IEventHandler {
     if (isFinished) {
       await this.#discordChannel.send('I\'ve disconnected as the session appears to be finished.')
     } else {
-      await this.#discordChannel.send('I\'ve disconnected. Give me the `connect` command to try reconnecting.')
+      const recentMsgs = await this.#discordChannel.channel.messages.fetch({ limit: 100 })
+      const lastMsgBySelf = recentMsgs.find(msg => msg.author.id === this.#discordClient.client.user?.id)
+      const disconnectMsg = 'I\'ve disconnected. Give me the `connect` command to try reconnecting.'
+      if (lastMsgBySelf?.content === disconnectMsg) return
+      await this.#discordChannel.send(disconnectMsg)
     }
   }
 

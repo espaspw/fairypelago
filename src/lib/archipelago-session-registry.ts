@@ -7,6 +7,7 @@ import { logger } from './util/logger.js'
 import { IOptionsProvider } from './interfaces/options-provider.js'
 import { EventToDiscordHandler } from './event-to-discord-handler.js'
 import { EventToDiscordFormatter } from './event-to-discord-formatter.js'
+import { DiscordClient } from './discord-client.js'
 
 export class ArchipelagoSessionRegistry {
   #sessions = new Map<number, ArchipelagoSession>()
@@ -20,12 +21,12 @@ export class ArchipelagoSessionRegistry {
     private optionsProvider: IOptionsProvider,
   ) { }
 
-  async initFromDb (discordClient: DC.Client) {
+  async initFromDb (discordClient: DiscordClient) {
     logger.info('Initializing session registry from database')
     const existingSessions = await this.sessionRepo.getSessions()
     for (const session of existingSessions) {
       try {
-        const channel = await discordClient.channels.fetch(session.channelId)
+        const channel = await discordClient.client.channels.fetch(session.channelId)
         if (!channel) {
           logger.warn(
             'Could not find channel for session, skipping',
@@ -41,7 +42,7 @@ export class ArchipelagoSessionRegistry {
           continue
         }
 
-        const newSession = await this.#createSessionInstance(session.id, channel, session.roomData)
+        const newSession = await this.#createSessionInstance(session.id, discordClient, channel, session.roomData)
         // TODO: What to do if this call fails?
         if (!newSession) continue
         this.#sessions.set(session.id, newSession)
@@ -82,9 +83,9 @@ export class ArchipelagoSessionRegistry {
     return this.#idToChannel.get(sessionId) ?? null
   }
 
-  async createSession (channel: DC.TextChannel | DC.ThreadChannel, roomData: ArchipelagoRoomData) {
+  async createSession (discordClient: DiscordClient, channel: DC.TextChannel | DC.ThreadChannel, roomData: ArchipelagoRoomData) {
     const sessionId = await this.sessionRepo.addSession(channel.guildId, channel.id, roomData)
-    const newSession = await this.#createSessionInstance(sessionId, channel, roomData)
+    const newSession = await this.#createSessionInstance(sessionId, discordClient, channel, roomData)
     if (!newSession) return null
     this.#sessions.set(sessionId, newSession)
     this.#channelToId.set(channel.id, sessionId)
@@ -94,9 +95,10 @@ export class ArchipelagoSessionRegistry {
   }
 
   /* Create an ArchipelagoSession instance representing a new or existing session from the database */
-  async #createSessionInstance (sessionId: number, channel: DC.TextChannel | DC.ThreadChannel, roomData: ArchipelagoRoomData) {
+  async #createSessionInstance (sessionId: number, discordClient: DiscordClient, channel: DC.TextChannel | DC.ThreadChannel, roomData: ArchipelagoRoomData) {
     const eventFormatter = new EventToDiscordFormatter(channel.guildId, this.settingsRepo)
     const eventHandler = new EventToDiscordHandler(sessionId, {
+      discordClient,
       discordChannel: channel,
       formatter: eventFormatter,
       sessionRepo: this.sessionRepo,

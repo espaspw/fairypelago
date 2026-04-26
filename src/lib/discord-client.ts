@@ -46,7 +46,7 @@ export class DiscordClient {
     this.#client.once(DC.Events.ClientReady, async (client) => {
       logger.info('Client ready', { tag: client.user.tag })
       await reloadAvaliableCommands()
-      await this.sessionRegistry.initFromDb(this.#client)
+      await this.sessionRegistry.initFromDb(this)
       await Promise.all(this.sessionRegistry.getAllSessions().map(async session => {
         if (!session.isSocketConnected) await session.start()
       }))
@@ -211,7 +211,7 @@ export class DiscordClient {
           url: archRoomData.url,
         })
 
-        const newSession = await this.sessionRegistry.createSession(newThread, archRoomData)
+        const newSession = await this.sessionRegistry.createSession(this, newThread, archRoomData)
         if (!newSession) {
           await replyWithError(message, 'Failed to fetch info from this AP room, perhaps the room is expired or the site is down...')
           logger.info('AP roomm link detected but failed to create session, ', {
