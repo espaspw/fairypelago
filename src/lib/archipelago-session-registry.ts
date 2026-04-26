@@ -24,7 +24,7 @@ export class ArchipelagoSessionRegistry {
   async initFromDb (discordClient: DiscordClient) {
     logger.info('Initializing session registry from database')
     const existingSessions = await this.sessionRepo.getSessions()
-    for (const session of existingSessions) {
+    await Promise.all(existingSessions.map(async session => {
       try {
         const channel = await discordClient.client.channels.fetch(session.channelId)
         if (!channel) {
@@ -32,19 +32,19 @@ export class ArchipelagoSessionRegistry {
             'Could not find channel for session, skipping',
             { channelId: session.channelId, sessionId: session.id },
           )
-          continue
+          return
         }
         if (!(channel.type === DC.ChannelType.PublicThread || channel.type === DC.ChannelType.GuildText)) {
           logger.warn(
             'Found channel for session but wasn\'t guild text or public thread channel',
             { channelId: session.channelId, sessionId: session.id },
           )
-          continue
+          return
         }
 
         const newSession = await this.#createSessionInstance(session.id, discordClient, channel, session.roomData)
         // TODO: What to do if this call fails?
-        if (!newSession) continue
+        if (!newSession) return
         this.#sessions.set(session.id, newSession)
         this.#channelToId.set(channel.id, session.id)
         this.#idToChannel.set(session.id, channel.id)
@@ -55,7 +55,7 @@ export class ArchipelagoSessionRegistry {
       } catch (err) {
         logger.error('Failed to initialize session into registry from db', { error: err })
       }
-    }
+    }))
   }
 
   getSessionByChannelId (channelId: DC.Snowflake): ArchipelagoSession | null {
