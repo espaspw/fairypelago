@@ -43,6 +43,8 @@ import { ttIcons } from './matchers/tt.js'
 import { wl4Icons } from './matchers/wl4.js'
 import { wordIcons } from './matchers/word.js'
 import { yachtDiceIcons } from './matchers/yachtDice.js'
+import { zoracleaIcons } from './matchers/zoraclea.js'
+import { zoraclesIcons } from './matchers/zoracles.js'
 
 export const gameIcons: GameIcons = {
   'A Hat in Time': 'ahit',
@@ -79,6 +81,8 @@ export const gameIcons: GameIcons = {
   'SMZ3': 'smz3',
   'Terraria': 'terraria',
   'Touhou Koumakyou ~ the Embodiment of Scarlet Devil': 'th6',
+  'The Legend of Zelda - Oracle of Ages': 'zoraclea',
+  'The Legend of Zelda - Oracle of Seasons': 'zoracles',
   'The Minish Cap': 'tmc',
   'The Wind Waker': 'tww',
   'Undertale': 'undertale',
@@ -125,6 +129,8 @@ export const itemIcons: ItemIcons = {
   'SMZ3': smz3Icons,
   'Terraria': terrariaIcons,
   'Touhou Koumakyou ~ the Embodiment of Scarlet Devil': th6Icons,
+  'The Legend of Zelda - Oracle of Ages': zoracleaIcons,
+  'The Legend of Zelda - Oracle of Seasons': zoraclesIcons,
   'The Minish Cap': tmcIcons,
   'The Wind Waker': twwIcons,
   'Undertale': undertaleIcons,
