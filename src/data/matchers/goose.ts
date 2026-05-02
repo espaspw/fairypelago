@@ -8,7 +8,7 @@ export const gooseIcons: IconMatcher[] = [
     ],
     emoji: ':unlock:',
   },
-  { pattern: [/.*Soul/], emoji: ':ghost:' }
+  { pattern: [/.*Soul/], emoji: ':ghost:' },
   { pattern: ['Carrots'], emoji: ':carrot:' },
   { pattern: ['Tomatoes'], emoji: ':tomato:' },
   { pattern: ['Pumpkins'], emoji: ':seedling:' },

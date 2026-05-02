@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const sm64Icons: IconMatcher[] = [
+export const csm64Icons: IconMatcher[] = [
   { pattern: ['Power Star'], emoji: 'sm64_star' },
   { pattern: [/.*Key/], emoji: 'sm64_key' },
   { pattern: ['Wing Cap'], emoji: 'sm64_wingcap' },

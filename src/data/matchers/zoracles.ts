@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const zoracleIcons: IconMatcher[] = [
+export const zoraclesIcons: IconMatcher[] = [
   { pattern: ['Progressive Shield'], emoji: 'zoracle_shield' },
   { pattern: [/Bombs.*/], emoji: 'zoracle_bomb' },
   { pattern: ['Cane of Somaria'], emoji: 'zoracle_caneofsomaria' },
