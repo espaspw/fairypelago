@@ -7,6 +7,7 @@ import { alttpIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
+import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
 import { kssIcons } from './matchers/kss.js'
 import { ladxIcons } from './matchers/ladx.js'
@@ -87,6 +88,7 @@ export const gameIcons: GameIcons = {
   'The Wind Waker': 'tww',
   'Undertale': 'undertale',
   'Unfair Flips': ':coin:',
+  'Untitled Goose Game': 'goose',
   'Toontown': 'tt',
   'Paper Mario: The Thousand-Year Door': 'ttyd',
   'Wario Land 4': 'wl4',
@@ -135,6 +137,7 @@ export const itemIcons: ItemIcons = {
   'The Wind Waker': twwIcons,
   'Undertale': undertaleIcons,
   'Unfair Flips': unfairflipsIcons,
+  'Untitled Goose Game': gooseIcons,
   'Toontown': ttIcons,
   'Paper Mario: The Thousand-Year Door': ttydIcons,
   'Wario Land 4': wl4Icons,
