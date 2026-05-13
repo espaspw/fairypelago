@@ -7,6 +7,7 @@ import { alttpIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
+import { csm64Icons } from './matchers/csm64.js'
 import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
 import { kssIcons } from './matchers/kss.js'
@@ -55,6 +56,7 @@ export const gameIcons: GameIcons = {
   'Archipeladoku': ':1234:',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
+  'Cursed Mario 64': 'sm64alt',
   'Hollow Knight': 'hk',
   'Kirby Super Star': 'kss',
   "Link's Awakening DX": 'ladx',
@@ -104,6 +106,7 @@ export const itemIcons: ItemIcons = {
   'Archipeladoku': adokuIcons,
   'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
+  'Cursed Mario 64': csm64Icons,
   'Hollow Knight': hkIcons,
   'Kirby Super Star': kssIcons,
   "Link's Awakening DX": ladxIcons,
