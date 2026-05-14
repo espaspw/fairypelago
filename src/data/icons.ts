@@ -24,6 +24,7 @@ import { ootIcons } from './matchers/oot.js'
 import { ootSohIcons } from './matchers/ootSoh.js'
 import { paintIcons } from './matchers/paint.js'
 import { ppwiiIcons } from './matchers/ppwii.js'
+import { pikminIcons } from './matchers/pikmin.js'
 import { pikmin2Icons } from './matchers/pikmin2.js'
 import { rasIcons } from './matchers/ras.js'
 import { ror2Icons } from './matchers/ror2.js'
@@ -71,6 +72,7 @@ export const gameIcons: GameIcons = {
   'Ocarina of Time': 'oot_timetravel',
   'Paint': ':paintbrush:',
   'PokePark': 'ppwii',
+  'Pikmin': 'pikmin',
   'Pikmin 2': 'pikmin2',
   'Rabbit and Steel': 'ras',
   'Risk of Rain 2': 'ror2',
@@ -122,6 +124,7 @@ export const itemIcons: ItemIcons = {
   'Paint': paintIcons,
   'PokePark': ppwiiIcons,
   'Rabbit and Steel': rasIcons,
+  'Pikmin': pikminIcons,
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
   'Ship of Harkinian': ootSohIcons,
