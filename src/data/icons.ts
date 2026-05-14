@@ -7,6 +7,8 @@ import { alttpIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
+import { csm64Icons } from './matchers/csm64.js'
+import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
 import { kssIcons } from './matchers/kss.js'
 import { ladxIcons } from './matchers/ladx.js'
@@ -22,6 +24,7 @@ import { ootIcons } from './matchers/oot.js'
 import { ootSohIcons } from './matchers/ootSoh.js'
 import { paintIcons } from './matchers/paint.js'
 import { ppwiiIcons } from './matchers/ppwii.js'
+import { pikminIcons } from './matchers/pikmin.js'
 import { pikmin2Icons } from './matchers/pikmin2.js'
 import { rasIcons } from './matchers/ras.js'
 import { ror2Icons } from './matchers/ror2.js'
@@ -54,6 +57,7 @@ export const gameIcons: GameIcons = {
   'Archipeladoku': ':1234:',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
+  'Cursed Mario 64': 'sm64alt',
   'Hollow Knight': 'hk',
   'Kirby Super Star': 'kss',
   "Link's Awakening DX": 'ladx',
@@ -68,6 +72,7 @@ export const gameIcons: GameIcons = {
   'Ocarina of Time': 'oot_timetravel',
   'Paint': ':paintbrush:',
   'PokePark': 'ppwii',
+  'Pikmin': 'pikmin',
   'Pikmin 2': 'pikmin2',
   'Rabbit and Steel': 'ras',
   'Risk of Rain 2': 'ror2',
@@ -87,6 +92,7 @@ export const gameIcons: GameIcons = {
   'The Wind Waker': 'tww',
   'Undertale': 'undertale',
   'Unfair Flips': ':coin:',
+  'Untitled Goose Game': 'goose',
   'Toontown': 'tt',
   'Paper Mario: The Thousand-Year Door': 'ttyd',
   'Wario Land 4': 'wl4',
@@ -102,6 +108,7 @@ export const itemIcons: ItemIcons = {
   'Archipeladoku': adokuIcons,
   'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
+  'Cursed Mario 64': csm64Icons,
   'Hollow Knight': hkIcons,
   'Kirby Super Star': kssIcons,
   "Link's Awakening DX": ladxIcons,
@@ -117,6 +124,7 @@ export const itemIcons: ItemIcons = {
   'Paint': paintIcons,
   'PokePark': ppwiiIcons,
   'Rabbit and Steel': rasIcons,
+  'Pikmin': pikminIcons,
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
   'Ship of Harkinian': ootSohIcons,
@@ -135,6 +143,7 @@ export const itemIcons: ItemIcons = {
   'The Wind Waker': twwIcons,
   'Undertale': undertaleIcons,
   'Unfair Flips': unfairflipsIcons,
+  'Untitled Goose Game': gooseIcons,
   'Toontown': ttIcons,
   'Paper Mario: The Thousand-Year Door': ttydIcons,
   'Wario Land 4': wl4Icons,

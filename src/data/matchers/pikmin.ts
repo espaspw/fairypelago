@@ -1,0 +1,38 @@
+import { IconMatcher } from '../../types/icon-types.js'
+
+export const pikminIcons: IconMatcher[] = [
+  { pattern: ['Bowsprit'], emoji: 'pikmin_bowsprit' },
+  { pattern: ['Gluon Drive'], emoji: 'pikmin_gluondrive' },
+  { pattern: ['Anti-Dioxin Filter'], emoji: 'pikmin_antidioxinfilter' },
+  { pattern: ['Eternal Fuel Dynamo'], emoji: 'pikmin_eternalfueldynamo' },
+  { pattern: ['Main Engine'], emoji: 'pikmin_mainengine' },
+  { pattern: ['Whimsical Radar'], emoji: 'pikmin_whimsicalradar' },
+  { pattern: ['Interstellar Radio'], emoji: 'pikmin_interstellarradio' },
+  { pattern: ['Guard Satellite'], emoji: 'pikmin_guardsatellite' },
+  { pattern: ['Chronos Reactor'], emoji: 'pikmin_chronosreactor' },
+  { pattern: ['Radiation Canopy'], emoji: 'pikmin_radiationcanopy' },
+  { pattern: ['Geiger Counter'], emoji: 'pikmin_geigercounter' },
+  {
+    pattern: [
+      'Sagittarius',
+      'Libra',
+    ],
+    emoji: 'pikmin_libra',
+  },
+  { pattern: ['Omega Stabilizer'], emoji: 'pikmin_omegastabilizer' },
+  { pattern: [/.*Ionium Jet/], emoji: 'pikmin_ioniumjet' },
+  { pattern: ['Shock Absorber'], emoji: 'pikmin_shockabsorber' },
+  { pattern: ['Gravity Jumper'], emoji: 'pikmin_gravityjumper' },
+  { pattern: ["Pilot's Seat"], emoji: 'pikmin_pilotsseat' },
+  { pattern: ['Nova Blaster'], emoji: 'pikmin_novablaster' },
+  { pattern: ['Automatic Gear'], emoji: 'pikmin_automaticgear' },
+  { pattern: ['Zirconium Rotor'], emoji: 'pikmin_zirconiumrotor' },
+  { pattern: ['Extraordinary Bolt'], emoji: 'pikmin_extraordinarybolt' },
+  { pattern: ['Repair-Type Bolt'], emoji: 'pikmin_repairtypebolt' },
+  { pattern: ['Space Float'], emoji: 'pikmin_spacefloat' },
+  { pattern: ['Massage Machine'], emoji: 'pikmin_massagemachine' },
+  { pattern: ['Secret Safe'], emoji: 'pikmin_secretsafe' },
+  { pattern: ['Positron Generator'], emoji: 'pikmin_positrongenerator' },
+  { pattern: ['Analog Computer'], emoji: 'pikmin_analogcomputer' },
+  { pattern: ['UV Lamp'], emoji: 'pikmin_uvlamp' },
+]

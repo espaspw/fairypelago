@@ -7,6 +7,7 @@ export const rasIcons: IconMatcher[] = [
   { pattern: ['Churchmouse Streets'], emoji: 'ras_churchmousestreets' },
   { pattern: ['Emerald Lakeside'], emoji: 'ras_emeraldlakeside' },
   { pattern: ['The Pale Keep'], emoji: 'ras_thepalekeep' },
+  { pattern: ['Moonlit Pinnacle'], emoji: 'ras_moonlitpinnacle' },
   { pattern: ['Darkhouse Depths'], emoji: 'ras_darkhousedepths' },
   { pattern: ['Atelier Aurum'], emoji: 'ras_atelieraurum' },
   { pattern: ['Subterra Sanctum'], emoji: 'ras_subterrasanctum' },
