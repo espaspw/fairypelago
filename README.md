@@ -29,6 +29,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - 🔢 Archipeladoku
 - <img src="assets/archipelago-icons/Celeste/Celeste64/celeste64.png" alt="Celeste 64" width="19"> Celeste 64
 - <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste (Open World)" width="19" > Celeste (Open World)
+- <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Cursed Mario 64
 - <img src="assets/archipelago-icons/Hollow Knight/hk.png" alt="Hollow Knight" width="19" > Hollow Knight
 - <img src="assets/archipelago-icons/Kirby Super Star/kss.png" alt="Kirby Super Star" width="19" > Kirby Super Star
 - <img src="assets/archipelago-icons/Link&apos;s Awakening DX/ladx.png" alt="Link's Awakening DX" width="19" > Link's Awakening DX
@@ -39,10 +40,13 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Metroid Zero Mission/mzm.png" alt="Metroid Zero Mission" width="19" > Metroid Zero Mission
 - <img src="assets/archipelago-icons/Minecraft/mc.png" alt="Minecraft" width="19" > Minecraft
 - <img src="assets/archipelago-icons/Minecraft/mc.png" alt="Minecraft Dig" width="19" > Minecraft Dig
+- <img src="assets/archipelago-icons/Noita/noita.png" alt="Noita" width="19" > Noita
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ocarina of Time" width="19" > Ocarina of Time
 - 🖌️ Paint
 - <img src="assets/archipelago-icons/PokePark Wii Pikachu&apos;s Adventure/ppwii.png" alt="PokePark" width="19" > PokePark
+- <img src="assets/archipelago-icons/Pikmin/pikmin.png" alt="Pikmin" width="19" > Pikmin
 - <img src="assets/archipelago-icons/Pikmin 2/pikmin2.png" alt="Pikmin 2" width="19" > Pikmin 2
+- <img src="assets/archipelago-icons/Rabbit and Steel/ras.png" alt="Rabbit and Steel" width="19" > Rabbit and Steel
 - <img src="assets/archipelago-icons/Risk of Rain 2/ror2.png" alt="Risk of Rain 2" width="19" > Risk of Rain 2
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ship of Harkinian" width="19" > Ship of Harkinian
 -  <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Super Mario 64
@@ -53,10 +57,13 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 -  <img src="assets/archipelago-icons/Super Metroid/smz3.png" alt="SMZ3" width="19" > SMZ3
 - <img src="assets/archipelago-icons/Terraria/terraria.png" alt="Terraria" width="19" >Terraria
 - <img src="assets/archipelago-icons/Touhou Embodiment of Scarlet Devil/th6.png" alt="Touhou Koumakyou ~ the Embodiment of Scarlet Devil" width="19" > Touhou Koumakyou ~ the Embodiment of Scarlet Devil
+- <img src="assets/archipelago-icons/The Legend of Zelda Oracle of Seasons Ages/zoraclea.png" alt="The Legend of Zelda - Oracle of Ages" width="19" > The Legend of Zelda - Oracle of Ages
+- <img src="assets/archipelago-icons/The Legend of Zelda Oracle of Seasons Ages/zoracles.png" alt="The Legend of Zelda - Oracle of Seasons" width="19" > The Legend of Zelda - Oracle of Seasons
 - <img src="assets/archipelago-icons/The Minish Cap/tmc.png" alt="The Minish Cap" width="19" > The Minish Cap
 - <img src="assets/archipelago-icons/The Wind Waker/tww.png" alt="The Wind Waker" width="19" > The Wind Waker
 - <img src="assets/archipelago-icons/Undertale/undertale.png" alt="Undertale" width="19" > Undertale
 - 🪙 Unfair Flips
+- <img src="assets/archipelago-icons/Untitled Goose Game/goose.png" alt="Untitled Goose Game" width="19" > Untitled Goose Game
 - <img src="assets/archipelago-icons/Toontown/tt.png" alt="Toontown" width="19" > Toontown
 - <img src="assets/archipelago-icons/Paper Mario The Thousand-Year Door/ttyd.png" alt="Paper Mario: The Thousand-Year Door" width="19" > Paper Mario: The Thousand-Year Door
 - <img src="assets/archipelago-icons/Wario Land 4/wl4.png" alt="Wario Land 4" width="19" > Wario Land 4
