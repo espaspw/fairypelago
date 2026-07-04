@@ -31,6 +31,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste (Open World)" width="19" > Celeste (Open World)
 - <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Cursed Mario 64
 - <img src="assets/archipelago-icons/Hollow Knight/hk.png" alt="Hollow Knight" width="19" > Hollow Knight
+- <img src="assets/archipelago-icons/Kingdom Hearts 2/kh2.png" alt="Kingdom Hearts 2" width="19" > Kingdom Hearts 2
 - <img src="assets/archipelago-icons/Kirby Super Star/kss.png" alt="Kirby Super Star" width="19" > Kirby Super Star
 - <img src="assets/archipelago-icons/Link&apos;s Awakening DX/ladx.png" alt="Link's Awakening DX" width="19" > Link's Awakening DX
 -  <img src="assets/archipelago-icons/Luigi&apos;s Mansion/lm_alticon.png" alt="Luigi's Mansion" width="19" > Luigi's Mansion
