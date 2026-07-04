@@ -50,15 +50,11 @@ export const ttydIcons: IconMatcher[] = [
       'Turtley Leaf',
       'Whacka Bump',
       /Zess.*/,
-      'ITEM',
-      'ITEM',
-      'ITEM',
     ],
     emoji: 'ttyd_item',
   },
   {
     pattern: [
-      '10 Coins',
       'All or Nothing',
       'Attack FX B',
       'Attack FX G',
