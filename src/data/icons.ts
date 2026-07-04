@@ -10,6 +10,7 @@ import { celesteIcons } from './matchers/celeste.js'
 import { csm64Icons } from './matchers/csm64.js'
 import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
+import { kh2Icons } from './matchers/kh2.js'
 import { kssIcons } from './matchers/kss.js'
 import { ladxIcons } from './matchers/ladx.js'
 import { lmIcons } from './matchers/lm.js'
@@ -59,6 +60,7 @@ export const gameIcons: GameIcons = {
   'Celeste (Open World)': 'celeste',
   'Cursed Mario 64': 'sm64alt',
   'Hollow Knight': 'hk',
+  'Kingdom Hearts 2': 'kh2',
   'Kirby Super Star': 'kss',
   "Link's Awakening DX": 'ladx',
   "Luigi's Mansion": 'lm_alticon',
@@ -110,6 +112,7 @@ export const itemIcons: ItemIcons = {
   'Celeste (Open World)': celesteIcons,
   'Cursed Mario 64': csm64Icons,
   'Hollow Knight': hkIcons,
+  'Kingdom Hearts 2': kh2Icons,
   'Kirby Super Star': kssIcons,
   "Link's Awakening DX": ladxIcons,
   "Luigi's Mansion": lmIcons,
