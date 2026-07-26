@@ -7,6 +7,7 @@ import { alttpIcons } from './matchers/alttp.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
+import { csIcons } from './matchers/cs.js'
 import { csm64Icons } from './matchers/csm64.js'
 import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
@@ -14,6 +15,7 @@ import { kh2Icons } from './matchers/kh2.js'
 import { kssIcons } from './matchers/kss.js'
 import { ladxIcons } from './matchers/ladx.js'
 import { lmIcons } from './matchers/lm.js'
+import { lwnIcons } from './matchers/lwn.js'
 import { mcIcons } from './matchers/mc.js'
 import { mcdigIcons } from './matchers/mcdig.js'
 import { mmIcons } from './matchers/mm.js'
@@ -56,6 +58,7 @@ export const gameIcons: GameIcons = {
   'Another Crabs Treasure': 'act',
   'APBingo': ':8ball:',
   'Archipeladoku': ':1234:',
+  'Cave Story': 'cs',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
   'Cursed Mario 64': 'sm64alt',
@@ -64,6 +67,7 @@ export const gameIcons: GameIcons = {
   'Kirby Super Star': 'kss',
   "Link's Awakening DX": 'ladx',
   "Luigi's Mansion": 'lm_alticon',
+  'Little Witch Nobeta': 'lwn',
   "Majora's Mask Recompiled": 'mm',
   'Mario & Luigi Superstar Saga': 'mlss',
   'Metroid Fusion': 'mf',
@@ -108,6 +112,7 @@ export const itemIcons: ItemIcons = {
   'Another Crabs Treasure': actIcons,
   'APBingo': bingoIcons,
   'Archipeladoku': adokuIcons,
+  'Cave Story': csIcons,
   'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
   'Cursed Mario 64': csm64Icons,
@@ -116,6 +121,7 @@ export const itemIcons: ItemIcons = {
   'Kirby Super Star': kssIcons,
   "Link's Awakening DX": ladxIcons,
   "Luigi's Mansion": lmIcons,
+  'Little Witch Nobeta': lwnIcons,
   "Majora's Mask Recompiled": mmIcons,
   'Mario & Luigi Superstar Saga': mlssIcons,
   'Metroid Fusion': mfIcons,
