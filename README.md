@@ -27,6 +27,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Another Crab&apos;s Treasure/act.png" alt="A Hat in Time" width="19"> Another Crab's Treasure
 - 🎱 APBingo
 - 🔢 Archipeladoku
+- <img src="assets/archipelago-icons/Cave Story/cs.png" alt="Cave Story" width="19" > Cave Story
 - <img src="assets/archipelago-icons/Celeste/Celeste64/celeste64.png" alt="Celeste 64" width="19"> Celeste 64
 - <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste (Open World)" width="19" > Celeste (Open World)
 - <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Cursed Mario 64
@@ -34,7 +35,8 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Kingdom Hearts 2/kh2.png" alt="Kingdom Hearts 2" width="19" > Kingdom Hearts 2
 - <img src="assets/archipelago-icons/Kirby Super Star/kss.png" alt="Kirby Super Star" width="19" > Kirby Super Star
 - <img src="assets/archipelago-icons/Link&apos;s Awakening DX/ladx.png" alt="Link's Awakening DX" width="19" > Link's Awakening DX
--  <img src="assets/archipelago-icons/Luigi&apos;s Mansion/lm_alticon.png" alt="Luigi's Mansion" width="19" > Luigi's Mansion
+- <img src="assets/archipelago-icons/Luigi&apos;s Mansion/lm_alticon.png" alt="Luigi's Mansion" width="19" > Luigi's Mansion
+- <img src="assets/archipelago-icons/Little Witch Nobeta/lwn.png" alt="Little Witch Nobeta" width="19" > Little Witch Nobeta
 - <img src="assets/archipelago-icons/Majora&apos;s Mask/mm.png" alt="Majora's Mask Recompiled" width="19" > Majora's Mask Recompiled
 - <img src="assets/archipelago-icons/Mario & Luigi Superstar Saga/mlss.png" alt="Mario & Luigi Superstar Saga" width="19" > Mario & Luigi Superstar Saga
 - <img src="assets/archipelago-icons/Metroid Fusion/mf.png" alt="Metroid Fusion" width="19" > Metroid Fusion
