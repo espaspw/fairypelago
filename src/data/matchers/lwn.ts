@@ -1,7 +1,7 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
 export const lwnIcons: IconMatcher[] = [
-  { pattern: [/[1-103]+.*/], emoji: 'lwn_lore' },
+  { pattern: [/\d+\..*/], emoji: 'lwn_lore' },
   {
     pattern: [
       /Abyss.*/,
