@@ -103,7 +103,7 @@ export const kh2Icons: IconMatcher[] = [
       'Bond of Flame',
       'Fenrir',
       'Ultima Weapon',
-      'Winner's Proof',
+      'Winner\'s Proof',
       'Pureblood',
     ],
     emoji: 'kh2_keyblade',
