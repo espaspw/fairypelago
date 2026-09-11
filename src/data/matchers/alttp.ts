@@ -67,7 +67,7 @@ export const alttpIcons: IconMatcher[] = [
   },
   { pattern: ['Power Star'], emoji: '' },
   { pattern: [/Arrow Upgrade.*/], emoji: 'alttp_arrow' },
-  { pattern: [/Bomb Upgrade.*/], emoji: 'alttp_arrow' },
+  { pattern: [/Bomb Upgrade.*/], emoji: 'alttp_bombs' },
   { pattern: ['Blue Mail'], emoji: 'alttp_bluemail' },
   {
     pattern: [
