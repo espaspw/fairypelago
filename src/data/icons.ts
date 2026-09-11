@@ -38,8 +38,10 @@ import { smwIcons } from './matchers/smw.js'
 import { smIcons } from './matchers/sm.js'
 import { smMapRandoIcons } from './matchers/smMapRando.js'
 import { smz3Icons } from './matchers/smz3.js'
+import { spmy64Icons } from './matchers/spmy64.js'
 import { terrariaIcons } from './matchers/terraria.js'
 import { th6Icons } from './matchers/th6.js'
+import { tlozalttpIcons } from './matchers/tlozalttp.js'
 import { tmcIcons } from './matchers/tmc.js'
 import { ttydIcons } from './matchers/ttyd.js'
 import { twwIcons } from './matchers/tww.js'
@@ -83,6 +85,7 @@ export const gameIcons: GameIcons = {
   'Rabbit and Steel': 'ras',
   'Risk of Rain 2': 'ror2',
   'Ship of Harkinian': 'oot_timetravel',
+  'SM64: Spicy Mycena 64': 'sm64alt',
   'Super Mario 64': 'sm64alt',
   'Super Mario Odyssey': 'smo',
   'Super Mario Sunshine': 'sms',
@@ -92,6 +95,7 @@ export const gameIcons: GameIcons = {
   'SMZ3': 'smz3',
   'Terraria': 'terraria',
   'Touhou Koumakyou ~ the Embodiment of Scarlet Devil': 'th6',
+  'The Legend of Zelda: A Link to the Past': 'alttp',
   'The Legend of Zelda - Oracle of Ages': 'zoraclea',
   'The Legend of Zelda - Oracle of Seasons': 'zoracles',
   'The Minish Cap': 'tmc',
@@ -137,6 +141,7 @@ export const itemIcons: ItemIcons = {
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
   'Ship of Harkinian': ootSohIcons,
+  'SM64: Spicy Mycena 64': spmy64Icons,
   'Super Mario 64': sm64Icons,
   'Super Mario Odyssey': smoIcons,
   'Super Mario Sunshine': smsIcons,
@@ -146,6 +151,7 @@ export const itemIcons: ItemIcons = {
   'SMZ3': smz3Icons,
   'Terraria': terrariaIcons,
   'Touhou Koumakyou ~ the Embodiment of Scarlet Devil': th6Icons,
+  'The Legend of Zelda: A Link to the Past': tlozalttpIcons,
   'The Legend of Zelda - Oracle of Ages': zoracleaIcons,
   'The Legend of Zelda - Oracle of Seasons': zoraclesIcons,
   'The Minish Cap': tmcIcons,
