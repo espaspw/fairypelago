@@ -53,6 +53,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Risk of Rain 2/ror2.png" alt="Risk of Rain 2" width="19" > Risk of Rain 2
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ship of Harkinian" width="19" > Ship of Harkinian
 -  <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Super Mario 64
+-  <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Spicy Mycena 64" width="19" > Spicy Mycena 64
 -  <img src="assets/archipelago-icons/Super Mario Sunshine/sms.png" alt="Super Mario Sunshine" width="19" > Super Mario Sunshine
 -  <img src="assets/archipelago-icons/SMW/smw.png" alt="Super Mario World" width="19" > Super Mario World
 -  <img src="assets/archipelago-icons/Super Metroid/sm.png" alt="Super Metroid" width="19" > Super Metroid
