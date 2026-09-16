@@ -46,6 +46,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Noita/noita.png" alt="Noita" width="19" > Noita
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ocarina of Time" width="19" > Ocarina of Time
 - 🖌️ Paint
+- <img src="assets/archipelago-icons/Pokemon Crystal/pc.png" alt="Pokemon Crystal" width="19" > Pokemon Crystal
 - <img src="assets/archipelago-icons/PokePark Wii Pikachu&apos;s Adventure/ppwii.png" alt="PokePark" width="19" > PokePark
 - <img src="assets/archipelago-icons/Pikmin/pikmin.png" alt="Pikmin" width="19" > Pikmin
 - <img src="assets/archipelago-icons/Pikmin 2/pikmin2.png" alt="Pikmin 2" width="19" > Pikmin 2
@@ -71,6 +72,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Toontown/tt.png" alt="Toontown" width="19" > Toontown
 - <img src="assets/archipelago-icons/Paper Mario The Thousand-Year Door/ttyd.png" alt="Paper Mario: The Thousand-Year Door" width="19" > Paper Mario: The Thousand-Year Door
 - <img src="assets/archipelago-icons/Wario Land 4/wl4.png" alt="Wario Land 4" width="19" > Wario Land 4
+- 🌐 Wikipelago
 - 📝 Wordipelago
 - <img src="assets/archipelago-icons/Yacht Dice/yd_icon.png" alt="Yacht Dice" width="19" > Yacht Dice
 
