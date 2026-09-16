@@ -26,6 +26,7 @@ import { noitaIcons } from './matchers/noita.js'
 import { ootIcons } from './matchers/oot.js'
 import { ootSohIcons } from './matchers/ootSoh.js'
 import { paintIcons } from './matchers/paint.js'
+import { pcIcons } from './matchers/pc.js'
 import { ppwiiIcons } from './matchers/ppwii.js'
 import { pikminIcons } from './matchers/pikmin.js'
 import { pikmin2Icons } from './matchers/pikmin2.js'
@@ -49,6 +50,7 @@ import { undertaleIcons } from './matchers/undertale.js'
 import { unfairflipsIcons } from './matchers/unfairflips.js'
 import { ttIcons } from './matchers/tt.js'
 import { wl4Icons } from './matchers/wl4.js'
+import { wikiIcons } from './matchers/wiki.js'
 import { wordIcons } from './matchers/word.js'
 import { yachtDiceIcons } from './matchers/yachtDice.js'
 import { zoracleaIcons } from './matchers/zoraclea.js'
@@ -79,6 +81,7 @@ export const gameIcons: GameIcons = {
   'Noita': 'noita',
   'Ocarina of Time': 'oot_timetravel',
   'Paint': ':paintbrush:',
+  'Pokemon Crystal': 'pc',
   'PokePark': 'ppwii',
   'Pikmin': 'pikmin',
   'Pikmin 2': 'pikmin2',
@@ -106,6 +109,7 @@ export const gameIcons: GameIcons = {
   'Toontown': 'tt',
   'Paper Mario: The Thousand-Year Door': 'ttyd',
   'Wario Land 4': 'wl4',
+  'Wikipelago': ':globe_with_meridians:',
   'Wordipelago': ':memo:',
   'Yacht Dice': 'yd',
 }
@@ -135,6 +139,7 @@ export const itemIcons: ItemIcons = {
   'Noita': noitaIcons,
   'Ocarina of Time': ootIcons,
   'Paint': paintIcons,
+  'Pokemon Crystal': pcIcons,
   'PokePark': ppwiiIcons,
   'Rabbit and Steel': rasIcons,
   'Pikmin': pikminIcons,
@@ -162,6 +167,7 @@ export const itemIcons: ItemIcons = {
   'Toontown': ttIcons,
   'Paper Mario: The Thousand-Year Door': ttydIcons,
   'Wario Land 4': wl4Icons,
+  'Wikipelago': wikiIcons,
   'Wordipelago': wordIcons,
   'Yacht Dice': yachtDiceIcons,
 }
