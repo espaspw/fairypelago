@@ -212,5 +212,5 @@ export const pcIcons: IconMatcher[] = [
     emoji: 'pc_tmnormal',
   },
   { pattern: [/Fly.*/], emoji: 'pc_flyunlock' },
-  { pattern: ['Oak's Parcel'], emoji: 'pc_parcel' },
+  { pattern: ['Oak\'s Parcel'], emoji: 'pc_parcel' },
 ]

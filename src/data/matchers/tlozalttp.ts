@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const alttpIcons: IconMatcher[] = [
+export const tlozalttpIcons: IconMatcher[] = [
   {
     pattern: [
       /.*Bow/,

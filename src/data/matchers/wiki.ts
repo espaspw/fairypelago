@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const ::Icons: IconMatcher[] = [
+export const wikiIcons: IconMatcher[] = [
   { pattern: ['Knowledge Fragment'], emoji: ':brain:' },
   { pattern: ['Progressive Back'], emoji: ':leftwards_arrow_with_hook:' },
   { pattern: ['Wiki Compass'], emoji: ':compass:' },
