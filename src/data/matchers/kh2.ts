@@ -192,6 +192,7 @@ export const kh2Icons: IconMatcher[] = [
       'Donald Draw',
       /Goofy.*/,
       'Teamwork',
+      'Tornado Fusion',
     ],
     emoji: 'kh2_ability',
   },
