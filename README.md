@@ -27,6 +27,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Another Crab&apos;s Treasure/act.png" alt="A Hat in Time" width="19"> Another Crab's Treasure
 - 🎱 APBingo
 - 🔢 Archipeladoku
+- <img src="assets/archipelago-icons/Banjo-Kazooie/banjo.png" alt="Banjo-Tooie" width="19" > Banjo-Tooie
 - <img src="assets/archipelago-icons/Cave Story/cs.png" alt="Cave Story" width="19" > Cave Story
 - <img src="assets/archipelago-icons/Celeste/Celeste64/celeste64.png" alt="Celeste 64" width="19"> Celeste 64
 - <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste (Open World)" width="19" > Celeste (Open World)
@@ -51,21 +52,23 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Pikmin/pikmin.png" alt="Pikmin" width="19" > Pikmin
 - <img src="assets/archipelago-icons/Pikmin 2/pikmin2.png" alt="Pikmin 2" width="19" > Pikmin 2
 - <img src="assets/archipelago-icons/Rabbit and Steel/ras.png" alt="Rabbit and Steel" width="19" > Rabbit and Steel
+- 🌱 Refunct
 - <img src="assets/archipelago-icons/Risk of Rain 2/ror2.png" alt="Risk of Rain 2" width="19" > Risk of Rain 2
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ship of Harkinian" width="19" > Ship of Harkinian
--  <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Super Mario 64
--  <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Spicy Mycena 64" width="19" > Spicy Mycena 64
--  <img src="assets/archipelago-icons/Super Mario Sunshine/sms.png" alt="Super Mario Sunshine" width="19" > Super Mario Sunshine
--  <img src="assets/archipelago-icons/SMW/smw.png" alt="Super Mario World" width="19" > Super Mario World
--  <img src="assets/archipelago-icons/Super Metroid/sm.png" alt="Super Metroid" width="19" > Super Metroid
--  <img src="assets/archipelago-icons/Super Metroid/smmr.png" alt="Super Metroid Map Rando" width="19" > Super Metroid Map Rando
--  <img src="assets/archipelago-icons/Super Metroid/smz3.png" alt="SMZ3" width="19" > SMZ3
+- <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Super Mario 64
+- <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Spicy Mycena 64" width="19" > Spicy Mycena 64
+- <img src="assets/archipelago-icons/Super Mario Sunshine/sms.png" alt="Super Mario Sunshine" width="19" > Super Mario Sunshine
+- <img src="assets/archipelago-icons/SMW/smw.png" alt="Super Mario World" width="19" > Super Mario World
+- <img src="assets/archipelago-icons/Super Metroid/sm.png" alt="Super Metroid" width="19" > Super Metroid
+- <img src="assets/archipelago-icons/Super Metroid/smmr.png" alt="Super Metroid Map Rando" width="19" > Super Metroid Map Rando
+- <img src="assets/archipelago-icons/Super Metroid/smz3.png" alt="SMZ3" width="19" > SMZ3
 - <img src="assets/archipelago-icons/Terraria/terraria.png" alt="Terraria" width="19" >Terraria
 - <img src="assets/archipelago-icons/Touhou Embodiment of Scarlet Devil/th6.png" alt="Touhou Koumakyou ~ the Embodiment of Scarlet Devil" width="19" > Touhou Koumakyou ~ the Embodiment of Scarlet Devil
 - <img src="assets/archipelago-icons/The Legend of Zelda Oracle of Seasons Ages/zoraclea.png" alt="The Legend of Zelda - Oracle of Ages" width="19" > The Legend of Zelda - Oracle of Ages
 - <img src="assets/archipelago-icons/The Legend of Zelda Oracle of Seasons Ages/zoracles.png" alt="The Legend of Zelda - Oracle of Seasons" width="19" > The Legend of Zelda - Oracle of Seasons
 - <img src="assets/archipelago-icons/The Minish Cap/tmc.png" alt="The Minish Cap" width="19" > The Minish Cap
 - <img src="assets/archipelago-icons/The Wind Waker/tww.png" alt="The Wind Waker" width="19" > The Wind Waker
+- <img src="assets/archipelago-icons/Uncanny Cat Golf/ucg.png" alt="Uncanny Cat Golf" width="19" > Uncanny Cat Golf
 - <img src="assets/archipelago-icons/Undertale/undertale.png" alt="Undertale" width="19" > Undertale
 - 🪙 Unfair Flips
 - <img src="assets/archipelago-icons/Untitled Goose Game/goose.png" alt="Untitled Goose Game" width="19" > Untitled Goose Game
