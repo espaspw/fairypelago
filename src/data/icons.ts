@@ -4,6 +4,7 @@ import { actIcons } from './matchers/act.js'
 import { adokuIcons } from './matchers/adoku.js'
 import { ahitItemIcons } from './matchers/ahit.js'
 import { alttpIcons } from './matchers/alttp.js'
+import { btIcons } from './matchers/bt.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
@@ -31,7 +32,8 @@ import { ppwiiIcons } from './matchers/ppwii.js'
 import { pikminIcons } from './matchers/pikmin.js'
 import { pikmin2Icons } from './matchers/pikmin2.js'
 import { rasIcons } from './matchers/ras.js'
-import { ror2Icons } from './matchers/ror2.js'
+import { rasIcons } from './matchers/ras.js'
+import { refunct2Icons } from './matchers/refunct.js'
 import { sm64Icons } from './matchers/sm64.js'
 import { smoIcons } from './matchers/smo.js'
 import { smsIcons } from './matchers/sms.js'
@@ -46,6 +48,7 @@ import { tlozalttpIcons } from './matchers/tlozalttp.js'
 import { tmcIcons } from './matchers/tmc.js'
 import { ttydIcons } from './matchers/ttyd.js'
 import { twwIcons } from './matchers/tww.js'
+import { ucgIcons } from './matchers/ucg.js'
 import { undertaleIcons } from './matchers/undertale.js'
 import { unfairflipsIcons } from './matchers/unfairflips.js'
 import { ttIcons } from './matchers/tt.js'
@@ -62,6 +65,7 @@ export const gameIcons: GameIcons = {
   'Another Crabs Treasure': 'act',
   'APBingo': ':8ball:',
   'Archipeladoku': ':1234:',
+  'Banjo-Tooie': 'banjo',
   'Cave Story': 'cs',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
@@ -86,6 +90,7 @@ export const gameIcons: GameIcons = {
   'Pikmin': 'pikmin',
   'Pikmin 2': 'pikmin2',
   'Rabbit and Steel': 'ras',
+  'Refunct': ':seedling:',
   'Risk of Rain 2': 'ror2',
   'Ship of Harkinian': 'oot_timetravel',
   'SM64: Spicy Mycena 64': 'sm64alt',
@@ -103,6 +108,7 @@ export const gameIcons: GameIcons = {
   'The Legend of Zelda - Oracle of Seasons': 'zoracles',
   'The Minish Cap': 'tmc',
   'The Wind Waker': 'tww',
+  'Uncanny Cat Golf': 'ucg',
   'Undertale': 'undertale',
   'Unfair Flips': ':coin:',
   'Untitled Goose Game': 'goose',
@@ -120,6 +126,7 @@ export const itemIcons: ItemIcons = {
   'Another Crabs Treasure': actIcons,
   'APBingo': bingoIcons,
   'Archipeladoku': adokuIcons,
+  'Banjo-Tooie': btIcons,
   'Cave Story': csIcons,
   'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
@@ -142,6 +149,7 @@ export const itemIcons: ItemIcons = {
   'Pokemon Crystal': pcIcons,
   'PokePark': ppwiiIcons,
   'Rabbit and Steel': rasIcons,
+  'Refunct': refunctIcons,
   'Pikmin': pikminIcons,
   'Pikmin 2': pikmin2Icons,
   'Risk of Rain 2': ror2Icons,
@@ -161,6 +169,7 @@ export const itemIcons: ItemIcons = {
   'The Legend of Zelda - Oracle of Seasons': zoraclesIcons,
   'The Minish Cap': tmcIcons,
   'The Wind Waker': twwIcons,
+  'Uncanny Cat Golf': ucgIcons,
   'Undertale': undertaleIcons,
   'Unfair Flips': unfairflipsIcons,
   'Untitled Goose Game': gooseIcons,
