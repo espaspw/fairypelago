@@ -168,6 +168,7 @@ export const ootSohIcons: IconMatcher[] = [
   { pattern: ['Biggest Quiver'], emoji: 'oot_biggestquiver' },
   { pattern: ['Big Bullet Bag'], emoji: 'oot_biggerbulletbag' },
   { pattern: ['Biggest Bullet Bag'], emoji: 'oot_biggestbulletbag' },
+  { pattern: ['Roc\'s Feather '], emoji: 'oot_rocsfeather' },
   { pattern: ['Scarecrow'], emoji: '' },
   { pattern: ['Distant Scarecrow'], emoji: '' },
   { pattern: ['Epona'], emoji: '' },

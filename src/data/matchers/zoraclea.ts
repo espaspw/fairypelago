@@ -3,6 +3,7 @@ import { IconMatcher } from '../../types/icon-types.js'
 export const zoracleaIcons: IconMatcher[] = [
   { pattern: ['Progressive Shield'], emoji: 'zoracle_shield' },
   { pattern: ['Bombs (10)'], emoji: 'zoracle_bomb' },
+  { pattern: [/Bombchus.*/], emoji: 'zoracle_bombchu' },
   { pattern: ['Progressive Sword'], emoji: 'zoracle_sword' },
   { pattern: ['Boomerang'], emoji: 'zoracle_boomerang' },
   { pattern: ['Progressive Harp'], emoji: 'zoracle_harp' },
@@ -55,7 +56,7 @@ export const zoracleaIcons: IconMatcher[] = [
   { pattern: ['Brother Emblem'], emoji: 'zoracle_brotheremblem' },
   { pattern: ['Cheval Rope'], emoji: 'zoracle_chevalrope' },
   { pattern: ['Crown Key'], emoji: 'zoracle_crownkey' },
-  { pattern: ['Fairy Powder'], emoji: 'zoracle_fairypowder' },
+  { pattern: ['Fairy Powder'], emoji: 'zoracle_fairydust' },
   { pattern: ['Goron Vase'], emoji: 'zoracle_goronvase' },
   { pattern: ['Goronade'], emoji: 'zoracle_goronade' },
   { pattern: ['Graveyard Key'], emoji: 'zoracle_graveyardkey' },
