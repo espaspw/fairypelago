@@ -25,7 +25,7 @@ export const ::Icons: IconMatcher[] = [
   { pattern: ['Starry Sky'], emoji: '' },
   { pattern: ['Red Sky'], emoji: '' },
   { pattern: ['Hurricane'], emoji: ':tornado:' },
-  { pattern: [/Trap.*/], emoji: ':exclamation' },
+  { pattern: [/Trap.*/], emoji: ':exclamation:' },
   { pattern: ['Rose'], emoji: ':rose:' },
   { pattern: ['Tulip'], emoji: ':tulip:' },
   { pattern: ['Sunflower'], emoji: ':sunflower:' },
