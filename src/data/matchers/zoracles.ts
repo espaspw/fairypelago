@@ -14,6 +14,7 @@ export const zoraclesIcons: IconMatcher[] = [
   { pattern: ["Ricky's Flute"], emoji: 'zoracle_rickyflute' },
   { pattern: ["Dimitri's Flute"], emoji: 'zoracle_dimitriflute' },
   { pattern: ["Moosh's Flute"], emoji: 'zoracle_mooshflute' },
+  { pattern: ["Ricky's Gloves"], emoji: 'zoracle_rickygloves' },
   { pattern: ['Seed Shooter'], emoji: 'zoracle_seedshooter' },
   { pattern: ['Progressive Slingshot'], emoji: 'zoracle_slingshot' },
   { pattern: ['Shovel'], emoji: 'zoracle_shovel' },
