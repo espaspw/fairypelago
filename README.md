@@ -1,6 +1,6 @@
 # Fairypelago
 
-A discord bot for using discord channels as text clients for [Archipelago Multiworld](https://github.com/ArchipelagoMW/Archipelago).
+A Discord bot for using Discord channels as text clients for [Archipelago Multiworld](https://github.com/ArchipelagoMW/Archipelago).
 
 ## Supported Features
 
