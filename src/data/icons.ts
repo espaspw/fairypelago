@@ -8,10 +8,12 @@ import { btIcons } from './matchers/bt.js'
 import { bingoIcons } from './matchers/bingo.js'
 import { celeste64Icons } from './matchers/celeste64.js'
 import { celesteIcons } from './matchers/celeste.js'
+import { celestejamIcons } from './matchers/celestejam.js'
 import { csIcons } from './matchers/cs.js'
 import { csm64Icons } from './matchers/csm64.js'
 import { gooseIcons } from './matchers/goose.js'
 import { hkIcons } from './matchers/hk.js'
+import { hl2Icons } from './matchers/hl2.js'
 import { kh2Icons } from './matchers/kh2.js'
 import { kssIcons } from './matchers/kss.js'
 import { ladxIcons } from './matchers/ladx.js'
@@ -26,6 +28,7 @@ import { mzmIcons } from './matchers/mzm.js'
 import { noitaIcons } from './matchers/noita.js'
 import { ootIcons } from './matchers/oot.js'
 import { ootSohIcons } from './matchers/ootSoh.js'
+import { orct2Icons } from './matchers/orct2.js'
 import { paintIcons } from './matchers/paint.js'
 import { pcIcons } from './matchers/pc.js'
 import { ppwiiIcons } from './matchers/ppwii.js'
@@ -69,7 +72,9 @@ export const gameIcons: GameIcons = {
   'Cave Story': 'cs',
   'Celeste 64': 'celeste64',
   'Celeste (Open World)': 'celeste',
+  'Celeste Modded': 'celeste',
   'Cursed Mario 64': 'sm64alt',
+  'Half-Life 2': 'hl2',
   'Hollow Knight': 'hk',
   'Kingdom Hearts 2': 'kh2',
   'Kirby Super Star': 'kss',
@@ -84,6 +89,7 @@ export const gameIcons: GameIcons = {
   'Minecraft Dig': 'mc',
   'Noita': 'noita',
   'Ocarina of Time': 'oot_timetravel',
+  'OpenRCT2': 'rct2',
   'Paint': ':paintbrush:',
   'Pokemon Crystal': 'pc',
   'PokePark': 'ppwii',
@@ -130,7 +136,9 @@ export const itemIcons: ItemIcons = {
   'Cave Story': csIcons,
   'Celeste 64': celeste64Icons,
   'Celeste (Open World)': celesteIcons,
+  'Celeste Modded': celestejamIcons,
   'Cursed Mario 64': csm64Icons,
+  'Half-Life 2': hl2Icons,
   'Hollow Knight': hkIcons,
   'Kingdom Hearts 2': kh2Icons,
   'Kirby Super Star': kssIcons,
@@ -145,6 +153,7 @@ export const itemIcons: ItemIcons = {
   'Minecraft Dig': mcdigIcons,
   'Noita': noitaIcons,
   'Ocarina of Time': ootIcons,
+  'OpenRCT2': orct2Icons,
   'Paint': paintIcons,
   'Pokemon Crystal': pcIcons,
   'PokePark': ppwiiIcons,
