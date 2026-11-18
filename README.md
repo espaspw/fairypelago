@@ -4,11 +4,11 @@ A discord bot for using discord channels as text clients for [Archipelago Multiw
 
 ## Supported Features
 
-- **Forwarding and receiving player messages** through Discord
-- Displaying network events with **item icons** for supported games
-- Configurable **player icons** per server
-- **Tracking of session state** through the network and webhost api
-- **Detection of a room url** for supported webhosts to create a client thread
+- **Forwarding and receiving player messages** through Discord.
+- Displaying network events with **item icons** for supported games.
+- Configurable **player icons** per server.
+- **Tracking of session state** through the network and webhost API.
+- **Detection of a room URL** for supported webhosts to create a client thread.
 
 
 When a supported webhost room URL is detected, it will create a new thread which acts like a client for the AP session.
@@ -31,7 +31,9 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Cave Story/cs.png" alt="Cave Story" width="19" > Cave Story
 - <img src="assets/archipelago-icons/Celeste/Celeste64/celeste64.png" alt="Celeste 64" width="19"> Celeste 64
 - <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste (Open World)" width="19" > Celeste (Open World)
+- <img src="assets/archipelago-icons/Celeste/celeste.png" alt="Celeste Modded" width="19" > Celeste Modded
 - <img src="assets/archipelago-icons/SM64EX/sm64alt.png" alt="Super Mario 64" width="19" > Cursed Mario 64
+- <img src="assets/archipelago-icons/Half-Life 2/hl2.png" alt="Half-Life 2" width="19" > Half-Life 2
 - <img src="assets/archipelago-icons/Hollow Knight/hk.png" alt="Hollow Knight" width="19" > Hollow Knight
 - <img src="assets/archipelago-icons/Kingdom Hearts 2/kh2.png" alt="Kingdom Hearts 2" width="19" > Kingdom Hearts 2
 - <img src="assets/archipelago-icons/Kirby Super Star/kss.png" alt="Kirby Super Star" width="19" > Kirby Super Star
@@ -46,6 +48,7 @@ If __autojoin__ is enabled in guild settings, the bot will attempt to connect to
 - <img src="assets/archipelago-icons/Minecraft/mc.png" alt="Minecraft Dig" width="19" > Minecraft Dig
 - <img src="assets/archipelago-icons/Noita/noita.png" alt="Noita" width="19" > Noita
 - <img src="assets/archipelago-icons/Ocarina of Time/oot_timetravel.png" alt="Ocarina of Time" width="19" > Ocarina of Time
+- <img src="assets/archipelago-icons/OpenRCT2/rct2.png" alt="OpenRCT2" width="19" > OpenRCT2
 - 🖌️ Paint
 - <img src="assets/archipelago-icons/Pokemon Crystal/pc.png" alt="Pokemon Crystal" width="19" > Pokemon Crystal
 - <img src="assets/archipelago-icons/PokePark Wii Pikachu&apos;s Adventure/ppwii.png" alt="PokePark" width="19" > PokePark
@@ -128,6 +131,6 @@ Icons are located in the assets folder and should be uploaded to your bot throug
 To add icons for a new game, you can use this [file generator](https://espaspw.github.io/ap-icon-matcher-generator/ ) to create the script file for the game.
 Not all mappings need to be filled, and it is recommended to coalesce mappings using regex when appropriate.
 
-- `/src/data/matchers`: Item name to emoji mapping
-- `/src/data/icons.ts`: Exporting item icons and define mappings for game names
+- `/src/data/matchers`: Item name to emoji mapping.
+- `/src/data/icons.ts`: Exporting item icons and define mappings for game names.
 
