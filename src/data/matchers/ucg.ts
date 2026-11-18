@@ -15,6 +15,7 @@ export const ucgIcons: IconMatcher[] = [
   },
   { pattern: [/World.*/], emoji: 'ucg_flag' },
   { pattern: ['Breakable Tiles'], emoji: 'ucg_breakable' },
+  { pattern: ['Switch Tiles'], emoji: 'ucg_switchblock' },
   { pattern: ['Keys'], emoji: 'ucg_key' },
   { pattern: ['Stop Markers'], emoji: 'ucg_stopmarker' },
   { pattern: ['Go Markers'], emoji: 'ucg_gomarker' },

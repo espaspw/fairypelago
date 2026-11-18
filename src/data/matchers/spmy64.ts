@@ -5,6 +5,15 @@ export const spmy64Icons: IconMatcher[] = [
   { pattern: [/.*Wing Cap/], emoji: 'sm64_wingcap' },
   { pattern: [/.*Metal Cap/], emoji: 'sm64_metalcap' },
   { pattern: [/.*Vanish Cap/], emoji: 'sm64_vanishcap' },
+  { pattern: ['Unlock Bob-omb Battlefield'], emoji: 'sm64_paintingbob' },
+  { pattern: ['Unlock Whomp\'s Fortress'], emoji: 'sm64_paintingwf' },
+  {
+    pattern: [
+      /Koopa Shell.*/,
+      /.*Koopa Shell/,
+    ],
+    emoji: 'sm64_koopashell',
+  },
   {
     pattern: [
       'Progressive Cap Length',
@@ -96,6 +105,7 @@ export const spmy64Icons: IconMatcher[] = [
       'Bob-omb Battlefield - Water Bombs',
       'Hazy Maze Cave - Boulders',
       'Lethal Lava Land - Bouncing Fireballs',
+      'Lethal Lava Land - Bowser Puzzle',
       'Shifting Sand Land - Spindel',
       'Jolly Roger Bay - Falling Pillars',
       'Dire, Dire Docks - Bubs',
@@ -138,8 +148,20 @@ export const spmy64Icons: IconMatcher[] = [
     ],
     emoji: 'sm64_health',
   },
-  { pattern: [/.*Koopa Shell/], emoji: 'sm64_koopashell' },
   { pattern: ['Castle - Progressive MIPS'], emoji: 'sm64_mips' },
+  { pattern: ['Unlock Cool, Cool Mountain'], emoji: 'sm64_paintingccm' },
+  { pattern: ['Unlock Lethal Lava Land'], emoji: 'sm64_paintinglll' },
+  { pattern: ['Unlock Jolly Roger Bay'], emoji: 'sm64_paintingjrb' },
+  { pattern: ['Unlock Wet-Dry World'], emoji: 'sm64_paintingwdw' },
+  { pattern: ['Unlock Tall, Tall Mountain'], emoji: 'sm64_paintingttm' },
+  {
+    pattern: [
+      'Unlock Tiny Island',
+      'Unlock Huge Island',
+    ],
+    emoji: 'sm64_paintingthi',
+  },
+  { pattern: ['Unlock Tick Tock Clock'], emoji: 'sm64_paintingttc' },
   {
     pattern: [
       'Unlock Tower of the Wing Cap',
@@ -187,21 +209,15 @@ export const spmy64Icons: IconMatcher[] = [
     pattern: [
       /.*Coins/,
       /.*Coin Lines/,
-      /.*Coins Rings/,
+      /.*Coin Rings/,
       /.*Coin Arrows/,
       /.*Coin Box/,
       /.*Coin Boxes/,
       /.*Coin Block/,
       /.*Coin Blocks/,
+      /.*Coin Blocks/,
     ],
     emoji: 'sm64_coin',
-  },
-  {
-    pattern: [
-      'Bowser',
-      /.*Bowser/,
-    ],
-    emoji: 'sm64_bowser',
   },
   {
     pattern: [
@@ -212,6 +228,14 @@ export const spmy64Icons: IconMatcher[] = [
     ],
     emoji: 'sm64_bowserbomb',
   },
+  {
+    pattern: [
+      'Bowser',
+      /.*Bowser/,
+    ],
+    emoji: 'sm64_bowser',
+  },
+  { pattern: ['Bonk Trap'], emoji: '' },
   { pattern: ['Bonk Trap'], emoji: '' },
   { pattern: ['Burn Trap'], emoji: '' },
   { pattern: ['Shock Trap'], emoji: '' },
