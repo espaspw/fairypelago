@@ -291,6 +291,6 @@ export const celestejamIcons: IconMatcher[] = [
     ],
     emoji: 'celeste_summit',
   },
-  { pattern: ['Moon Berry', 'Strawberry", 'Raspberry', 'Blueberry', 'Blackberry', 'Cranberry', 'Elderberry', 'Huckleberry'], emoji: 'celeste_strawberry' },
+  { pattern: ['Moon Berry', 'Strawberry', 'Raspberry', 'Blueberry', 'Blackberry', 'Cranberry', 'Elderberry', 'Huckleberry'], emoji: 'celeste_strawberry' },
   { pattern: ['Win Condition Level Victory'], emoji: 'celeste' },
 ]
