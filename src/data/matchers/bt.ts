@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const banjoIcons: IconMatcher[] = [
+export const btIcons: IconMatcher[] = [
   {
     pattern: [
       'Grip Grab',

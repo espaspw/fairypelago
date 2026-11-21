@@ -1,6 +1,6 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
-export const ::Icons: IconMatcher[] = [
+export const refunctIcons: IconMatcher[] = [
   { pattern: [/Cluster.*/], emoji: ':cityscape:' },
   { pattern: ['Grass'], emoji: ':seedling:' },
   { pattern: ['Starting Platform'], emoji: ':beginner:' },
