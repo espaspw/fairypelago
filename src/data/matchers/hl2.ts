@@ -2,7 +2,7 @@ import { IconMatcher } from '../../types/icon-types.js'
 
 export const hl2Icons: IconMatcher[] = [
   { pattern: [/.*Unlock/], emoji: 'hl2_exit' },
-  { pattern: ['Crowbar'], emoji: 'hl2crowbar' },
+  { pattern: ['Crowbar'], emoji: 'hl2_crowbar' },
   { pattern: ['Progressive Gravity Gun'], emoji: 'hl2_gravitygun' },
   { pattern: [/.*Pistol/], emoji: 'hl2_pistol' },
   { pattern: [/.*Magnum/], emoji: 'hl2_magnum' },

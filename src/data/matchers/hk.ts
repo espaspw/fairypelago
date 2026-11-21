@@ -1,9 +1,9 @@
 import { IconMatcher } from '../../types/icon-types.js'
 
 export const hkIcons: IconMatcher[] = [
-  { pattern: ['Lurien'], emoji: '' },
-  { pattern: ['Monomon'], emoji: '' },
-  { pattern: ['Herrah'], emoji: '' },
+  { pattern: ['Lurien'], emoji: 'hk_lurien' },
+  { pattern: ['Monomon'], emoji: 'hk_monomon' },
+  { pattern: ['Herrah'], emoji: 'hk_herrah' },
   { pattern: ['Mothwing_Cloak'], emoji: 'hk_mothwingcloak' },
   { pattern: ['Mantis_Claw'], emoji: 'hk_mantisclaw' },
   { pattern: ['Crystal_Heart'], emoji: 'hk_crystalheart' },
